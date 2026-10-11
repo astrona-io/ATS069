@@ -1,8 +1,9 @@
-# Preparation scaffold. Technical pages stay draft until authoring and review.
+# Reading-only content; YAML knowledge checks have a separate index.
 training:
   id: ATS069
   title: 'CBA: Backstage Development Workflow'
-  description: Preparation scaffold for Backstage Development Workflow. Lessons and environments are planned.
+  description: 'Detailed reading material and reusable YAML knowledge checks for CBA: Backstage Development
+    Workflow. Technical content remains draft. No labs or playgrounds.'
   certification:
     name: Certified Backstage Associate
     code: CBA
@@ -18,7 +19,7 @@ training:
 modules:
 - id: module-intro
   title: Introduction
-  description: Planned introduction and authoring status.
+  description: Audience, reading method and review process.
   content:
   - type: reading
     title: Introduction
@@ -34,51 +35,88 @@ modules:
     path: sections/intro/course-03-how-this-course-is-made.md
 - id: module-010
   title: Build and run Backstage projects locally
-  description: Planned coverage of this curriculum objective.
+  description: Developed reading and reasoning for Build and run Backstage projects locally.
+  draft: true
   content:
-  - type: reading
-    title: Section Overview
-    path: sections/section-010/README.md
   - type: reading
     title: Build and run Backstage projects locally
+    path: sections/section-010/README.md
+  - type: reading
+    title: Local Projects, Development Servers And Production Builds
     path: sections/section-010/module-01/course.md
+  - type: reading
+    title: Local Projects, Development Servers And Production Builds
+    path: sections/section-010/module-01/course-01-local-projects-development-servers-and-production-builds.md
+  - type: reading
+    title: Summary
+    path: sections/section-010/module-01/course-02-summary.md
 - id: module-020
   title: Understand local development workflows
-  description: Planned coverage of this curriculum objective.
+  description: Developed reading and reasoning for Understand local development workflows.
+  draft: true
   content:
-  - type: reading
-    title: Section Overview
-    path: sections/section-020/README.md
   - type: reading
     title: Understand local development workflows
+    path: sections/section-020/README.md
+  - type: reading
+    title: Changes, Workspace Feedback And Reviewable Development
     path: sections/section-020/module-01/course.md
+  - type: reading
+    title: Changes, Workspace Feedback And Reviewable Development
+    path: sections/section-020/module-01/course-01-changes-workspace-feedback-and-reviewable-development.md
+  - type: reading
+    title: Summary
+    path: sections/section-020/module-01/course-02-summary.md
 - id: module-030
   title: Compile a Backstage project with TypeScript
-  description: Planned coverage of this curriculum objective.
+  description: Developed reading and reasoning for Compile a Backstage project with TypeScript.
+  draft: true
   content:
-  - type: reading
-    title: Section Overview
-    path: sections/section-030/README.md
   - type: reading
     title: Compile a Backstage project with TypeScript
+    path: sections/section-030/README.md
+  - type: reading
+    title: Type Checking, Transpilation And Workspace Build Contracts
     path: sections/section-030/module-01/course.md
+  - type: reading
+    title: Type Checking, Transpilation And Workspace Build Contracts
+    path: sections/section-030/module-01/course-01-type-checking-transpilation-and-workspace-build-contracts.md
+  - type: reading
+    title: Summary
+    path: sections/section-030/module-01/course-02-summary.md
 - id: module-040
   title: Download and install dependencies for a Backstage project with NPM/Yarn
-  description: Planned coverage of this curriculum objective.
+  description: Developed reading and reasoning for Download and install dependencies for a Backstage project
+    with NPM/Yarn.
+  draft: true
   content:
-  - type: reading
-    title: Section Overview
-    path: sections/section-040/README.md
   - type: reading
     title: Download and install dependencies for a Backstage project with NPM/Yarn
+    path: sections/section-040/README.md
+  - type: reading
+    title: Package Managers, Lockfiles And Reproducible Dependencies
     path: sections/section-040/module-01/course.md
+  - type: reading
+    title: Package Managers, Lockfiles And Reproducible Dependencies
+    path: sections/section-040/module-01/course-01-package-managers-lockfiles-and-reproducible-dependencies.md
+  - type: reading
+    title: Summary
+    path: sections/section-040/module-01/course-02-summary.md
 - id: module-050
   title: Use Docker to build a container image of a Backstage project
-  description: Planned coverage of this curriculum objective.
+  description: Developed reading and reasoning for Use Docker to build a container image of a Backstage
+    project.
+  draft: true
   content:
   - type: reading
-    title: Section Overview
+    title: Use Docker to build a container image of a Backstage project
     path: sections/section-050/README.md
   - type: reading
-    title: Use Docker to build a container image of a Backstage project
+    title: Container Artifacts, Build Inputs And Runtime Responsibilities
     path: sections/section-050/module-01/course.md
+  - type: reading
+    title: Container Artifacts, Build Inputs And Runtime Responsibilities
+    path: sections/section-050/module-01/course-01-container-artifacts-build-inputs-and-runtime-responsibilities.md
+  - type: reading
+    title: Summary
+    path: sections/section-050/module-01/course-02-summary.md
