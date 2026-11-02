@@ -36,7 +36,7 @@ modules:
 - id: module-010
   title: Build and run Backstage projects locally
   description: Developed reading and reasoning for Build and run Backstage projects locally.
-  draft: true
+  status: alpha
   content:
   - type: reading
     title: Build and run Backstage projects locally
@@ -53,7 +53,7 @@ modules:
 - id: module-020
   title: Understand local development workflows
   description: Developed reading and reasoning for Understand local development workflows.
-  draft: true
+  status: alpha
   content:
   - type: reading
     title: Understand local development workflows
@@ -70,7 +70,7 @@ modules:
 - id: module-030
   title: Compile a Backstage project with TypeScript
   description: Developed reading and reasoning for Compile a Backstage project with TypeScript.
-  draft: true
+  status: alpha
   content:
   - type: reading
     title: Compile a Backstage project with TypeScript
@@ -88,7 +88,7 @@ modules:
   title: Download and install dependencies for a Backstage project with NPM/Yarn
   description: Developed reading and reasoning for Download and install dependencies for a Backstage project
     with NPM/Yarn.
-  draft: true
+  status: alpha
   content:
   - type: reading
     title: Download and install dependencies for a Backstage project with NPM/Yarn
@@ -106,7 +106,7 @@ modules:
   title: Use Docker to build a container image of a Backstage project
   description: Developed reading and reasoning for Use Docker to build a container image of a Backstage
     project.
-  draft: true
+  status: alpha
   content:
   - type: reading
     title: Use Docker to build a container image of a Backstage project
