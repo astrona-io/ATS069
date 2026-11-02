@@ -1,0 +1,119 @@
+version: 1
+approval: CBA requested 2026-10-11; established reading-only scope
+course:
+  id: ATS069
+  certification:
+    name: Certified Backstage Associate
+    code: CBA
+    provider: CNCF / Linux Foundation
+    domain: Backstage Development Workflow
+    weight: 24
+    competencies:
+    - Build and run Backstage projects locally
+    - Understand local development workflows
+    - Compile a Backstage project with TypeScript
+    - Download and install dependencies for a Backstage project with NPM/Yarn
+    - Use Docker to build a container image of a Backstage project
+defaults:
+  playground: false
+  module_lab: false
+  capstone: false
+  section_quiz: false
+  final_quiz: true
+assessment_format: YAML question banks v1, registered in assessments/index.yaml
+sections:
+- id: section-010
+  title: Build and run Backstage projects locally
+  curriculum_item: Build and run Backstage projects locally
+  capstone: false
+  section_quiz: false
+  modules:
+  - id: module-01
+    title: Local Projects, Development Servers And Production Builds
+    objectives:
+    - Explain the responsibilities of the app and backend workspaces.
+    - Distinguish a development server from a production artifact.
+    - Locate startup failures by dependency, configuration and process boundaries.
+    outline:
+    - Local Projects, Development Servers And Production Builds
+    playground: false
+    module_lab: false
+    sources:
+    - reading: sections/section-010/module-01/course-01-local-projects-development-servers-and-production-builds.md
+      adapted_from: null
+- id: section-020
+  title: Understand local development workflows
+  curriculum_item: Understand local development workflows
+  capstone: false
+  section_quiz: false
+  modules:
+  - id: module-01
+    title: Changes, Workspace Feedback And Reviewable Development
+    objectives:
+    - Trace a source change through the relevant workspace and checks.
+    - Explain why fast feedback needs both type and behavior checks.
+    - Distinguish local overrides from committed project configuration.
+    outline:
+    - Changes, Workspace Feedback And Reviewable Development
+    playground: false
+    module_lab: false
+    sources:
+    - reading: sections/section-020/module-01/course-01-changes-workspace-feedback-and-reviewable-development.md
+      adapted_from: null
+- id: section-030
+  title: Compile a Backstage project with TypeScript
+  curriculum_item: Compile a Backstage project with TypeScript
+  capstone: false
+  section_quiz: false
+  modules:
+  - id: module-01
+    title: Type Checking, Transpilation And Workspace Build Contracts
+    objectives:
+    - Distinguish TypeScript checking from JavaScript execution.
+    - Explain workspace build dependencies and generated artifacts.
+    - Diagnose type errors separately from runtime integration failures.
+    outline:
+    - Type Checking, Transpilation And Workspace Build Contracts
+    playground: false
+    module_lab: false
+    sources:
+    - reading: sections/section-030/module-01/course-01-type-checking-transpilation-and-workspace-build-contracts.md
+      adapted_from: null
+- id: section-040
+  title: Download and install dependencies for a Backstage project with NPM/Yarn
+  curriculum_item: Download and install dependencies for a Backstage project with NPM/Yarn
+  capstone: false
+  section_quiz: false
+  modules:
+  - id: module-01
+    title: Package Managers, Lockfiles And Reproducible Dependencies
+    objectives:
+    - Explain manifest and lockfile responsibilities in a workspace project.
+    - Distinguish compatible dependency resolution from arbitrary upgrades.
+    - Identify environment and dependency causes of installation failure.
+    outline:
+    - Package Managers, Lockfiles And Reproducible Dependencies
+    playground: false
+    module_lab: false
+    sources:
+    - reading: sections/section-040/module-01/course-01-package-managers-lockfiles-and-reproducible-dependencies.md
+      adapted_from: null
+- id: section-050
+  title: Use Docker to build a container image of a Backstage project
+  curriculum_item: Use Docker to build a container image of a Backstage project
+  capstone: false
+  section_quiz: false
+  modules:
+  - id: module-01
+    title: Container Artifacts, Build Inputs And Runtime Responsibilities
+    objectives:
+    - Describe the files and dependencies a Backstage container needs.
+    - Explain host-build and multi-stage packaging tradeoffs.
+    - Distinguish a built image from a correctly configured deployment.
+    outline:
+    - Container Artifacts, Build Inputs And Runtime Responsibilities
+    playground: false
+    module_lab: false
+    sources:
+    - reading: sections/section-050/module-01/course-01-container-artifacts-build-inputs-and-runtime-responsibilities.md
+      adapted_from: null

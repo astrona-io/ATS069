@@ -1,0 +1,302 @@
+schema_version: 1
+kind: question_bank
+id: ats069-domain-review
+course_id: ATS069
+exam_code: CBA
+status: draft
+provenance: Original practice material; not official examination questions.
+scope:
+  type: domain
+  id: domain-review
+  title: Backstage Development Workflow
+placement:
+  position: after
+  reading: sections/section-050/module-01/course-02-summary.md
+questions:
+- id: ats069-domain-review-q01
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain the responsibilities of the app and backend workspaces.
+  source_readings:
+  - sections/section-010/module-01/course-01-local-projects-development-servers-and-production-builds.md
+  prompt: Which workspace responsibility belongs primarily to the backend?
+  options:
+  - id: a
+    text: Keeping every integration credential in browser code.
+    explanation: Browser-delivered code cannot keep a credential secret.
+  - id: b
+    text: Replacing the browser's rendering engine.
+    explanation: The frontend still renders the interface.
+  - id: c
+    text: Serving plugin APIs and privileged integrations.
+    explanation: The backend owns server-side operations and credentials.
+  correct_option: c
+  explanation: The backend owns server-side operations and credentials.
+- id: ats069-domain-review-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish a development server from a production artifact.
+  source_readings:
+  - sections/section-010/module-01/course-01-local-projects-development-servers-and-production-builds.md
+  prompt: Why does a successful development server not prove a production artifact is ready?
+  options:
+  - id: a
+    text: Because the production database is included in TypeScript types.
+    explanation: Types do not package a database.
+  - id: b
+    text: Development and production use different build and runtime paths.
+    explanation: A development server can provide behavior absent from the packaged artifact.
+  - id: c
+    text: Because development servers cannot show a page.
+    explanation: Showing pages is a normal development capability.
+  correct_option: b
+  explanation: A development server can provide behavior absent from the packaged artifact.
+- id: ats069-domain-review-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Locate startup failures by dependency, configuration and process boundaries.
+  source_readings:
+  - sections/section-010/module-01/course-01-local-projects-development-servers-and-production-builds.md
+  prompt: The backend fails before serving requests because a configuration key is absent. What is the
+    useful next investigation?
+  options:
+  - id: a
+    text: Inspect the effective server configuration and required key.
+    explanation: The failure occurred at configuration loading.
+  - id: b
+    text: Change the catalog entity owner first.
+    explanation: Entity ownership does not supply a missing startup key.
+  - id: c
+    text: Assume the browser cache contains the backend secret.
+    explanation: The browser is a separate boundary.
+  correct_option: a
+  explanation: The failure occurred at configuration loading.
+- id: ats069-domain-review-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Trace a source change through the relevant workspace and checks.
+  source_readings:
+  - sections/section-020/module-01/course-01-changes-workspace-feedback-and-reviewable-development.md
+  prompt: A backend route is changed. Which feedback is most directly relevant?
+  options:
+  - id: a
+    text: Only a screenshot of the header logo.
+    explanation: The logo does not exercise the route.
+  - id: b
+    text: Only a catalog owner rename.
+    explanation: Ownership does not prove route behavior.
+  - id: c
+    text: A request-level check of the route and its response contract.
+    explanation: The changed behavior is a server API.
+  correct_option: c
+  explanation: The changed behavior is a server API.
+- id: ats069-domain-review-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain why fast feedback needs both type and behavior checks.
+  source_readings:
+  - sections/section-020/module-01/course-01-changes-workspace-feedback-and-reviewable-development.md
+  prompt: Why keep behavioral checks when TypeScript accepts a change?
+  options:
+  - id: a
+    text: Linting automatically exercises every external service.
+    explanation: Linting is static analysis.
+  - id: b
+    text: Types do not prove the intended runtime behavior.
+    explanation: A typed response can still contain incorrect results.
+  - id: c
+    text: TypeScript never understands interfaces.
+    explanation: Interfaces are a core TypeScript mechanism.
+  correct_option: b
+  explanation: A typed response can still contain incorrect results.
+- id: ats069-domain-review-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish local overrides from committed project configuration.
+  source_readings:
+  - sections/section-020/module-01/course-01-changes-workspace-feedback-and-reviewable-development.md
+  prompt: Which setting belongs in a developer-specific local override?
+  options:
+  - id: a
+    text: An isolated personal development endpoint.
+    explanation: It varies locally and is not a shared application contract.
+  - id: b
+    text: A required default omitted from every committed configuration.
+    explanation: Other developers still need shared required configuration.
+  - id: c
+    text: A production credential committed for convenience.
+    explanation: Version control would expose and retain it.
+  correct_option: a
+  explanation: It varies locally and is not a shared application contract.
+- id: ats069-domain-review-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish TypeScript checking from JavaScript execution.
+  source_readings:
+  - sections/section-030/module-01/course-01-type-checking-transpilation-and-workspace-build-contracts.md
+  prompt: Which claim does successful TypeScript checking support?
+  options:
+  - id: a
+    text: Every remote token has sufficient permissions.
+    explanation: Remote authorization is runtime behavior.
+  - id: b
+    text: Every catalog record describes a real healthy service.
+    explanation: Types do not establish operational truth.
+  - id: c
+    text: The checked source satisfies its declared type contracts.
+    explanation: Type checking evaluates source compatibility under the configuration.
+  correct_option: c
+  explanation: Type checking evaluates source compatibility under the configuration.
+- id: ats069-domain-review-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain workspace build dependencies and generated artifacts.
+  source_readings:
+  - sections/section-030/module-01/course-01-type-checking-transpilation-and-workspace-build-contracts.md
+  prompt: Why does build order matter between workspaces?
+  options:
+  - id: a
+    text: The browser must compile the database first.
+    explanation: The browser does not compile a database.
+  - id: b
+    text: A consumer may require output or declarations from its dependency.
+    explanation: The build graph determines prerequisite artifacts.
+  - id: c
+    text: Every package must use an identical filename.
+    explanation: Package names and exports can differ.
+  correct_option: b
+  explanation: The build graph determines prerequisite artifacts.
+- id: ats069-domain-review-q09
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Diagnose type errors separately from runtime integration failures.
+  source_readings:
+  - sections/section-030/module-01/course-01-type-checking-transpilation-and-workspace-build-contracts.md
+  prompt: A typed API client receives an unauthorized response at runtime. What failed?
+  options:
+  - id: a
+    text: The runtime authentication or authorization contract.
+    explanation: The request reached a boundary that types cannot satisfy.
+  - id: b
+    text: The TypeScript language stopped supporting objects.
+    explanation: The symptom is not a source-language change.
+  - id: c
+    text: The catalog schema must be renamed to JavaScript.
+    explanation: Renaming a schema does not grant access.
+  correct_option: a
+  explanation: The request reached a boundary that types cannot satisfy.
+- id: ats069-domain-review-q10
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain manifest and lockfile responsibilities in a workspace project.
+  source_readings:
+  - sections/section-040/module-01/course-01-package-managers-lockfiles-and-reproducible-dependencies.md
+  prompt: What does a lockfile primarily record?
+  options:
+  - id: a
+    text: All production database rows.
+    explanation: Application data is not a dependency lockfile.
+  - id: b
+    text: All backend credentials in encrypted form automatically.
+    explanation: A lockfile is not a secret-management system.
+  - id: c
+    text: The package manager's resolved dependency graph.
+    explanation: It helps repeat a chosen resolution.
+  correct_option: c
+  explanation: It helps repeat a chosen resolution.
+- id: ats069-domain-review-q11
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish compatible dependency resolution from arbitrary upgrades.
+  source_readings:
+  - sections/section-040/module-01/course-01-package-managers-lockfiles-and-reproducible-dependencies.md
+  prompt: A project selects Yarn and commits its lockfile. What is the safest general installation approach?
+  options:
+  - id: a
+    text: Upgrade every dependency to an arbitrary latest major version.
+    explanation: Compatibility must be reviewed deliberately.
+  - id: b
+    text: Use its selected package-manager version and committed resolution.
+    explanation: The repository's package and lockfile contract should remain consistent.
+  - id: c
+    text: Generate a competing NPM lockfile without deciding to migrate.
+    explanation: Competing resolutions make the project contract unclear.
+  correct_option: b
+  explanation: The repository's package and lockfile contract should remain consistent.
+- id: ats069-domain-review-q12
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Identify environment and dependency causes of installation failure.
+  source_readings:
+  - sections/section-040/module-01/course-01-package-managers-lockfiles-and-reproducible-dependencies.md
+  prompt: A native dependency installs on one operating system but fails on another. What should be investigated?
+  options:
+  - id: a
+    text: Supported runtime versions and native build prerequisites.
+    explanation: Native packages can depend on platform-specific tooling.
+  - id: b
+    text: Only the catalog entity namespace.
+    explanation: Entity identity does not supply operating-system tools.
+  - id: c
+    text: Whether the browser has a matching font.
+    explanation: Browser fonts do not compile native dependencies.
+  correct_option: a
+  explanation: Native packages can depend on platform-specific tooling.
+- id: ats069-domain-review-q13
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Describe the files and dependencies a Backstage container needs.
+  source_readings:
+  - sections/section-050/module-01/course-01-container-artifacts-build-inputs-and-runtime-responsibilities.md
+  prompt: Which input is necessary when an image packages a prebuilt backend?
+  options:
+  - id: a
+    text: A screenshot of the catalog homepage.
+    explanation: A screenshot is not executable application output.
+  - id: b
+    text: Every developer's home directory.
+    explanation: Personal files are not required application artifacts.
+  - id: c
+    text: The backend build output expected by its Dockerfile.
+    explanation: Packaging cannot copy an artifact that was never built.
+  correct_option: c
+  explanation: Packaging cannot copy an artifact that was never built.
+- id: ats069-domain-review-q14
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain host-build and multi-stage packaging tradeoffs.
+  source_readings:
+  - sections/section-050/module-01/course-01-container-artifacts-build-inputs-and-runtime-responsibilities.md
+  prompt: What can a multi-stage build achieve?
+  options:
+  - id: a
+    text: Making runtime database credentials unnecessary.
+    explanation: The application still needs authorized database access.
+  - id: b
+    text: Separating build tools from the final runtime filesystem.
+    explanation: Only selected output needs to move into the final stage.
+  - id: c
+    text: Guaranteeing every dependency has no vulnerability.
+    explanation: Build staging does not prove code safety.
+  correct_option: b
+  explanation: Only selected output needs to move into the final stage.
+- id: ats069-domain-review-q15
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish a built image from a correctly configured deployment.
+  source_readings:
+  - sections/section-050/module-01/course-01-container-artifacts-build-inputs-and-runtime-responsibilities.md
+  prompt: An image builds but the backend cannot connect to its production database. What remains to be
+    checked?
+  options:
+  - id: a
+    text: Runtime endpoint configuration, credentials and network access.
+    explanation: Those are deployment contracts beyond image construction.
+  - id: b
+    text: Whether TypeScript interfaces contain database rows.
+    explanation: Interfaces do not contain the live database.
+  - id: c
+    text: Whether adding a larger logo changes TCP connectivity.
+    explanation: A browser asset cannot repair that connection.
+  correct_option: a
+  explanation: Those are deployment contracts beyond image construction.
