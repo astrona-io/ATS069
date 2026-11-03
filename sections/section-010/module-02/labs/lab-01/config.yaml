@@ -1,0 +1,65 @@
+# Backstage CLI, Scaffolding And Project Creation (LAB). Graded on the virtual machine.
+# The workspace /opt/scaffold starts with four faults.
+metadata:
+  name: "ats-069-lab-010-02"
+  docs:
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+      sshPasswordAuth: false
+
+bootstrap:
+  init:
+    - name: "seed-scaffold"
+      description: "Install Node.js and Yarn, then create the scaffold workspace with its faults"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "workspaces-include-plugins"
+      description: "The root workspaces field lists packages/* and plugins/*"
+      type: "file"
+      source: "validation/validate-workspaces-include-plugins.sh"
+      hint: "Add plugins/* to the workspaces packages list in the root package.json."
+    - name: "engines-allow-node-22"
+      description: "The engines field allows the installed Node.js version"
+      type: "file"
+      source: "validation/validate-engines-allow-node-22.sh"
+      hint: "Run node tools/check-env.js. Add the installed major version to engines.node."
+    - name: "package-manager-is-yarn-4"
+      description: "The packageManager field names Yarn 4"
+      type: "file"
+      source: "validation/validate-package-manager-is-yarn-4.sh"
+      hint: "The project uses Yarn 4. Set packageManager to yarn@4.4.1."
+    - name: "backend-plugin-has-role"
+      description: "plugins/status-backend declares the role backend-plugin"
+      type: "file"
+      source: "validation/validate-backend-plugin-has-role.sh"
+      hint: "Add a backstage field with role set to backend-plugin to plugins/status-backend/package.json."
+    - name: "packages-kept"
+      description: "Every package and the version record still exist"
+      type: "file"
+      source: "validation/validate-packages-kept.sh"
+      hint: "Edit the fields. Do not delete packages or backstage.json."
+
+teardown:
+  keepCluster: false

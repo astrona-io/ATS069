@@ -1,0 +1,70 @@
+# Shared tsconfig And Strict Check Scripts (LAB). Graded on the virtual machine.
+# The root configuration is standalone with strict off, a parameter has no type and the scripts are incomplete.
+metadata:
+  name: "ats-069-lab-030-02"
+  docs:
+    prerequisites: "prerequisites.md"
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+
+bootstrap:
+  init:
+    - name: "seed-workspace"
+      description: "Install Node.js and TypeScript, then create the faulty workspace in /opt/portal"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "extends-shared-base"
+      description: "The root tsconfig.json extends the shared base and does not switch strict off"
+      type: "file"
+      source: "validation/validate-extends-shared-base.sh"
+      hint: "Add an extends field that points to ./tsconfig.base.json and remove the options that the base already sets."
+    - name: "strict-in-effect"
+      description: "The merged configuration has strict true and the source has no escape"
+      type: "file"
+      source: "validation/validate-strict-in-effect.sh"
+      hint: "Check the merged result with tsc --showConfig. Give the parameter a type instead of using any."
+    - name: "type-check-passes"
+      description: "tsc reports no error"
+      type: "file"
+      source: "validation/validate-type-check-passes.sh"
+      hint: "Run tsc in /opt/portal and fix the error in the deploy-backend plugin."
+    - name: "declarations-in-dist-types"
+      description: "The check writes declaration files into dist-types and nothing next to the sources"
+      type: "file"
+      source: "validation/validate-declarations-in-dist-types.sh"
+      hint: "Set outDir to dist-types and rootDir to . in the root configuration, and delete the .js files in the src folders."
+    - name: "full-check-script"
+      description: "The tsc:full script turns skipLibCheck and incremental off and passes"
+      type: "file"
+      source: "validation/validate-full-check-script.sh"
+      hint: "Add a tsc:full script to package.json that runs tsc with --skipLibCheck false and --incremental false."
+    - name: "build-output-ignored"
+      description: ".gitignore lists dist-types"
+      type: "file"
+      source: "validation/validate-build-output-ignored.sh"
+      hint: "Add a line with dist-types to /opt/portal/.gitignore."
+
+teardown:
+  keepCluster: false

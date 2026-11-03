@@ -268,3 +268,443 @@ questions:
   correct_option: a
   explanation: Correct. A build and its metadata prove packaging only. Connectivity
     and permissions need separate checks.
+- id: ats069-050-q11
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Control the build context with a .dockerignore file"
+  source_readings:
+  - sections/section-050/module-02/course-01-the-build-context-and-the-ignore-file.md
+  prompt: "What is the build context of `docker image build . -f packages/backend/Dockerfile --tag backstage`?"
+  options:
+  - id: a
+    text: "The set of files under `.` that the client sends to the daemon, after the ignore file removes some."
+    explanation: "Correct. The last path argument is the context root, and the daemon can read only files in it."
+  - id: b
+    text: "Only the Dockerfile named with `-f`."
+    explanation: "The Dockerfile is one file in the context. The `COPY` instructions read other files from it too."
+  - id: c
+    text: "All files on the host that the user can read."
+    explanation: "The daemon cannot read files outside the context path."
+  - id: d
+    text: "The layers of the base image."
+    explanation: "Layers of the base image are part of the image, not of the context."
+  correct_option: a
+  explanation: "Correct. The last path argument is the context root, and the daemon can read only files in it."
+- id: ats069-050-q12
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Control the build context with a .dockerignore file"
+  source_readings:
+  - sections/section-050/module-02/course-01-the-build-context-and-the-ignore-file.md
+  prompt: "A `.dockerignore` file in the context root contains `*.local.yaml`. Which file does it exclude?"
+  options:
+  - id: a
+    text: "Every `.local.yaml` file in every folder."
+    explanation: "That needs `**/*.local.yaml`."
+  - id: b
+    text: "`app-config.local.yaml` in the context root only."
+    explanation: "Correct. A single star does not cross a folder boundary, so `packages/backend/app-config.local.yaml` stays in the context."
+  - id: c
+    text: "Only files named exactly `*.local.yaml`."
+    explanation: "The star is a wildcard, not part of the file name."
+  - id: d
+    text: "No file, because the ignore file only affects `COPY` with wildcards."
+    explanation: "The ignore file removes files from the context before the transfer."
+  correct_option: b
+  explanation: "Correct. A single star does not cross a folder boundary, so `packages/backend/app-config.local.yaml` stays in the context."
+- id: ats069-050-q13
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Control the build context with a .dockerignore file"
+  source_readings:
+  - sections/section-050/module-02/course-01-the-build-context-and-the-ignore-file.md
+  prompt: "A `COPY` of `packages/backend/dist/bundle.tar.gz` fails with a message that the file was not found, although `ls` shows it. What is the first thing to read?"
+  options:
+  - id: a
+    text: "The Node.js version in the base image."
+    explanation: "The Node.js version does not affect whether a file is found in the context."
+  - id: b
+    text: "The `CMD` instruction."
+    explanation: "`CMD` runs at container start, after the build."
+  - id: c
+    text: "The `.dockerignore` file, for a pattern that removes `packages/*/dist`."
+    explanation: "Correct. A file on disk is not in the context if a pattern excludes it."
+  - id: d
+    text: "The Docker daemon log for network errors."
+    explanation: "The daemon reads the context from the client, so this is not a network problem."
+  correct_option: c
+  explanation: "Correct. A file on disk is not in the context if a pattern excludes it."
+- id: ats069-050-q14
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Control the build context with a .dockerignore file"
+  source_readings:
+  - sections/section-050/module-02/course-01-the-build-context-and-the-ignore-file.md
+  prompt: "A repository has a host-build Dockerfile and a multi-stage Dockerfile that need different ignore patterns. What does BuildKit offer?"
+  options:
+  - id: a
+    text: "A `--ignore` option that takes a pattern list."
+    explanation: "`docker image build` has no such option."
+  - id: b
+    text: "A `COPY --exclude` that is always required."
+    explanation: "Exclusion in `COPY` does not change the context transfer."
+  - id: c
+    text: "Nothing. All Dockerfiles in a repository must share one ignore file."
+    explanation: "BuildKit supports a per-Dockerfile ignore file."
+  - id: d
+    text: "A file named like the Dockerfile with the suffix `.dockerignore`, which replaces the root ignore file for that build."
+    explanation: "Correct. For `-f packages/backend/Dockerfile` BuildKit looks for `packages/backend/Dockerfile.dockerignore`."
+  correct_option: d
+  explanation: "Correct. For `-f packages/backend/Dockerfile` BuildKit looks for `packages/backend/Dockerfile.dockerignore`."
+- id: ats069-050-q15
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Explain what skeleton.tar.gz and bundle.tar.gz contain"
+  source_readings:
+  - sections/section-050/module-02/course-02-the-skeleton-and-bundle-archives.md
+  prompt: "What does `skeleton.tar.gz` contain?"
+  options:
+  - id: a
+    text: "The `package.json` files of the backend and the workspace packages it depends on, without code."
+    explanation: "Correct. Yarn can resolve and install dependencies from it."
+  - id: b
+    text: "The compiled backend code."
+    explanation: "That is the content of `bundle.tar.gz`."
+  - id: c
+    text: "The `node_modules` folder."
+    explanation: "Dependencies are installed in the image by a Dockerfile step."
+  - id: d
+    text: "The configuration files."
+    explanation: "Configuration files are copied by name into the image."
+  correct_option: a
+  explanation: "Correct. Yarn can resolve and install dependencies from it."
+- id: ats069-050-q16
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Explain what skeleton.tar.gz and bundle.tar.gz contain"
+  source_readings:
+  - sections/section-050/module-02/course-02-the-skeleton-and-bundle-archives.md
+  prompt: "Why does the Backstage Dockerfile unpack the skeleton and install dependencies before it copies the bundle?"
+  options:
+  - id: a
+    text: "Yarn cannot read the bundle."
+    explanation: "Yarn reads manifests, which the bundle also contains. The reason is caching."
+  - id: b
+    text: "The skeleton changes only when dependencies change, so the slow install step stays cached when only code changes."
+    explanation: "Correct. The layer cache reuses the install step as long as the files before it are unchanged."
+  - id: c
+    text: "Docker requires archives to be unpacked in alphabetical order."
+    explanation: "Docker has no such rule."
+  - id: d
+    text: "The skeleton holds the secrets that the install needs."
+    explanation: "The skeleton holds package manifests, not secrets."
+  correct_option: b
+  explanation: "Correct. The layer cache reuses the install step as long as the files before it are unchanged."
+- id: ats069-050-q17
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Predict which build steps Docker reuses from its cache"
+  source_readings:
+  - sections/section-050/module-02/course-03-layers-and-the-build-cache.md
+  prompt: "A Dockerfile copies the skeleton, installs dependencies, copies the bundle and unpacks it. Only a source file changes and the bundle is rebuilt. Which steps run again?"
+  options:
+  - id: a
+    text: "Every step, including the base image pull."
+    explanation: "Earlier steps with unchanged input are reused."
+  - id: b
+    text: "Only the unpack step."
+    explanation: "The copy step runs first because its input changed, and the unpack depends on it."
+  - id: c
+    text: "The bundle copy and the steps after it."
+    explanation: "Correct. A changed input invalidates its own step and every later step. The earlier steps stay cached."
+  - id: d
+    text: "None, because Docker compares only instruction text."
+    explanation: "For `COPY`, Docker also compares the file content."
+  correct_option: c
+  explanation: "Correct. A changed input invalidates its own step and every later step. The earlier steps stay cached."
+- id: ats069-050-q18
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Predict which build steps Docker reuses from its cache"
+  source_readings:
+  - sections/section-050/module-02/course-03-layers-and-the-build-cache.md
+  prompt: "Why does `COPY . .` before the dependency install slow down builds?"
+  options:
+  - id: a
+    text: "Docker refuses to cache `COPY` instructions."
+    explanation: "Docker caches `COPY` by file content."
+  - id: b
+    text: "The command copies files twice."
+    explanation: "The number of copies is not the problem. The cache key is."
+  - id: c
+    text: "It changes the base image."
+    explanation: "The base image is chosen by `FROM`."
+  - id: d
+    text: "Any changed file in the context changes the copied content, so the install step and all later steps run again."
+    explanation: "Correct. Copying named files keeps the cache stable."
+  correct_option: d
+  explanation: "Correct. Copying named files keeps the cache stable."
+- id: ats069-050-q19
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Use BuildKit cache mounts and secret mounts for dependency downloads and credentials"
+  source_readings:
+  - sections/section-050/module-02/course-04-buildkit-cache-mounts-and-secret-mounts.md
+  prompt: "A build needs a registry token for one `RUN` step. Which method keeps the token out of the image layers and the history?"
+  options:
+  - id: a
+    text: "`RUN --mount=type=secret,id=...` with `--secret` on the build command."
+    explanation: "Correct. The secret is readable only during that instruction and is not stored."
+  - id: b
+    text: "`ARG TOKEN` and `--build-arg`."
+    explanation: "Build arguments are recorded in the image history."
+  - id: c
+    text: "`ENV TOKEN=...` in the Dockerfile."
+    explanation: "`ENV` stores the value in the image metadata."
+  - id: d
+    text: "`COPY` of a token file, then `RUN rm` in a later instruction."
+    explanation: "The file stays in the earlier layer."
+  correct_option: a
+  explanation: "Correct. The secret is readable only during that instruction and is not stored."
+- id: ats069-050-q20
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Use BuildKit cache mounts and secret mounts for dependency downloads and credentials"
+  source_readings:
+  - sections/section-050/module-02/course-04-buildkit-cache-mounts-and-secret-mounts.md
+  prompt: "What is true of a `RUN --mount=type=cache` directory?"
+  options:
+  - id: a
+    text: "It becomes part of the image and adds to its size."
+    explanation: "The cache content is not stored in a layer."
+  - id: b
+    text: "Docker keeps it outside the image layers between builds, and the step must still work when it is empty."
+    explanation: "Correct. A cache mount speeds up downloads but does not change the result."
+  - id: c
+    text: "It is shared with the final container at run time."
+    explanation: "It exists only while the instruction runs."
+  - id: d
+    text: "It guarantees the install step is skipped."
+    explanation: "The step still runs. Only the downloads can be reused."
+  correct_option: b
+  explanation: "Correct. A cache mount speeds up downloads but does not change the result."
+- id: ats069-050-q21
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Start, inspect and stop a container, and publish its port"
+  source_readings:
+  - sections/section-050/module-03/course-01-running-and-inspecting-a-container.md
+  prompt: "What does `-p 8080:7007` do?"
+  options:
+  - id: a
+    text: "It publishes container port 7007 on host port 8080."
+    explanation: "Correct. The host port is on the left and the container port is on the right."
+  - id: b
+    text: "It publishes host port 7007 on container port 8080."
+    explanation: "The sides are the other way around."
+  - id: c
+    text: "It makes the backend listen on port 8080."
+    explanation: "The process chooses its own port. The option only maps it."
+  - id: d
+    text: "It limits the container to 8080 connections."
+    explanation: "The option does not limit connections."
+  correct_option: a
+  explanation: "Correct. The host port is on the left and the container port is on the right."
+- id: ats069-050-q22
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Start, inspect and stop a container, and publish its port"
+  source_readings:
+  - sections/section-050/module-03/course-01-running-and-inspecting-a-container.md
+  prompt: "A container publishes `-p 7007:7007`, but `curl` to the host port is refused. The log shows that the backend listens on `127.0.0.1:7007`. What is the cause?"
+  options:
+  - id: a
+    text: "Port 7007 is reserved by Docker."
+    explanation: "Docker does not reserve that port."
+  - id: b
+    text: "The process binds the loopback address inside the container, so published traffic cannot reach it."
+    explanation: "Correct. The backend must bind `0.0.0.0`, which the production configuration sets."
+  - id: c
+    text: "The image has no layers."
+    explanation: "Every image has layers. This is not the cause."
+  - id: d
+    text: "The container needs `--privileged`."
+    explanation: "Privileges do not change the bind address."
+  correct_option: b
+  explanation: "Correct. The backend must bind `0.0.0.0`, which the production configuration sets."
+- id: ats069-050-q23
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Start, inspect and stop a container, and publish its port"
+  source_readings:
+  - sections/section-050/module-03/course-01-running-and-inspecting-a-container.md
+  prompt: "Which command shows why a container exited a moment after it started?"
+  options:
+  - id: a
+    text: "`docker image ls`"
+    explanation: "That lists images, not container output."
+  - id: b
+    text: "`docker build --no-cache`"
+    explanation: "That builds an image."
+  - id: c
+    text: "`docker logs <name>` together with `docker container ls -a`."
+    explanation: "Correct. The log shows the last output, and the list shows the exit status of stopped containers."
+  - id: d
+    text: "`docker network ls`"
+    explanation: "That lists networks."
+  correct_option: c
+  explanation: "Correct. The log shows the last output, and the list shows the exit status of stopped containers."
+- id: ats069-050-q24
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Supply configuration files and environment variables at run time, including APP_CONFIG_ variables"
+  source_readings:
+  - sections/section-050/module-03/course-02-configuration-at-run-time.md
+  prompt: "A run command ends with `backstage node packages/backend --config /config/extra.yaml`. What happens to the two `--config` files of the image?"
+  options:
+  - id: a
+    text: "They load first, then the extra file."
+    explanation: "Only the options in the new command apply."
+  - id: b
+    text: "Docker merges the new options into the old `CMD`."
+    explanation: "Docker replaces the `CMD`."
+  - id: c
+    text: "They load only if the mount has `:ro`."
+    explanation: "The mount mode does not affect the `CMD`."
+  - id: d
+    text: "They are not loaded, because the command replaces the whole `CMD`."
+    explanation: "Correct. The command must repeat every file it still needs."
+  correct_option: d
+  explanation: "Correct. The command must repeat every file it still needs."
+- id: ats069-050-q25
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Supply configuration files and environment variables at run time, including APP_CONFIG_ variables"
+  source_readings:
+  - sections/section-050/module-03/course-02-configuration-at-run-time.md
+  prompt: "Which setting does `APP_CONFIG_backend_listen_port=7008` make?"
+  options:
+  - id: a
+    text: "`backend.listen.port` becomes the number 7008, and it overrides the configuration files."
+    explanation: "Correct. The name after the prefix is the path, with underscores between levels, and the value is parsed as JSON."
+  - id: b
+    text: "It sets an environment variable that the files cannot read."
+    explanation: "Backstage reads variables with this prefix as configuration."
+  - id: c
+    text: "It sets `app.listen.port`."
+    explanation: "The path in the name is `backend.listen.port`."
+  - id: d
+    text: "It is applied first and any file overrides it."
+    explanation: "These variables apply after the files."
+  correct_option: a
+  explanation: "Correct. The name after the prefix is the path, with underscores between levels, and the value is parsed as JSON."
+- id: ats069-050-q26
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Supply configuration files and environment variables at run time, including APP_CONFIG_ variables"
+  source_readings:
+  - sections/section-050/module-03/course-02-configuration-at-run-time.md
+  prompt: "A database password must be in the configuration without being committed. Which is the correct pattern?"
+  options:
+  - id: a
+    text: "The password written in `app-config.production.yaml` in the image."
+    explanation: "Everyone who can pull the image can read it."
+  - id: b
+    text: "A value `${POSTGRES_PASSWORD}` in the file, with the variable passed to the container at run time."
+    explanation: "Correct. The file holds no secret, and the value is read when the configuration loads."
+  - id: c
+    text: "An `ARG` in the Dockerfile."
+    explanation: "`ARG` values are recorded in the image history."
+  - id: d
+    text: "A `frontend` visibility on the key."
+    explanation: "That sends the value to every browser."
+  correct_option: b
+  explanation: "Correct. The file holds no secret, and the value is read when the configuration loads."
+- id: ats069-050-q27
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Run the container as a non-root user with a read-only filesystem and fewer privileges"
+  source_readings:
+  - sections/section-050/module-03/course-03-identity-privileges-and-secrets.md
+  prompt: "Which options belong to the run settings rather than to the image?"
+  options:
+  - id: a
+    text: "`FROM` and `COPY`."
+    explanation: "These are Dockerfile instructions."
+  - id: b
+    text: "`WORKDIR` and `EXPOSE`."
+    explanation: "These are Dockerfile instructions."
+  - id: c
+    text: "`--read-only`, `--cap-drop ALL` and `--security-opt no-new-privileges`."
+    explanation: "Correct. A hardened image can still be started without them."
+  - id: d
+    text: "`HEALTHCHECK` only."
+    explanation: "`HEALTHCHECK` is a Dockerfile instruction, and the check can also be set on the run command."
+  correct_option: c
+  explanation: "Correct. A hardened image can still be started without them."
+- id: ats069-050-q28
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Run the container as a non-root user with a read-only filesystem and fewer privileges"
+  source_readings:
+  - sections/section-050/module-03/course-03-identity-privileges-and-secrets.md
+  prompt: "A container runs with `--read-only` and the process fails when it writes a temporary file. What is the usual fix?"
+  options:
+  - id: a
+    text: "Remove `USER node` from the Dockerfile."
+    explanation: "Running as root does not address the read-only setting."
+  - id: b
+    text: "Add `--cap-add ALL`."
+    explanation: "Capabilities do not make a read-only filesystem writable."
+  - id: c
+    text: "Publish another port."
+    explanation: "Ports are not related to file writes."
+  - id: d
+    text: "Add `--tmpfs /tmp` so the process has a writable temporary directory."
+    explanation: "Correct. The root filesystem stays read-only."
+  correct_option: d
+  explanation: "Correct. The root filesystem stays read-only."
+- id: ats069-050-q29
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Run the container as a non-root user with a read-only filesystem and fewer privileges"
+  source_readings:
+  - sections/section-050/module-03/course-03-identity-privileges-and-secrets.md
+  prompt: "A token was passed with `-e TOKEN=...` and kept out of the image. Where can it still be read?"
+  options:
+  - id: a
+    text: "In the output of `docker inspect` for the container, by anyone who can run Docker commands on the host."
+    explanation: "Correct. The environment of a container is part of its stored settings."
+  - id: b
+    text: "In `docker image history`."
+    explanation: "Run-time variables are not part of the image history."
+  - id: c
+    text: "Nowhere, because it is not in the image."
+    explanation: "The container metadata contains it."
+  - id: d
+    text: "Only in the registry."
+    explanation: "The registry never receives run-time variables."
+  correct_option: a
+  explanation: "Correct. The environment of a container is part of its stored settings."
+- id: ats069-050-q30
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Connect the backend to PostgreSQL through environment variables and check container health"
+  source_readings:
+  - sections/section-050/module-03/course-04-database-health-checks-and-the-frontend-image.md
+  prompt: "Why does a health check for the slim Node.js image use `node -e` instead of `curl`?"
+  options:
+  - id: a
+    text: "Docker accepts only JavaScript in health checks."
+    explanation: "A health check can run any command that exists in the image."
+  - id: b
+    text: "The slim image does not contain `curl`, so a check that runs it fails even when the backend works."
+    explanation: "Correct. Test the check command with `docker exec` first."
+  - id: c
+    text: "`curl` cannot reach `127.0.0.1`."
+    explanation: "`curl` can, if it is installed."
+  - id: d
+    text: "`node -e` makes the container healthy automatically."
+    explanation: "The command must still request the endpoint and exit with the right code."
+  correct_option: b
+  explanation: "Correct. Test the check command with `docker exec` first."

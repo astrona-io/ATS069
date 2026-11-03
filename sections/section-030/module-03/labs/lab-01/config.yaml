@@ -1,0 +1,70 @@
+# Package Roles And Build Scripts (LAB). Graded on the virtual machine.
+# A package has no role, the root build script is incomplete, a package would publish no build output and a type error is hidden by the transpile-only build.
+metadata:
+  name: "ats-069-lab-030-03"
+  docs:
+    prerequisites: "prerequisites.md"
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+
+bootstrap:
+  init:
+    - name: "seed-workspace"
+      description: "Install Node.js and TypeScript, then create the faulty workspace in /opt/portal"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "every-package-has-role"
+      description: "Each package declares the expected backstage.role"
+      type: "file"
+      source: "validation/validate-every-package-has-role.sh"
+      hint: "Run node scripts/list-roles.mjs. A backend plugin has the role backend-plugin."
+    - name: "build-all-builds-every-package"
+      description: "npm run build:all writes dist/index.js in all four packages"
+      type: "file"
+      source: "validation/validate-build-all-builds-every-package.sh"
+      hint: "Make build:all run the build script of every workspace with npm run build --workspaces --if-present."
+    - name: "published-files-include-dist"
+      description: "Every package lists dist in its files field"
+      type: "file"
+      source: "validation/validate-published-files-include-dist.sh"
+      hint: "Replace src with dist in the files field of deploy-common. Check with npm pack --dry-run."
+    - name: "type-check-passes"
+      description: "The root type check reports no error"
+      type: "file"
+      source: "validation/validate-type-check-passes.sh"
+      hint: "The build does not check types. Run npm run tsc and read the error in deploy-backend."
+    - name: "built-backend-plugin-behaves"
+      description: "The built deploy-backend plugin returns the name and its length"
+      type: "file"
+      source: "validation/validate-built-backend-plugin-behaves.sh"
+      hint: "describeBackend('abc') must return abc (3). Use the length property of the string."
+    - name: "no-escapes-and-build-kept"
+      description: "No type escape in the source and the build script still transpiles with --noCheck"
+      type: "file"
+      source: "validation/validate-no-escapes-and-build-kept.sh"
+      hint: "Fix the code. Do not use any, as or a ts comment directive, and do not change the build script."
+
+teardown:
+  keepCluster: false

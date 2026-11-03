@@ -5,32 +5,32 @@ status: draft
 banks:
 - id: ats069-010
   path: sections/section-010/quiz.yaml
-  question_count: 9
+  question_count: 29
   covered_sections:
   - section-010
 - id: ats069-020
   path: sections/section-020/quiz.yaml
-  question_count: 8
+  question_count: 28
   covered_sections:
   - section-020
 - id: ats069-030
   path: sections/section-030/quiz.yaml
-  question_count: 8
+  question_count: 28
   covered_sections:
   - section-030
 - id: ats069-040
   path: sections/section-040/quiz.yaml
-  question_count: 10
+  question_count: 30
   covered_sections:
   - section-040
 - id: ats069-050
   path: sections/section-050/quiz.yaml
-  question_count: 10
+  question_count: 30
   covered_sections:
   - section-050
 - id: ats069-final
   path: sections/final-domain-quiz.yaml
-  question_count: 15
+  question_count: 45
   covered_sections:
   - section-010
   - section-020

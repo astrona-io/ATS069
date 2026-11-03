@@ -227,3 +227,443 @@ questions:
   correct_option: b
   explanation: Building and type checking are separate pieces of evidence, and the
     type check owns this finding.
+- id: ats069-030-q09
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Explain what a shared base tsconfig sets"
+  source_readings:
+  - sections/section-030/module-02/course-01-what-the-shared-base-configuration-sets.md
+  prompt: "A root `tsconfig.json` has `\"extends\": \"./tsconfig.base.json\"` and does not mention `strict`. The base sets `strict` to `true`. What is the value of `strict` for the root project?"
+  options:
+  - id: a
+    text: "`false`, because an option that is not set defaults to off."
+    explanation: "A default applies only when no file in the chain sets the option. The base sets it."
+  - id: b
+    text: "`true`, because options the extending file does not set keep the value from the base."
+    explanation: "Correct. Options that the extending file does not mention are inherited from the base."
+  - id: c
+    text: "The compiler stops with an error, because every option must appear in the root file."
+    explanation: "The root file does not need to repeat inherited options."
+  - id: d
+    text: "It depends on the operating system."
+    explanation: "Inheritance through `extends` does not depend on the operating system."
+  correct_option: b
+  explanation: "Options that the extending file does not mention are inherited from the base."
+- id: ats069-030-q10
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Read the merged configuration"
+  source_readings:
+  - sections/section-030/module-02/course-01-what-the-shared-base-configuration-sets.md
+  prompt: "Which command prints the compiler options that really apply to a project after `extends` is resolved?"
+  options:
+  - id: a
+    text: "`tsc --showConfig`"
+    explanation: "Correct. It prints the configuration after the whole `extends` chain is merged."
+  - id: b
+    text: "`tsc --listFilesOnly`"
+    explanation: "It lists the files of the project and does not print the options."
+  - id: c
+    text: "`tsc --noEmit`"
+    explanation: "It stops the compiler from writing output and prints no configuration."
+  - id: d
+    text: "`npm ls typescript`"
+    explanation: "It lists the installed package version and does not show the options."
+  correct_option: a
+  explanation: "It prints the configuration after the whole `extends` chain is merged."
+- id: ats069-030-q11
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Explain precedence between a base and an extending file"
+  source_readings:
+  - sections/section-030/module-02/course-01-what-the-shared-base-configuration-sets.md
+  prompt: "The base file has `\"include\": [\"packages/*/src\"]`. A file that extends it sets `\"include\": [\"plugins/*/src\"]`. Which files does the extending project include?"
+  options:
+  - id: a
+    text: "The files under both patterns, because the lists are merged."
+    explanation: "`include`, `exclude` and `files` are replaced, not merged."
+  - id: b
+    text: "Only the files under `packages/*/src`, because the base always wins."
+    explanation: "The extending file wins for the fields it sets."
+  - id: c
+    text: "No files, because two `include` fields conflict."
+    explanation: "Two files setting `include` do not conflict; the nearest one is used."
+  - id: d
+    text: "Only the files under `plugins/*/src`, because the list is replaced and not merged."
+    explanation: "Correct. The `include` field of the extending file replaces the one from the base as a whole."
+  correct_option: d
+  explanation: "The `include` field of the extending file replaces the one from the base as a whole."
+- id: ats069-030-q12
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Explain what strict switches on"
+  source_readings:
+  - sections/section-030/module-02/course-02-strict-mode-and-what-it-switches-on.md
+  prompt: "What does the option `strict` change about the compiler output?"
+  options:
+  - id: a
+    text: "It removes all types from the output."
+    explanation: "Types are removed from JavaScript output whether or not `strict` is on."
+  - id: b
+    text: "It makes the compiler write minified files."
+    explanation: "Minification is not part of `strict`."
+  - id: c
+    text: "Nothing. It only changes which problems the compiler reports."
+    explanation: "Correct. `strict` turns on more checks. The written JavaScript or declarations do not depend on it."
+  - id: d
+    text: "It makes the compiler run tests."
+    explanation: "The compiler does not run tests."
+  correct_option: c
+  explanation: "`strict` turns on more checks. The written JavaScript or declarations do not depend on it."
+- id: ats069-030-q13
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Name checks inside strict"
+  source_readings:
+  - sections/section-030/module-02/course-02-strict-mode-and-what-it-switches-on.md
+  prompt: "A function `function double(value) { return value * 2; }` passes without `strict` and fails with it. Which check reports the error?"
+  options:
+  - id: a
+    text: "`strictPropertyInitialization`, which checks class properties."
+    explanation: "The function has no class property."
+  - id: b
+    text: "`noImplicitAny`, because the parameter would get the type `any` by guessing."
+    explanation: "Correct. Under `strict`, `noImplicitAny` rejects a value whose type is implicitly `any`."
+  - id: c
+    text: "`alwaysStrict`, which adds `\"use strict\"`."
+    explanation: "It changes the emitted directive, not the type of a parameter."
+  - id: d
+    text: "`useUnknownInCatchVariables`, which types catch variables."
+    explanation: "The function has no `catch` clause."
+  correct_option: b
+  explanation: "Under `strict`, `noImplicitAny` rejects a value whose type is implicitly `any`."
+- id: ats069-030-q14
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Handle an optional value under strictNullChecks"
+  source_readings:
+  - sections/section-030/module-02/course-02-strict-mode-and-what-it-switches-on.md
+  prompt: "`record.owner` has the type `string | undefined`. Under `strict`, `record.owner.toUpperCase()` is an error. Which change solves it without weakening the check?"
+  options:
+  - id: a
+    text: "Test for `undefined` before calling the method, for example with a conditional expression."
+    explanation: "Correct. Handling the missing value in code removes the crash path that the compiler found."
+  - id: b
+    text: "Set `strict` to `false` in the package configuration."
+    explanation: "This hides the report and keeps the crash path."
+  - id: c
+    text: "Add `// @ts-ignore` above the line."
+    explanation: "The comment makes the compiler skip the line and the crash path remains."
+  - id: d
+    text: "Write `record.owner as any`."
+    explanation: "`any` turns off checking for that value and still crashes on `undefined`."
+  correct_option: a
+  explanation: "Handling the missing value in code removes the crash path that the compiler found."
+- id: ats069-030-q15
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Explain skipLibCheck"
+  source_readings:
+  - sections/section-030/module-02/course-03-skiplibcheck-and-declaration-files.md
+  prompt: "A repository has `skipLibCheck: true`. A `.d.ts` file written by the team contains a reference to a type that does not exist. What does `tsc` report?"
+  options:
+  - id: a
+    text: "Error `TS2304`, because the team owns the file."
+    explanation: "`skipLibCheck` does not make an exception for files the team owns."
+  - id: b
+    text: "A warning that does not change the exit code."
+    explanation: "The compiler has no warning level for this case."
+  - id: c
+    text: "An error only for imports of that file."
+    explanation: "The file is skipped for checking regardless of who imports it."
+  - id: d
+    text: "Nothing for that file, because `skipLibCheck` skips all declaration files, including the team's own."
+    explanation: "Correct. The option applies to every `.d.ts` file in the project."
+  correct_option: d
+  explanation: "The option applies to every `.d.ts` file in the project."
+- id: ats069-030-q16
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Read the full check script"
+  source_readings:
+  - sections/section-030/module-02/course-03-skiplibcheck-and-declaration-files.md
+  prompt: "The script `tsc:full` runs `tsc --skipLibCheck false --incremental false`. Why does a repository keep it next to the everyday `tsc` script?"
+  options:
+  - id: a
+    text: "It writes the JavaScript files for the build."
+    explanation: "The script only runs the type check."
+  - id: b
+    text: "It installs dependencies before the check."
+    explanation: "Installing is the job of the package manager."
+  - id: c
+    text: "It checks declaration files too and starts from nothing, so it reports errors that the everyday check hides."
+    explanation: "Correct. Both flags remove shortcuts of the everyday check."
+  - id: d
+    text: "It runs faster than the everyday check."
+    explanation: "Removing the shortcuts makes it slower."
+  correct_option: c
+  explanation: "Both flags remove shortcuts of the everyday check."
+- id: ats069-030-q17
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Explain where declarations go"
+  source_readings:
+  - sections/section-030/module-02/course-04-check-scripts-dist-types-and-incremental-checks.md
+  prompt: "The base sets `declaration` and `emitDeclarationOnly`, and the root file sets `outDir` to `dist-types`. What does `yarn tsc` write?"
+  options:
+  - id: a
+    text: "JavaScript files next to each source file."
+    explanation: "`outDir` moves the output and `emitDeclarationOnly` removes the JavaScript."
+  - id: b
+    text: "Declaration files in `dist-types` and no JavaScript."
+    explanation: "Correct. `emitDeclarationOnly` limits the output to `.d.ts` files, and `outDir` sends them to `dist-types`."
+  - id: c
+    text: "Nothing, because the check never writes files."
+    explanation: "With these options the check writes declaration files."
+  - id: d
+    text: "A bundle for the browser."
+    explanation: "`tsc` does not bundle."
+  correct_option: b
+  explanation: "`emitDeclarationOnly` limits the output to `.d.ts` files, and `outDir` sends them to `dist-types`."
+- id: ats069-030-q18
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Explain incremental mode and the build order"
+  source_readings:
+  - sections/section-030/module-02/course-04-check-scripts-dist-types-and-incremental-checks.md
+  prompt: "A pipeline runs `yarn build:all` before `yarn tsc` and the library build fails on a clean machine, but passes on a developer machine. What is the most likely cause?"
+  options:
+  - id: a
+    text: "The library build reads declarations from `dist-types`, which exist on the developer machine from earlier runs and not on the clean machine."
+    explanation: "Correct. The type check writes the declarations that the library build needs, so it must run first."
+  - id: b
+    text: "`strict` is on only on the clean machine."
+    explanation: "`strict` comes from the shared configuration and is the same on both machines."
+  - id: c
+    text: "`skipLibCheck` is off on the developer machine."
+    explanation: "The option does not decide whether `dist-types` exists."
+  - id: d
+    text: "The clean machine has no network connection to the compiler."
+    explanation: "The compiler is installed locally and does not use the network to check."
+  correct_option: a
+  explanation: "The type check writes the declarations that the library build needs, so it must run first."
+- id: ats069-030-q19
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Explain package roles"
+  source_readings:
+  - sections/section-030/module-03/course-01-package-roles-in-package-json.md
+  prompt: "Which field of `package.json` tells `backstage-cli` what kind of package it is building?"
+  options:
+  - id: a
+    text: "`main`"
+    explanation: "`main` names the entry file of the package."
+  - id: b
+    text: "`files`"
+    explanation: "`files` lists what a published package contains."
+  - id: c
+    text: "`private`"
+    explanation: "`private` blocks publishing and says nothing about the kind of package."
+  - id: d
+    text: "`backstage.role`"
+    explanation: "Correct. The role names the kind of package, for example `frontend` or `backend-plugin`."
+  correct_option: d
+  explanation: "The role names the kind of package, for example `frontend` or `backend-plugin`."
+- id: ats069-030-q20
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Choose the right role"
+  source_readings:
+  - sections/section-030/module-03/course-01-package-roles-in-package-json.md
+  prompt: "A package holds shared types and helper functions that both the browser app and the backend import, and it uses no Node.js-only API. Which role fits?"
+  options:
+  - id: a
+    text: "`node-library`"
+    explanation: "It is meant for code that runs on Node.js only."
+  - id: b
+    text: "`web-library`"
+    explanation: "It is meant for code that runs in the browser only."
+  - id: c
+    text: "`common-library`"
+    explanation: "Correct. A library that can run in both places is a `common-library`."
+  - id: d
+    text: "`backend`"
+    explanation: "It is the backend application, not a library."
+  correct_option: c
+  explanation: "A library that can run in both places is a `common-library`."
+- id: ats069-030-q21
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Explain the effect of a missing role"
+  source_readings:
+  - sections/section-030/module-03/course-01-package-roles-in-package-json.md
+  prompt: "A package has no `backstage.role`. What is the consequence?"
+  options:
+  - id: a
+    text: "Nothing, because the role is only documentation."
+    explanation: "The tooling reads the role."
+  - id: b
+    text: "The tooling cannot tell which build and rules to use, so the package is not built correctly."
+    explanation: "Correct. The role is how the tooling chooses the build, the start command and the rules."
+  - id: c
+    text: "The package becomes a `frontend` by default."
+    explanation: "There is no such guaranteed default."
+  - id: d
+    text: "The package is built twice."
+    explanation: "A missing role does not cause a double build."
+  correct_option: b
+  explanation: "The role is how the tooling chooses the build, the start command and the rules."
+- id: ats069-030-q22
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Separate transpiling from type checking"
+  source_readings:
+  - sections/section-030/module-03/course-02-transpiling-without-type-checking.md
+  prompt: "The package build finishes with exit code 0, and the root `tsc` script reports `Type 'unknown' is not assignable to type 'number'` in the same package. How do you read this?"
+  options:
+  - id: a
+    text: "Both results are valid: the build converted the files and the type check found a type error that needs a source fix."
+    explanation: "Correct. The build transpiles without checking types, so only the type check reports the error."
+  - id: b
+    text: "The type check is wrong, because the build passed."
+    explanation: "The build does not check types, so its result says nothing about them."
+  - id: c
+    text: "The build must be run again with `--clean`."
+    explanation: "Cleaning output does not change a type error."
+  - id: d
+    text: "The error appears only on the first run."
+    explanation: "The error is in the source and appears on every run."
+  correct_option: a
+  explanation: "The build transpiles without checking types, so only the type check reports the error."
+- id: ats069-030-q23
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Explain why the build is fast"
+  source_readings:
+  - sections/section-030/module-03/course-02-transpiling-without-type-checking.md
+  prompt: "Why can a transpiler that works on one file at a time be faster than a type check?"
+  options:
+  - id: a
+    text: "It skips reading the file."
+    explanation: "A transpiler reads the file it converts."
+  - id: b
+    text: "It uses the network to check types."
+    explanation: "Type checking is local and does not use the network."
+  - id: c
+    text: "It writes fewer lines than the source."
+    explanation: "The speed comes from doing less analysis, not from output size."
+  - id: d
+    text: "It does not need the types of the imported files, only the syntax of the file it converts."
+    explanation: "Correct. A type check needs the whole program, because types depend on declarations in many files."
+  correct_option: d
+  explanation: "A type check needs the whole program, because types depend on declarations in many files."
+- id: ats069-030-q24
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Order the steps of a pipeline"
+  source_readings:
+  - sections/section-030/module-03/course-02-transpiling-without-type-checking.md
+  prompt: "Which statement about running the type check, the tests and the build in a pipeline is correct?"
+  options:
+  - id: a
+    text: "Only the build is needed, because it also checks types."
+    explanation: "The build does not check types."
+  - id: b
+    text: "Only the type check is needed, because it produces the deployable files."
+    explanation: "The type check writes declarations, not the files that are deployed."
+  - id: c
+    text: "They are separate steps; the type check comes before the library build because the build reads its declarations."
+    explanation: "Correct. Each step gives different evidence, and the library build depends on `dist-types`."
+  - id: d
+    text: "The order does not matter for any step."
+    explanation: "The library build reads declarations that the type check writes."
+  correct_option: c
+  explanation: "Each step gives different evidence, and the library build depends on `dist-types`."
+- id: ats069-030-q25
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Explain the files field"
+  source_readings:
+  - sections/section-030/module-03/course-03-build-output-libraries-the-app-and-the-backend.md
+  prompt: "A library lists `\"files\": [\"src\"]` and has `\"main\": \"dist/index.js\"`. What happens when it is published?"
+  options:
+  - id: a
+    text: "npm adds `dist` automatically."
+    explanation: "npm publishes only what `files` and the defaults include."
+  - id: b
+    text: "The published package has no `dist` folder, so importing it fails because `main` points at a missing file."
+    explanation: "Correct. `files` decides what a published package contains."
+  - id: c
+    text: "The package is published with `src` compiled into `main`."
+    explanation: "Publishing does not run a build."
+  - id: d
+    text: "npm rejects the package because `main` and `files` differ."
+    explanation: "npm does not compare the two fields."
+  correct_option: b
+  explanation: "`files` decides what a published package contains."
+- id: ats069-030-q26
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Describe backend build output"
+  source_readings:
+  - sections/section-030/module-03/course-03-build-output-libraries-the-app-and-the-backend.md
+  prompt: "What does the backend build write besides the bundled backend, and what is it used for?"
+  options:
+  - id: a
+    text: "`skeleton.tar.gz` and `bundle.tar.gz`; a container build unpacks the skeleton to install dependencies and then the bundle, which keeps the dependency layer cacheable."
+    explanation: "Correct. The split lets a container build reuse the dependency layer when only the code changes."
+  - id: b
+    text: "A `.env` file with the production secrets."
+    explanation: "The build does not write secrets."
+  - id: c
+    text: "A copy of the frontend app."
+    explanation: "The frontend has its own build output."
+  - id: d
+    text: "A lockfile for the registry."
+    explanation: "The lockfile is not produced by the build."
+  correct_option: a
+  explanation: "The split lets a container build reuse the dependency layer when only the code changes."
+- id: ats069-030-q27
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Explain public frontend output"
+  source_readings:
+  - sections/section-030/module-03/course-03-build-output-libraries-the-app-and-the-backend.md
+  prompt: "Why must a credential for an outside service not be placed in the frontend app configuration?"
+  options:
+  - id: a
+    text: "The frontend build removes all configuration."
+    explanation: "The configuration can end up in the bundle."
+  - id: b
+    text: "The backend cannot read the same file."
+    explanation: "The backend can read server-side configuration; the problem is exposure in the browser."
+  - id: c
+    text: "Credentials make the bundle too large to build."
+    explanation: "Size is not the reason."
+  - id: d
+    text: "The build output of the frontend is delivered to every visitor, so any value in it is public."
+    explanation: "Correct. The files are static and the browser downloads and can read them."
+  correct_option: d
+  explanation: "The files are static and the browser downloads and can read them."
+- id: ats069-030-q28
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Place a pipeline failure at its step"
+  source_readings:
+  - sections/section-030/module-03/course-04-building-the-whole-repository.md
+  prompt: "After a clean checkout, the pipeline fails during the build with a message that an import cannot be resolved. Which step owns the failure, and what do you run?"
+  options:
+  - id: a
+    text: "The type check step; run `tsc` with `--skipLibCheck false`."
+    explanation: "A resolution failure in the build is not found by a different compiler flag."
+  - id: b
+    text: "The install step; delete the lockfile."
+    explanation: "Deleting the lockfile makes the install unrepeatable and is not the first move."
+  - id: c
+    text: "The build step; run the same root build script the pipeline runs, from a clean state with `dist` folders removed."
+    explanation: "Correct. A resolution failure belongs to the build, and the script keeps the flags the same as the pipeline."
+  - id: d
+    text: "The test step; rerun the tests."
+    explanation: "Tests do not produce a build resolution error."
+  correct_option: c
+  explanation: "A resolution failure belongs to the build, and the script keeps the flags the same as the pipeline."

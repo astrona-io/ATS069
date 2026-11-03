@@ -223,3 +223,489 @@ questions:
   correct_option: a
   explanation: Correct. The reference reads the value from the environment, and the
     old value stays in history, so it must be changed.
+- id: ats069-020-q09
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Create a plugin package with yarn new
+  source_readings:
+  - sections/section-020/module-02/course-01-creating-a-plugin-with-yarn-new.md
+  prompt: A new folder `plugins/orders-backend` exists, but `yarn workspaces list`
+    does not show it. What is the most likely cause?
+  options:
+  - id: a
+    text: The plugin id is longer than eight characters.
+    explanation: The id has no length limit that affects the workspace list.
+  - id: b
+    text: No pattern in the `workspaces` field of the root `package.json` matches
+      the folder.
+    explanation: Correct. Yarn treats only folders that match a workspaces pattern
+      as workspaces.
+  - id: c
+    text: The folder is missing a `dev/` entry point.
+    explanation: The entry point is needed to run the plugin alone, not to be a workspace.
+  - id: d
+    text: Yarn lists only frontend plugins.
+    explanation: Yarn lists every package that a workspace pattern matches.
+  correct_option: b
+  explanation: Correct. Yarn treats only folders that match a workspaces pattern as
+    workspaces.
+- id: ats069-020-q10
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Create a plugin package with yarn new
+  source_readings:
+  - sections/section-020/module-02/course-01-creating-a-plugin-with-yarn-new.md
+  prompt: Where does `yarn new` put a new backend plugin with the id `orders` in a
+    generated Backstage project?
+  options:
+  - id: a
+    text: "`plugins/orders-backend`"
+    explanation: Correct. Backend plugins get the suffix `-backend` in their folder
+      name.
+  - id: b
+    text: "`packages/orders`"
+    explanation: The `packages/` folder holds the app and the backend, not plugins.
+  - id: c
+    text: "`plugins/orders`"
+    explanation: This is the folder name for a frontend plugin.
+  - id: d
+    text: "`node_modules/@internal/orders`"
+    explanation: "`node_modules` holds installed links, not source."
+  correct_option: a
+  explanation: Correct. Backend plugins get the suffix `-backend` in their folder
+    name.
+- id: ats069-020-q11
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Create a plugin package with yarn new
+  source_readings:
+  - sections/section-020/module-02/course-01-creating-a-plugin-with-yarn-new.md
+  prompt: A backend plugin has the folder `plugins/hello-backend`, the package name
+    `@internal/plugin-hello-backend` and the plugin id `hello`. Which value decides
+    the route prefix?
+  options:
+  - id: a
+    text: The folder name, so the routes live under `/api/hello-backend`.
+    explanation: The folder name is not read by the backend.
+  - id: b
+    text: The package name, so the routes live under `/api/plugin-hello-backend`.
+    explanation: The package name identifies the package for imports only.
+  - id: c
+    text: The port of the backend process.
+    explanation: All plugins share one port.
+  - id: d
+    text: The plugin id, so the routes live under `/api/hello`.
+    explanation: Correct. The backend mounts a plugin under `/api/<plugin id>`.
+  correct_option: d
+  explanation: Correct. The backend mounts a plugin under `/api/<plugin id>`.
+- id: ats069-020-q12
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Run a plugin alone from its dev entry point
+  source_readings:
+  - sections/section-020/module-02/course-02-the-plugin-development-entry-and-hot-reload.md
+  prompt: What is the job of the `dev/` folder of a plugin?
+  options:
+  - id: a
+    text: It holds the published code of the plugin.
+    explanation: Published code lives in `src/`.
+  - id: b
+    text: It holds the production build output.
+    explanation: Build output goes to `dist/`.
+  - id: c
+    text: It holds an entry point that runs the plugin alone with sample data or a
+      test backend.
+    explanation: Correct. The `dev/` entry point lets a developer run one plugin without
+      the rest of the portal.
+  - id: d
+    text: It holds the configuration of the portal.
+    explanation: Configuration lives in the `app-config` files.
+  correct_option: c
+  explanation: Correct. The `dev/` entry point lets a developer run one plugin without
+    the rest of the portal.
+- id: ats069-020-q13
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Run a plugin alone from its dev entry point
+  source_readings:
+  - sections/section-020/module-02/course-02-the-plugin-development-entry-and-hot-reload.md
+  prompt: A developer changes a key in `app-config.yaml` while a plugin runs in development.
+    Nothing changes in the running plugin. Why?
+  options:
+  - id: a
+    text: Hot reload only works for backend plugins.
+    explanation: Hot reload applies to source changes, in both kinds of plugin.
+  - id: b
+    text: The process reads configuration once at start, so it needs a restart.
+    explanation: Correct. Configuration is read at start, so a configuration change
+      needs a restart.
+  - id: c
+    text: The key must be written in uppercase.
+    explanation: Key case does not decide when the file is read.
+  - id: d
+    text: Hot reload is switched off in a `dev/` entry point.
+    explanation: The entry point supports hot reload; configuration is the exception.
+  correct_option: b
+  explanation: Correct. Configuration is read at start, so a configuration change
+    needs a restart.
+- id: ats069-020-q14
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain hot reload and what it does not prove
+  source_readings:
+  - sections/section-020/module-02/course-02-the-plugin-development-entry-and-hot-reload.md
+  prompt: The `dev/` entry point of a plugin renders correctly after an edit. What
+    does that prove?
+  options:
+  - id: a
+    text: The changed file compiles and runs inside the entry point.
+    explanation: Correct. Hot reload shows only that the changed code runs in the
+      entry point.
+  - id: b
+    text: The app loads the plugin.
+    explanation: The entry point does not use the app.
+  - id: c
+    text: The backend serves the plugin routes.
+    explanation: The entry point of a frontend plugin does not start the backend.
+  - id: d
+    text: The tests and the type check pass.
+    explanation: Hot reload runs neither.
+  correct_option: a
+  explanation: Correct. Hot reload shows only that the changed code runs in the entry
+    point.
+- id: ats069-020-q15
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Explain how a backend plugin id decides its route prefix
+  source_readings:
+  - sections/section-020/module-02/course-03-backend-plugins-and-their-routes.md
+  prompt: A backend plugin with the id `inventory` handles the path `/items`. Which
+    request reaches it?
+  options:
+  - id: a
+    text: "`GET /inventory/items`"
+    explanation: The backend mounts plugins under `/api/`.
+  - id: b
+    text: "`GET /api/items`"
+    explanation: The plugin id is part of the prefix.
+  - id: c
+    text: "`GET /api/inventory-backend/items`"
+    explanation: The folder name is not part of the route.
+  - id: d
+    text: "`GET /api/inventory/items`"
+    explanation: Correct. The prefix is `/api/<plugin id>`.
+  correct_option: d
+  explanation: Correct. The prefix is `/api/<plugin id>`.
+- id: ats069-020-q16
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain how a backend plugin id decides its route prefix
+  source_readings:
+  - sections/section-020/module-02/course-03-backend-plugins-and-their-routes.md
+  prompt: After a developer renames a plugin id from `hello` to `hello-world`, the
+    tests of the route still pass, but the browser gets 404. Why?
+  options:
+  - id: a
+    text: The tests cache the old id.
+    explanation: Tests do not cache the id.
+  - id: b
+    text: A 404 always means the plugin crashed.
+    explanation: A crash gives an error status, not a missing route.
+  - id: c
+    text: The tests call the plugin directly, while the browser uses the old path
+      `/api/hello`, which no plugin now owns.
+    explanation: Correct. The id is a contract with callers, and only a request through
+      the backend shows a broken path.
+  - id: d
+    text: The browser needs a new login.
+    explanation: Login does not change route paths.
+  correct_option: c
+  explanation: Correct. The id is a contract with callers, and only a request through
+    the backend shows a broken path.
+- id: ats069-020-q17
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Connect a plugin to the app and to the backend
+  source_readings:
+  - sections/section-020/module-02/course-04-wiring-a-plugin-into-the-app-and-the-backend.md
+  prompt: The plugin code and its tests are correct, but `GET /api/hello/greeting`
+    on the started backend answers 404. What should you check first?
+  options:
+  - id: a
+    text: That `yarn tsc` prints nothing.
+    explanation: The type check never starts the backend.
+  - id: b
+    text: That the backend adds the plugin, for example with `backend.add(...)`.
+    explanation: Correct. A plugin that the backend never adds serves no routes.
+  - id: c
+    text: That Prettier formatted the plugin.
+    explanation: Formatting does not change routes.
+  - id: d
+    text: That the plugin has a `dev/` folder.
+    explanation: The `dev/` folder is not used by the portal backend.
+  correct_option: b
+  explanation: Correct. A plugin that the backend never adds serves no routes.
+- id: ats069-020-q18
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Connect a plugin to the app and to the backend
+  source_readings:
+  - sections/section-020/module-02/course-04-wiring-a-plugin-into-the-app-and-the-backend.md
+  prompt: What does the version `workspace:^` in a `package.json` dependency mean?
+  options:
+  - id: a
+    text: Use the package from this repository.
+    explanation: Correct. The `workspace:` protocol links a package that lives in
+      the same repository.
+  - id: b
+    text: Use the newest version on the npm registry.
+    explanation: The workspace protocol does not read the registry.
+  - id: c
+    text: Use any version but never install it.
+    explanation: Yarn links the workspace package.
+  - id: d
+    text: Use the version from the lockfile of another project.
+    explanation: The lockfile belongs to this repository.
+  correct_option: a
+  explanation: Correct. The `workspace:` protocol links a package that lives in the
+    same repository.
+- id: ats069-020-q19
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Run the tests with backstage-cli
+  source_readings:
+  - sections/section-020/module-03/course-01-running-tests-with-backstage-cli.md
+  prompt: Which command runs the tests of every package in a Backstage repository?
+  options:
+  - id: a
+    text: "`backstage-cli package test`"
+    explanation: This runs only the package in the current folder.
+  - id: b
+    text: "`backstage-cli repo lint`"
+    explanation: This runs the linter, not the tests.
+  - id: c
+    text: "`tsc --noEmit`"
+    explanation: This checks types and runs no tests.
+  - id: d
+    text: "`backstage-cli repo test`"
+    explanation: Correct. The `repo` form covers all packages and the `package` form
+      covers one.
+  correct_option: d
+  explanation: Correct. The `repo` form covers all packages and the `package` form
+    covers one.
+- id: ats069-020-q20
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Run the tests with backstage-cli
+  source_readings:
+  - sections/section-020/module-03/course-01-running-tests-with-backstage-cli.md
+  prompt: A pipeline step runs the package test command in watch mode and never finishes.
+    What fixes it?
+  options:
+  - id: a
+    text: Add `--fix`.
+    explanation: The option `--fix` belongs to the linter.
+  - id: b
+    text: Run the test command twice.
+    explanation: Watch mode still never exits.
+  - id: c
+    text: Run once, with the `CI` environment variable set or with `--watch=false`.
+    explanation: Correct. A pipeline needs a run that exits with a code.
+  - id: d
+    text: Use `prettier --check` instead.
+    explanation: This checks formatting, not behavior.
+  correct_option: c
+  explanation: Correct. A pipeline needs a run that exits with a code.
+- id: ats069-020-q21
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Run the tests with backstage-cli
+  source_readings:
+  - sections/section-020/module-03/course-01-running-tests-with-backstage-cli.md
+  prompt: A test fails with the expected value `missing` and the actual value `error`.
+    The behavior was not meant to change. What is the right action?
+  options:
+  - id: a
+    text: Change the expected value to `error`.
+    explanation: This removes the guard for the old behavior.
+  - id: b
+    text: Fix the code so that it returns `missing`.
+    explanation: Correct. Change the code, not the expectation, unless the behavior
+      was meant to change.
+  - id: c
+    text: Delete the test.
+    explanation: The test describes wanted behavior.
+  - id: d
+    text: Run the test again until it passes.
+    explanation: A deterministic failure does not go away.
+  correct_option: b
+  explanation: Correct. Change the code, not the expectation, unless the behavior
+    was meant to change.
+- id: ats069-020-q22
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Lint with backstage-cli
+  source_readings:
+  - sections/section-020/module-03/course-02-linting-with-backstage-cli.md
+  prompt: A developer wants a fast lint of only the packages changed since `origin/master`.
+    Which option does `backstage-cli repo lint` offer?
+  options:
+  - id: a
+    text: "`--since origin/master`"
+    explanation: Correct. `--since <ref>` limits the run to changed packages.
+  - id: b
+    text: "`--watch`"
+    explanation: Lint has no watch mode of this kind.
+  - id: c
+    text: "`--write`"
+    explanation: This is a Prettier option.
+  - id: d
+    text: "`--coverage`"
+    explanation: This is a test option.
+  correct_option: a
+  explanation: Correct. `--since <ref>` limits the run to changed packages.
+- id: ats069-020-q23
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Lint with backstage-cli
+  source_readings:
+  - sections/section-020/module-03/course-02-linting-with-backstage-cli.md
+  prompt: A rule reports a problem in one line, and the developer adds a comment that
+    disables the rule for the whole file. Why should a reviewer question this?
+  options:
+  - id: a
+    text: Disabled rules make the file run slower.
+    explanation: A disabled rule does not change runtime speed.
+  - id: b
+    text: Comments are not allowed in TypeScript.
+    explanation: Comments are allowed.
+  - id: c
+    text: Rules can only be disabled in `package.json`.
+    explanation: Rules can be disabled in comments or in the lint configuration.
+  - id: d
+    text: It hides the problem for every later change in that file.
+    explanation: Correct. Disable a rule for one line, with a reason, and only when
+      the rule is wrong there.
+  correct_option: d
+  explanation: Correct. Disable a rule for one line, with a reason, and only when
+    the rule is wrong there.
+- id: ats069-020-q24
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Check formatting and types
+  source_readings:
+  - sections/section-020/module-03/course-03-formatting-with-prettier-and-checking-types-with-tsc.md
+  prompt: A pipeline must fail when a file is not formatted, and it must not change
+    files. Which command fits?
+  options:
+  - id: a
+    text: "`prettier --write .`"
+    explanation: This rewrites files.
+  - id: b
+    text: "`tsc --noEmit`"
+    explanation: This checks types.
+  - id: c
+    text: "`prettier --check .`"
+    explanation: Correct. `--check` reports differences and exits non-zero without
+      changing files.
+  - id: d
+    text: "`backstage-cli repo test`"
+    explanation: This runs tests.
+  correct_option: c
+  explanation: Correct. `--check` reports differences and exits non-zero without changing
+    files.
+- id: ats069-020-q25
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Check formatting and types
+  source_readings:
+  - sections/section-020/module-03/course-03-formatting-with-prettier-and-checking-types-with-tsc.md
+  prompt: "`yarn tsc` prints nothing, and `yarn test` fails. What does the silent
+    `tsc` tell you?"
+  options:
+  - id: a
+    text: The tests must be wrong.
+    explanation: The behavior may be wrong while the types are right.
+  - id: b
+    text: The types agree. It does not say anything about behavior.
+    explanation: Correct. Each check covers a different kind of mistake.
+  - id: c
+    text: The linter passed.
+    explanation: The linter is a separate command.
+  - id: d
+    text: The format check passed.
+    explanation: Formatting is a separate command.
+  correct_option: b
+  explanation: Correct. Each check covers a different kind of mistake.
+- id: ats069-020-q26
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Combine checks and run them in a Git hook
+  source_readings:
+  - sections/section-020/module-03/course-04-one-check-command-ci-and-git-hooks.md
+  prompt: Why does a `check` script join its commands with `&&`?
+  options:
+  - id: a
+    text: The next command runs only if the previous one exited with code 0, so the
+      chain stops at the first failure.
+    explanation: Correct. `&&` makes the chain fail fast.
+  - id: b
+    text: All commands run at the same time.
+    explanation: "`&&` runs commands one after another."
+  - id: c
+    text: It ignores failures.
+    explanation: A failure stops the chain.
+  - id: d
+    text: It installs the dependencies.
+    explanation: Installing is a separate step.
+  correct_option: a
+  explanation: Correct. `&&` makes the chain fail fast.
+- id: ats069-020-q27
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Combine checks and run them in a Git hook
+  source_readings:
+  - sections/section-020/module-03/course-04-one-check-command-ci-and-git-hooks.md
+  prompt: Why does `.git/hooks` not give every developer the same `pre-commit` hook?
+  options:
+  - id: a
+    text: Hooks run only on the server.
+    explanation: Hooks run on the machine where Git runs.
+  - id: b
+    text: Hooks work only with Husky.
+    explanation: Git runs hooks without extra tools.
+  - id: c
+    text: Hooks are deleted after each commit.
+    explanation: Git keeps them.
+  - id: d
+    text: The `.git` folder is not part of the repository content, so Git does not
+      share it.
+    explanation: Correct. A shared folder such as `.githooks` with `core.hooksPath`
+      gives everyone the same hooks.
+  correct_option: d
+  explanation: Correct. A shared folder such as `.githooks` with `core.hooksPath`
+    gives everyone the same hooks.
+- id: ats069-020-q28
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Combine checks and run them in a Git hook
+  source_readings:
+  - sections/section-020/module-03/course-04-one-check-command-ci-and-git-hooks.md
+  prompt: A project has a `pre-commit` hook that runs all checks. Why must the pipeline
+    still run them?
+  options:
+  - id: a
+    text: Hooks never run tests.
+    explanation: A hook can run any command.
+  - id: b
+    text: The pipeline is faster than a hook.
+    explanation: Speed is not the reason.
+  - id: c
+    text: "`git commit --no-verify` skips a hook, and a developer may never have set
+      `core.hooksPath`."
+    explanation: Correct. A hook is a convenience. The pipeline cannot be skipped.
+  - id: d
+    text: Git forbids hooks that call `yarn`.
+    explanation: Hooks may call any program.
+  correct_option: c
+  explanation: Correct. A hook is a convenience. The pipeline cannot be skipped.

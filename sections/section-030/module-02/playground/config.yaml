@@ -1,0 +1,28 @@
+# Shared tsconfig, Strictness And Type Check Scripts (PLAYGROUND). A clean Ubuntu VM with a TypeScript workspace.
+# No task, no grading, no astrona submit.
+metadata:
+  name: "ats-069-playground-030-02"
+  docs:
+    guide: "docs/overview.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+      sshPasswordAuth: false
+
+bootstrap:
+  init:
+    - name: "prepare"
+      description: "Install Node.js and TypeScript, then seed the portal workspace in /opt/portal"
+      type: "folder"
+      source: "bootstrap/"
+
+teardown:
+  keepCluster: false

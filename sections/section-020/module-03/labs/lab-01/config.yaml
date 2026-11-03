@@ -1,0 +1,63 @@
+# Add A Check Script And A Pre-Commit Hook (LAB). Graded on the virtual machine. UNTESTED.
+metadata:
+  name: "ats-069-lab-020-03"
+  docs:
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+
+bootstrap:
+  init:
+    - name: "seed-checks"
+      description: "Install Node.js 22 and Yarn, then create the portal workspace with the faults"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "lint-passes"
+      description: "yarn lint finishes without problems"
+      type: "file"
+      source: "validation/validate-lint.sh"
+      hint: "The rule no-console-debug rejects console.debug. Remove the line."
+    - name: "format-passes"
+      description: "yarn format:check finishes without problems"
+      type: "file"
+      source: "validation/validate-format.sh"
+      hint: "Run yarn format and read git diff."
+    - name: "tests-unchanged"
+      description: "The tests pass and are unchanged"
+      type: "file"
+      source: "validation/validate-tests.sh"
+      hint: "Do not edit any test file."
+    - name: "check-script"
+      description: "yarn check runs tsc, lint, format:check and test"
+      type: "file"
+      source: "validation/validate-check-script.sh"
+      hint: "Add a check script that joins the four commands with &&."
+    - name: "hook-installed"
+      description: "Git runs a pre-commit hook that calls yarn check, and the hook stops a bad commit"
+      type: "file"
+      source: "validation/validate-hook.sh"
+      hint: "Set core.hooksPath to .githooks, make .githooks/pre-commit executable and call yarn check in it."
+
+teardown:
+  keepCluster: false

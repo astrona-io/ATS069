@@ -1,0 +1,69 @@
+# Declare A Peer Dependency And Route A Scope To A Private Registry (LAB). Graded on the VM. The plugin has no peer dependency and .yarnrc.yml holds a literal token.
+metadata:
+  name: "ats-069-lab-040-03"
+  docs:
+    prerequisites: "prerequisites.md"
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+
+bootstrap:
+  init:
+    - name: "seed"
+      description: "Install Node.js 22 and create the workspace with its faults"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "plugin-peer-declared"
+      description: "The plugin declares @internal/shared in peerDependencies and in devDependencies"
+      type: "file"
+      source: "validation/validate-plugin-peer-declared.sh"
+      hint: "In packages/plugin/package.json add peerDependencies with ^1.0.0 and devDependencies with workspace:^."
+    - name: "token-not-in-file"
+      description: "No literal token remains in .yarnrc.yml"
+      type: "file"
+      source: "validation/validate-token-not-in-file.sh"
+      hint: "Delete the npmAuthToken line that holds npm_FAKE... and read the token from NPM_TOKEN instead."
+    - name: "scope-routed"
+      description: "The scope internal uses https://npm.internal.example.com with the token read from NPM_TOKEN"
+      type: "file"
+      source: "validation/validate-scope-routed.sh"
+      hint: "Add npmScopes, internal, npmRegistryServer and npmAuthToken with the value NPM_TOKEN in a dollar-brace reference."
+    - name: "why-answer"
+      description: "answers.txt names the workspaces that depend on @internal/shared"
+      type: "file"
+      source: "validation/validate-why-answer.sh"
+      hint: "Run yarn why @internal/shared and write the names of the workspaces that ask for it to /opt/portal/answers.txt."
+    - name: "immutable-install-passes"
+      description: "yarn install --immutable exits with code 0"
+      type: "file"
+      source: "validation/validate-immutable-install-passes.sh"
+      hint: "Run yarn install once, then yarn install --immutable to confirm."
+    - name: "project-setup-unchanged"
+      description: "Yarn stays the package manager and the shared package keeps version 1.0.0"
+      type: "file"
+      source: "validation/validate-project-setup-unchanged.sh"
+      hint: "Do not change packageManager, the shared version or nodeLinker, and do not add package-lock.json."
+
+teardown:
+  keepCluster: false

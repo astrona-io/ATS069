@@ -1,4 +1,3 @@
-# Final domain knowledge check across all five sections.
 ---
 schema_version: 1
 kind: question_bank
@@ -384,3 +383,742 @@ questions:
   correct_option: c
   explanation: An image holds the build output. Secrets and environment-specific configuration
     arrive when the container runs.
+- id: ats069-final-q16
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Describe what the project generator creates
+  source_readings:
+  - sections/section-010/module-02/course-01-what-the-project-generator-creates.md
+  prompt: A team runs npx @backstage/create-app@latest and later wants to know who
+    maintains the generated root scripts. Who owns them?
+  options:
+  - id: a
+    text: The Backstage project, which updates them with each release.
+    explanation: The generator copies a template once. It does not update files later.
+  - id: b
+    text: The project owner, because the generator copies a template and does not
+      manage it afterwards.
+    explanation: Correct. After generation every file belongs to the project owner.
+  - id: c
+    text: Yarn, which regenerates them at install.
+    explanation: Yarn installs dependencies. It does not rewrite project scripts.
+  - id: d
+    text: The npm registry, which serves the latest copy.
+    explanation: The registry serves packages, not the files of an existing project.
+  correct_option: b
+  explanation: The generator copies a template once, so the project owner owns every
+    file afterwards.
+- id: ats069-final-q17
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Describe what the project generator creates
+  source_readings:
+  - sections/section-010/module-02/course-01-what-the-project-generator-creates.md
+  prompt: Which folder holds the browser application in a generated project?
+  options:
+  - id: a
+    text: plugins/app
+    explanation: The plugins folder starts empty and holds plugins written by the
+      team.
+  - id: b
+    text: packages/backend
+    explanation: This folder holds the backend process.
+  - id: c
+    text: packages/app
+    explanation: Correct. The frontend application is in packages/app.
+  - id: d
+    text: examples
+    explanation: This folder holds example catalog entities.
+  correct_option: c
+  explanation: The frontend application is in packages/app and the backend is in packages/backend.
+- id: ats069-final-q18
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Describe what the project generator creates
+  source_readings:
+  - sections/section-010/module-02/course-01-what-the-project-generator-creates.md
+  prompt: A developer wants a configuration file for settings that belong to one machine
+    only, such as a local token. Which approach matches the generated project?
+  options:
+  - id: a
+    text: Edit app-config.production.yaml and commit it.
+    explanation: The production file is shared and committed.
+  - id: b
+    text: Create app-config.local.yaml, which the generated .gitignore excludes, and
+      pass it with --config.
+    explanation: Correct. The local file name is excluded from version control by
+      convention.
+  - id: c
+    text: Edit files under node_modules.
+    explanation: Yarn replaces node_modules at the next install.
+  - id: d
+    text: Put the token in backstage.json.
+    explanation: backstage.json records the Backstage release.
+  correct_option: b
+  explanation: A local configuration file that the .gitignore excludes keeps machine
+    settings out of the repository.
+- id: ats069-final-q19
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Explain the roles of ports 3000 and 7007
+  source_readings:
+  - sections/section-010/module-03/course-01-ports-base-urls-and-cors.md
+  prompt: Which two origins are different for a browser?
+  options:
+  - id: a
+    text: http://localhost:3000 and http://localhost:3000/catalog
+    explanation: Only the path differs, so the origin is the same.
+  - id: b
+    text: http://localhost:3000 and http://localhost:7007
+    explanation: Correct. The port is part of the origin.
+  - id: c
+    text: http://localhost:7007/api and http://localhost:7007/healthcheck
+    explanation: Only the path differs.
+  - id: d
+    text: http://localhost:3000 and http://localhost:3000?x=1
+    explanation: Only the query differs.
+  correct_option: b
+  explanation: An origin is scheme, host and port, so a different port is a different
+    origin.
+- id: ats069-final-q20
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain the roles of ports 3000 and 7007
+  source_readings:
+  - sections/section-010/module-03/course-01-ports-base-urls-and-cors.md
+  prompt: The app loads, but every card shows a network error. The browser developer
+    tools report a CORS error for requests to port 7007. Which value is the first
+    to check?
+  options:
+  - id: a
+    text: backend.database.client
+    explanation: The database does not decide CORS answers.
+  - id: b
+    text: backend.cors.origin, which must equal app.baseUrl
+    explanation: Correct. The backend must allow the origin of the app.
+  - id: c
+    text: catalog.locations
+    explanation: Locations decide catalog data, not CORS.
+  - id: d
+    text: auth.environment
+    explanation: This decides the sign-in mode.
+  correct_option: b
+  explanation: CORS errors are decided by backend.cors, whose origin must match the
+    app origin exactly.
+- id: ats069-final-q21
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Compare the SQLite database of a local start with a PostgreSQL
+    database
+  source_readings:
+  - sections/section-010/module-03/course-02-databases-sqlite-and-postgresql.md
+  prompt: What happens to data stored in SQLite with the connection ':memory:' when
+    the backend stops?
+  options:
+  - id: a
+    text: It is saved to a file in packages/backend.
+    explanation: The memory connection does not write a file.
+  - id: b
+    text: It is lost, because it lived in the memory of the process.
+    explanation: Correct. Catalog data from locations loads again at the next start.
+  - id: c
+    text: It moves to PostgreSQL.
+    explanation: No migration happens.
+  - id: d
+    text: It stays in the browser.
+    explanation: The database belongs to the backend.
+  correct_option: b
+  explanation: In-memory SQLite data is lost when the process stops.
+- id: ats069-final-q22
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Create a plugin package with yarn new
+  source_readings:
+  - sections/section-020/module-02/course-01-creating-a-plugin-with-yarn-new.md
+  prompt: A new folder `plugins/orders-backend` exists, but `yarn workspaces list`
+    does not show it. What is the most likely cause?
+  options:
+  - id: a
+    text: The plugin id is longer than eight characters.
+    explanation: The id has no length limit that affects the workspace list.
+  - id: b
+    text: No pattern in the `workspaces` field of the root `package.json` matches
+      the folder.
+    explanation: Correct. Yarn treats only folders that match a workspaces pattern
+      as workspaces.
+  - id: c
+    text: The folder is missing a `dev/` entry point.
+    explanation: The entry point is needed to run the plugin alone, not to be a workspace.
+  - id: d
+    text: Yarn lists only frontend plugins.
+    explanation: Yarn lists every package that a workspace pattern matches.
+  correct_option: b
+  explanation: Correct. Yarn treats only folders that match a workspaces pattern as
+    workspaces.
+- id: ats069-final-q23
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Create a plugin package with yarn new
+  source_readings:
+  - sections/section-020/module-02/course-01-creating-a-plugin-with-yarn-new.md
+  prompt: Where does `yarn new` put a new backend plugin with the id `orders` in a
+    generated Backstage project?
+  options:
+  - id: a
+    text: "`plugins/orders-backend`"
+    explanation: Correct. Backend plugins get the suffix `-backend` in their folder
+      name.
+  - id: b
+    text: "`packages/orders`"
+    explanation: The `packages/` folder holds the app and the backend, not plugins.
+  - id: c
+    text: "`plugins/orders`"
+    explanation: This is the folder name for a frontend plugin.
+  - id: d
+    text: "`node_modules/@internal/orders`"
+    explanation: "`node_modules` holds installed links, not source."
+  correct_option: a
+  explanation: Correct. Backend plugins get the suffix `-backend` in their folder
+    name.
+- id: ats069-final-q24
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Create a plugin package with yarn new
+  source_readings:
+  - sections/section-020/module-02/course-01-creating-a-plugin-with-yarn-new.md
+  prompt: A backend plugin has the folder `plugins/hello-backend`, the package name
+    `@internal/plugin-hello-backend` and the plugin id `hello`. Which value decides
+    the route prefix?
+  options:
+  - id: a
+    text: The folder name, so the routes live under `/api/hello-backend`.
+    explanation: The folder name is not read by the backend.
+  - id: b
+    text: The package name, so the routes live under `/api/plugin-hello-backend`.
+    explanation: The package name identifies the package for imports only.
+  - id: c
+    text: The port of the backend process.
+    explanation: All plugins share one port.
+  - id: d
+    text: The plugin id, so the routes live under `/api/hello`.
+    explanation: Correct. The backend mounts a plugin under `/api/<plugin id>`.
+  correct_option: d
+  explanation: Correct. The backend mounts a plugin under `/api/<plugin id>`.
+- id: ats069-final-q25
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Run the tests with backstage-cli
+  source_readings:
+  - sections/section-020/module-03/course-01-running-tests-with-backstage-cli.md
+  prompt: Which command runs the tests of every package in a Backstage repository?
+  options:
+  - id: a
+    text: "`backstage-cli package test`"
+    explanation: This runs only the package in the current folder.
+  - id: b
+    text: "`backstage-cli repo lint`"
+    explanation: This runs the linter, not the tests.
+  - id: c
+    text: "`tsc --noEmit`"
+    explanation: This checks types and runs no tests.
+  - id: d
+    text: "`backstage-cli repo test`"
+    explanation: Correct. The `repo` form covers all packages and the `package` form
+      covers one.
+  correct_option: d
+  explanation: Correct. The `repo` form covers all packages and the `package` form
+    covers one.
+- id: ats069-final-q26
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Run the tests with backstage-cli
+  source_readings:
+  - sections/section-020/module-03/course-01-running-tests-with-backstage-cli.md
+  prompt: A pipeline step runs the package test command in watch mode and never finishes.
+    What fixes it?
+  options:
+  - id: a
+    text: Add `--fix`.
+    explanation: The option `--fix` belongs to the linter.
+  - id: b
+    text: Run the test command twice.
+    explanation: Watch mode still never exits.
+  - id: c
+    text: Run once, with the `CI` environment variable set or with `--watch=false`.
+    explanation: Correct. A pipeline needs a run that exits with a code.
+  - id: d
+    text: Use `prettier --check` instead.
+    explanation: This checks formatting, not behavior.
+  correct_option: c
+  explanation: Correct. A pipeline needs a run that exits with a code.
+- id: ats069-final-q27
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Run the tests with backstage-cli
+  source_readings:
+  - sections/section-020/module-03/course-01-running-tests-with-backstage-cli.md
+  prompt: A test fails with the expected value `missing` and the actual value `error`.
+    The behavior was not meant to change. What is the right action?
+  options:
+  - id: a
+    text: Change the expected value to `error`.
+    explanation: This removes the guard for the old behavior.
+  - id: b
+    text: Fix the code so that it returns `missing`.
+    explanation: Correct. Change the code, not the expectation, unless the behavior
+      was meant to change.
+  - id: c
+    text: Delete the test.
+    explanation: The test describes wanted behavior.
+  - id: d
+    text: Run the test again until it passes.
+    explanation: A deterministic failure does not go away.
+  correct_option: b
+  explanation: Correct. Change the code, not the expectation, unless the behavior
+    was meant to change.
+- id: ats069-final-q28
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Explain what a shared base tsconfig sets
+  source_readings:
+  - sections/section-030/module-02/course-01-what-the-shared-base-configuration-sets.md
+  prompt: 'A root `tsconfig.json` has `"extends": "./tsconfig.base.json"` and does
+    not mention `strict`. The base sets `strict` to `true`. What is the value of `strict`
+    for the root project?'
+  options:
+  - id: a
+    text: "`false`, because an option that is not set defaults to off."
+    explanation: A default applies only when no file in the chain sets the option.
+      The base sets it.
+  - id: b
+    text: "`true`, because options the extending file does not set keep the value
+      from the base."
+    explanation: Correct. Options that the extending file does not mention are inherited
+      from the base.
+  - id: c
+    text: The compiler stops with an error, because every option must appear in the
+      root file.
+    explanation: The root file does not need to repeat inherited options.
+  - id: d
+    text: It depends on the operating system.
+    explanation: Inheritance through `extends` does not depend on the operating system.
+  correct_option: b
+  explanation: Options that the extending file does not mention are inherited from
+    the base.
+- id: ats069-final-q29
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Read the merged configuration
+  source_readings:
+  - sections/section-030/module-02/course-01-what-the-shared-base-configuration-sets.md
+  prompt: Which command prints the compiler options that really apply to a project
+    after `extends` is resolved?
+  options:
+  - id: a
+    text: "`tsc --showConfig`"
+    explanation: Correct. It prints the configuration after the whole `extends` chain
+      is merged.
+  - id: b
+    text: "`tsc --listFilesOnly`"
+    explanation: It lists the files of the project and does not print the options.
+  - id: c
+    text: "`tsc --noEmit`"
+    explanation: It stops the compiler from writing output and prints no configuration.
+  - id: d
+    text: "`npm ls typescript`"
+    explanation: It lists the installed package version and does not show the options.
+  correct_option: a
+  explanation: It prints the configuration after the whole `extends` chain is merged.
+- id: ats069-final-q30
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain precedence between a base and an extending file
+  source_readings:
+  - sections/section-030/module-02/course-01-what-the-shared-base-configuration-sets.md
+  prompt: 'The base file has `"include": ["packages/*/src"]`. A file that extends
+    it sets `"include": ["plugins/*/src"]`. Which files does the extending project
+    include?'
+  options:
+  - id: a
+    text: The files under both patterns, because the lists are merged.
+    explanation: "`include`, `exclude` and `files` are replaced, not merged."
+  - id: b
+    text: Only the files under `packages/*/src`, because the base always wins.
+    explanation: The extending file wins for the fields it sets.
+  - id: c
+    text: No files, because two `include` fields conflict.
+    explanation: Two files setting `include` do not conflict; the nearest one is used.
+  - id: d
+    text: Only the files under `plugins/*/src`, because the list is replaced and not
+      merged.
+    explanation: Correct. The `include` field of the extending file replaces the one
+      from the base as a whole.
+  correct_option: d
+  explanation: The `include` field of the extending file replaces the one from the
+    base as a whole.
+- id: ats069-final-q31
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Explain package roles
+  source_readings:
+  - sections/section-030/module-03/course-01-package-roles-in-package-json.md
+  prompt: Which field of `package.json` tells `backstage-cli` what kind of package
+    it is building?
+  options:
+  - id: a
+    text: "`main`"
+    explanation: "`main` names the entry file of the package."
+  - id: b
+    text: "`files`"
+    explanation: "`files` lists what a published package contains."
+  - id: c
+    text: "`private`"
+    explanation: "`private` blocks publishing and says nothing about the kind of package."
+  - id: d
+    text: "`backstage.role`"
+    explanation: Correct. The role names the kind of package, for example `frontend`
+      or `backend-plugin`.
+  correct_option: d
+  explanation: The role names the kind of package, for example `frontend` or `backend-plugin`.
+- id: ats069-final-q32
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Choose the right role
+  source_readings:
+  - sections/section-030/module-03/course-01-package-roles-in-package-json.md
+  prompt: A package holds shared types and helper functions that both the browser
+    app and the backend import, and it uses no Node.js-only API. Which role fits?
+  options:
+  - id: a
+    text: "`node-library`"
+    explanation: It is meant for code that runs on Node.js only.
+  - id: b
+    text: "`web-library`"
+    explanation: It is meant for code that runs in the browser only.
+  - id: c
+    text: "`common-library`"
+    explanation: Correct. A library that can run in both places is a `common-library`.
+  - id: d
+    text: "`backend`"
+    explanation: It is the backend application, not a library.
+  correct_option: c
+  explanation: A library that can run in both places is a `common-library`.
+- id: ats069-final-q33
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain the effect of a missing role
+  source_readings:
+  - sections/section-030/module-03/course-01-package-roles-in-package-json.md
+  prompt: A package has no `backstage.role`. What is the consequence?
+  options:
+  - id: a
+    text: Nothing, because the role is only documentation.
+    explanation: The tooling reads the role.
+  - id: b
+    text: The tooling cannot tell which build and rules to use, so the package is
+      not built correctly.
+    explanation: Correct. The role is how the tooling chooses the build, the start
+      command and the rules.
+  - id: c
+    text: The package becomes a `frontend` by default.
+    explanation: There is no such guaranteed default.
+  - id: d
+    text: The package is built twice.
+    explanation: A missing role does not cause a double build.
+  correct_option: b
+  explanation: The role is how the tooling chooses the build, the start command and
+    the rules.
+- id: ats069-final-q34
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Read .yarnrc.yml and say what its settings control
+  source_readings:
+  - sections/section-040/module-02/course-01-the-yarn-configuration-file-and-the-linker.md
+  prompt: 'A Backstage repository sets `nodeLinker: node-modules` in `.yarnrc.yml`.
+    What does this setting control?'
+  options:
+  - id: a
+    text: 'How Yarn writes installed packages to disk: as a `node_modules` folder.'
+    explanation: Correct. The linker decides the on-disk layout, and Backstage tooling
+      expects `node_modules`.
+  - id: b
+    text: Which registry Yarn downloads packages from.
+    explanation: The registry is set by `npmRegistryServer`.
+  - id: c
+    text: Which Node.js release runs the scripts.
+    explanation: Yarn does not choose the Node.js release with this setting.
+  - id: d
+    text: Whether `yarn.lock` is written.
+    explanation: The lockfile is written whatever the linker is.
+  correct_option: a
+  explanation: Correct. The linker decides the on-disk layout, and Backstage tooling
+    expects `node_modules`.
+- id: ats069-final-q35
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Read .yarnrc.yml and say what its settings control
+  source_readings:
+  - sections/section-040/module-02/course-01-the-yarn-configuration-file-and-the-linker.md
+  prompt: On a build server, `yarn config get enableGlobalCache` prints `true`, but
+    the repository `.yarnrc.yml` says `false`. What is the most likely cause?
+  options:
+  - id: a
+    text: Yarn ignores `.yarnrc.yml` files in repositories.
+    explanation: Yarn reads the repository file and merges it with other sources.
+  - id: b
+    text: A user-level `.yarnrc.yml` or a `YARN_ENABLE_GLOBAL_CACHE` environment variable
+      overrides the repository file.
+    explanation: Correct. Yarn merges settings from several places, and environment
+      variables win over files.
+  - id: c
+    text: The lockfile overrides the setting.
+    explanation: The lockfile records resolved packages, not settings.
+  - id: d
+    text: "`enableGlobalCache` cannot be set in a file."
+    explanation: It is a normal setting that a file can hold.
+  correct_option: b
+  explanation: Correct. Yarn merges settings from several places, and environment
+    variables win over files.
+- id: ats069-final-q36
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Read .yarnrc.yml and say what its settings control
+  source_readings:
+  - sections/section-040/module-02/course-01-the-yarn-configuration-file-and-the-linker.md
+  prompt: Which items does a Backstage repository normally commit?
+  options:
+  - id: a
+    text: The `node_modules` folder and `.yarn/install-state.gz`.
+    explanation: These are outputs of an install, so they belong in `.gitignore`.
+  - id: b
+    text: Only `yarn.lock`.
+    explanation: Without the manifests the lockfile has nothing to match.
+  - id: c
+    text: The manifests, `yarn.lock`, `.yarnrc.yml` and the release file under `.yarn/releases`.
+    explanation: Correct. These are inputs that describe the project.
+  - id: d
+    text: Only the manifests.
+    explanation: Without the lockfile, installs are not reproducible.
+  correct_option: c
+  explanation: Correct. These are inputs that describe the project.
+- id: ats069-final-q37
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Describe what backstage-cli versions:bump changes
+  source_readings:
+  - sections/section-040/module-03/course-01-upgrading-backstage-with-versions-bump.md
+  prompt: Which files does `yarn backstage-cli versions:bump` change?
+  options:
+  - id: a
+    text: Only `yarn.lock`.
+    explanation: Manifests and `backstage.json` change too.
+  - id: b
+    text: The source code of the plugins.
+    explanation: It does not fix breaking code changes.
+  - id: c
+    text: The manifests with `@backstage` ranges, `backstage.json` and, through the
+      install, `yarn.lock`.
+    explanation: Correct. It also runs the install step.
+  - id: d
+    text: The `Dockerfile` of the project.
+    explanation: Template files are not rewritten.
+  correct_option: c
+  explanation: Correct. It also runs the install step.
+- id: ats069-final-q38
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Describe what backstage-cli versions:bump changes
+  source_readings:
+  - sections/section-040/module-03/course-01-upgrading-backstage-with-versions-bump.md
+  prompt: After a bump, `yarn install --immutable` passes. Which claim does this support?
+  options:
+  - id: a
+    text: The upgraded code compiles.
+    explanation: The install does not run the compiler.
+  - id: b
+    text: The tests pass.
+    explanation: The install does not run tests.
+  - id: c
+    text: The release notes need no reading.
+    explanation: Breaking changes still need to be read.
+  - id: d
+    text: The manifests and the lockfile agree.
+    explanation: Correct. It does not prove that the code compiles or passes tests.
+  correct_option: d
+  explanation: Correct. It does not prove that the code compiles or passes tests.
+- id: ats069-final-q39
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Find why a package is installed with yarn why
+  source_readings:
+  - sections/section-040/module-03/course-02-finding-duplicate-and-vulnerable-packages.md
+  prompt: Which command shows which packages ask for `semver` and which version Yarn
+    selected?
+  options:
+  - id: a
+    text: "`yarn why semver`"
+    explanation: Correct. The flag `-R` adds the chain to the workspace.
+  - id: b
+    text: "`yarn dedupe semver`"
+    explanation: It rewrites the lockfile; it does not explain.
+  - id: c
+    text: "`yarn npm audit semver`"
+    explanation: It reports advisories.
+  - id: d
+    text: "`yarn up semver`"
+    explanation: It updates the package.
+  correct_option: a
+  explanation: Correct. The flag `-R` adds the chain to the workspace.
+- id: ats069-final-q40
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Control the build context with a .dockerignore file
+  source_readings:
+  - sections/section-050/module-02/course-01-the-build-context-and-the-ignore-file.md
+  prompt: What is the build context of `docker image build . -f packages/backend/Dockerfile
+    --tag backstage`?
+  options:
+  - id: a
+    text: The set of files under `.` that the client sends to the daemon, after the
+      ignore file removes some.
+    explanation: Correct. The last path argument is the context root, and the daemon
+      can read only files in it.
+  - id: b
+    text: Only the Dockerfile named with `-f`.
+    explanation: The Dockerfile is one file in the context. The `COPY` instructions
+      read other files from it too.
+  - id: c
+    text: All files on the host that the user can read.
+    explanation: The daemon cannot read files outside the context path.
+  - id: d
+    text: The layers of the base image.
+    explanation: Layers of the base image are part of the image, not of the context.
+  correct_option: a
+  explanation: Correct. The last path argument is the context root, and the daemon
+    can read only files in it.
+- id: ats069-final-q41
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Control the build context with a .dockerignore file
+  source_readings:
+  - sections/section-050/module-02/course-01-the-build-context-and-the-ignore-file.md
+  prompt: A `.dockerignore` file in the context root contains `*.local.yaml`. Which
+    file does it exclude?
+  options:
+  - id: a
+    text: Every `.local.yaml` file in every folder.
+    explanation: That needs `**/*.local.yaml`.
+  - id: b
+    text: "`app-config.local.yaml` in the context root only."
+    explanation: Correct. A single star does not cross a folder boundary, so `packages/backend/app-config.local.yaml`
+      stays in the context.
+  - id: c
+    text: Only files named exactly `*.local.yaml`.
+    explanation: The star is a wildcard, not part of the file name.
+  - id: d
+    text: No file, because the ignore file only affects `COPY` with wildcards.
+    explanation: The ignore file removes files from the context before the transfer.
+  correct_option: b
+  explanation: Correct. A single star does not cross a folder boundary, so `packages/backend/app-config.local.yaml`
+    stays in the context.
+- id: ats069-final-q42
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Control the build context with a .dockerignore file
+  source_readings:
+  - sections/section-050/module-02/course-01-the-build-context-and-the-ignore-file.md
+  prompt: A `COPY` of `packages/backend/dist/bundle.tar.gz` fails with a message that
+    the file was not found, although `ls` shows it. What is the first thing to read?
+  options:
+  - id: a
+    text: The Node.js version in the base image.
+    explanation: The Node.js version does not affect whether a file is found in the
+      context.
+  - id: b
+    text: The `CMD` instruction.
+    explanation: "`CMD` runs at container start, after the build."
+  - id: c
+    text: The `.dockerignore` file, for a pattern that removes `packages/*/dist`.
+    explanation: Correct. A file on disk is not in the context if a pattern excludes
+      it.
+  - id: d
+    text: The Docker daemon log for network errors.
+    explanation: The daemon reads the context from the client, so this is not a network
+      problem.
+  correct_option: c
+  explanation: Correct. A file on disk is not in the context if a pattern excludes
+    it.
+- id: ats069-final-q43
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Start, inspect and stop a container, and publish its port
+  source_readings:
+  - sections/section-050/module-03/course-01-running-and-inspecting-a-container.md
+  prompt: What does `-p 8080:7007` do?
+  options:
+  - id: a
+    text: It publishes container port 7007 on host port 8080.
+    explanation: Correct. The host port is on the left and the container port is on
+      the right.
+  - id: b
+    text: It publishes host port 7007 on container port 8080.
+    explanation: The sides are the other way around.
+  - id: c
+    text: It makes the backend listen on port 8080.
+    explanation: The process chooses its own port. The option only maps it.
+  - id: d
+    text: It limits the container to 8080 connections.
+    explanation: The option does not limit connections.
+  correct_option: a
+  explanation: Correct. The host port is on the left and the container port is on
+    the right.
+- id: ats069-final-q44
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Start, inspect and stop a container, and publish its port
+  source_readings:
+  - sections/section-050/module-03/course-01-running-and-inspecting-a-container.md
+  prompt: A container publishes `-p 7007:7007`, but `curl` to the host port is refused.
+    The log shows that the backend listens on `127.0.0.1:7007`. What is the cause?
+  options:
+  - id: a
+    text: Port 7007 is reserved by Docker.
+    explanation: Docker does not reserve that port.
+  - id: b
+    text: The process binds the loopback address inside the container, so published
+      traffic cannot reach it.
+    explanation: Correct. The backend must bind `0.0.0.0`, which the production configuration
+      sets.
+  - id: c
+    text: The image has no layers.
+    explanation: Every image has layers. This is not the cause.
+  - id: d
+    text: The container needs `--privileged`.
+    explanation: Privileges do not change the bind address.
+  correct_option: b
+  explanation: Correct. The backend must bind `0.0.0.0`, which the production configuration
+    sets.
+- id: ats069-final-q45
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Start, inspect and stop a container, and publish its port
+  source_readings:
+  - sections/section-050/module-03/course-01-running-and-inspecting-a-container.md
+  prompt: Which command shows why a container exited a moment after it started?
+  options:
+  - id: a
+    text: "`docker image ls`"
+    explanation: That lists images, not container output.
+  - id: b
+    text: "`docker build --no-cache`"
+    explanation: That builds an image.
+  - id: c
+    text: "`docker logs <name>` together with `docker container ls -a`."
+    explanation: Correct. The log shows the last output, and the list shows the exit
+      status of stopped containers.
+  - id: d
+    text: "`docker network ls`"
+    explanation: That lists networks.
+  correct_option: c
+  explanation: Correct. The log shows the last output, and the list shows the exit
+    status of stopped containers.

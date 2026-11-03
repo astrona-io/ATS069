@@ -18,6 +18,8 @@ This section teaches you to follow one change through a Backstage monorepo on yo
 - Explain how configuration files layer, and when `app-config.local.yaml` is loaded.
 - Keep secrets out of committed configuration with `${NAME}` references.
 - Describe a change with its behavior, its boundaries and its evidence.
+- Create a plugin, run it alone from its `dev/` entry point and connect it to the app and the backend.
+- Run tests, lint, formatting and the type check, combine them in one command and run it from a Git hook.
 
 ---
 
@@ -35,6 +37,30 @@ This section teaches you to follow one change through a Backstage monorepo on yo
     astrona submit -c .
     ```
 
+### 2. Developing Plugins Locally
+*   **Module Reader:** **[Module 2: Developing Plugins Locally](./module-02/course.md)**
+*   **Hands-on Playground:** `sections/section-020/module-02/playground` - an Ubuntu virtual machine with Node.js 22, Yarn and Git, and a portal workspace in `/opt/portal` with a frontend plugin and a backend plugin.
+    ```bash
+    astrona run --git ssh://git@github.com/astrona-io/ATS069.git -c sections/section-020/module-02/playground
+    ```
+*   **Lab:** `sections/section-020/module-02/labs/lab-01` (UNTESTED)
+    ```bash
+    astrona run --git ssh://git@github.com/astrona-io/ATS069.git -c sections/section-020/module-02/labs/lab-01
+    astrona submit -c .
+    ```
+
+### 3. Testing, Linting And Formatting Workflow
+*   **Module Reader:** **[Module 3: Testing, Linting And Formatting Workflow](./module-03/course.md)**
+*   **Hands-on Playground:** `sections/section-020/module-03/playground` - an Ubuntu virtual machine with Node.js 22, Yarn and Git, and a portal workspace in `/opt/portal` with a check script and a pre-commit hook.
+    ```bash
+    astrona run --git ssh://git@github.com/astrona-io/ATS069.git -c sections/section-020/module-03/playground
+    ```
+*   **Lab:** `sections/section-020/module-03/labs/lab-01` (UNTESTED)
+    ```bash
+    astrona run --git ssh://git@github.com/astrona-io/ATS069.git -c sections/section-020/module-03/labs/lab-01
+    astrona submit -c .
+    ```
+
 ### Section Capstone Challenge
 *   **Comprehensive Challenge:** Local Development Workflow Capstone - `sections/section-020/capstone/labs/lab-01` (UNTESTED)
     ```bash
@@ -44,4 +70,4 @@ This section teaches you to follow one change through a Backstage monorepo on yo
 *   **Hands-on Objective:** Finish an unfinished deployment status change across `catalog-common`, `backend` and `app`: fix the type errors, the failing tests and the lint problems, move a shared key out of the local override, read the database password from the environment, ignore the local file and write a change description. The grader checks files and runs the checks.
 
 ### Knowledge Check
-*   **Quiz:** 8 questions in `sections/section-020/quiz.yaml`. The pass score is 70 percent.
+*   **Quiz:** 28 questions in `sections/section-020/quiz.yaml`. The pass score is 70 percent.

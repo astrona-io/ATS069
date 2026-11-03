@@ -19,6 +19,10 @@ This section teaches you how a Backstage project turns its package manifests int
 - Install exactly what the lockfile says with `yarn install --immutable` or `npm ci`.
 - Force one release of a transitive dependency with `resolutions`.
 - Sort an install failure into Node.js version, registry, authentication, native build or integrity causes.
+- Read `.yarnrc.yml`, add a dependency to one workspace and run a script in every workspace with `yarn workspaces foreach`.
+- Explain what `backstage.json` and the `backstage:` protocol do, and what `backstage-cli versions:bump` changes.
+- Find duplicate and vulnerable packages with `yarn why`, `yarn dedupe` and `yarn npm audit`.
+- Declare a peer dependency in a plugin and route a package scope to a private registry without committing a token.
 
 ---
 
@@ -36,6 +40,30 @@ This section teaches you how a Backstage project turns its package manifests int
     astrona submit -c .
     ```
 
+### 2. Yarn Workflows In A Backstage Repository
+*   **Module Reader:** **[Module 2: Yarn Workflows In A Backstage Repository](./module-02/course.md)**
+*   **Hands-on Playground:** `sections/section-040/module-02/playground` - an Ubuntu virtual machine with Node.js 22 and Yarn 4.4.1. `/opt/portal` is a simplified Yarn workspace with `lint` and `build` scripts, the root scripts `lint:all` and `build:all`, and a `backstage.json` file.
+    ```bash
+    astrona run --git ssh://git@github.com/astrona-io/ATS069.git -c sections/section-040/module-02/playground
+    ```
+*   **Lab:** `sections/section-040/module-02/labs/lab-01` (UNTESTED)
+    ```bash
+    astrona run --git ssh://git@github.com/astrona-io/ATS069.git -c sections/section-040/module-02/labs/lab-01
+    astrona submit -c .
+    ```
+
+### 3. Upgrading, Auditing And Private Registries
+*   **Module Reader:** **[Module 3: Upgrading, Auditing And Private Registries](./module-03/course.md)**
+*   **Hands-on Playground:** `sections/section-040/module-03/playground` - an Ubuntu virtual machine with Node.js 22 and Yarn 4.4.1. `/opt/portal` has a plugin with a peer dependency, a backend that depends on `semver` and a registry setting for the scope `internal`.
+    ```bash
+    astrona run --git ssh://git@github.com/astrona-io/ATS069.git -c sections/section-040/module-03/playground
+    ```
+*   **Lab:** `sections/section-040/module-03/labs/lab-01` (UNTESTED)
+    ```bash
+    astrona run --git ssh://git@github.com/astrona-io/ATS069.git -c sections/section-040/module-03/labs/lab-01
+    astrona submit -c .
+    ```
+
 ### Section Capstone Challenge
 *   **Comprehensive Challenge:** Reproducible Dependencies Capstone - `sections/section-040/capstone/labs/lab-01` (UNTESTED)
     ```bash
@@ -45,4 +73,4 @@ This section teaches you how a Backstage project turns its package manifests int
 *   **Hands-on Objective:** Make the CI install step immutable, declare `semver` in the backend, force one `semver` release of 7.5.2 or later with `resolutions` and remove a stray `package-lock.json`. The grader checks the files and runs `yarn install --immutable`.
 
 ### Knowledge Check
-*   **Quiz:** 10 questions in `sections/section-040/quiz.yaml`. The pass score is 70 percent.
+*   **Quiz:** 30 questions in `sections/section-040/quiz.yaml`. The pass score is 70 percent.

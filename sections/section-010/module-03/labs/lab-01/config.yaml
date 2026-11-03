@@ -1,0 +1,65 @@
+# Database, Ports, Proxies And Local Integrations (LAB). Graded on the virtual machine.
+# The workspace /opt/envcfg starts with four faults.
+metadata:
+  name: "ats-069-lab-010-03"
+  docs:
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+      sshPasswordAuth: false
+
+bootstrap:
+  init:
+    - name: "seed-envcfg"
+      description: "Install Node.js and Yarn, then create the configuration files with their faults"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "cors-origin-matches-app"
+      description: "backend.cors.origin equals app.baseUrl"
+      type: "file"
+      source: "validation/validate-cors-origin-matches-app.sh"
+      hint: "Run python3 tools/check-config.py cors. The browser origin is the app.baseUrl value, with the port 3000."
+    - name: "guest-sign-in-development-only"
+      description: "Guest sign-in is defined in the base file and not in the production file"
+      type: "file"
+      source: "validation/validate-guest-sign-in-development-only.sh"
+      hint: "Add guest: {} under auth.providers in app-config.yaml. Do not add it to the production file."
+    - name: "catalog-location-resolves"
+      description: "The file location resolves to an existing file"
+      type: "file"
+      source: "validation/validate-catalog-location-resolves.sh"
+      hint: "File targets are resolved from packages/backend. Two folders up is /opt/envcfg. Check the folder name."
+    - name: "production-password-from-environment"
+      description: "The production database password is read from POSTGRES_PASSWORD"
+      type: "file"
+      source: "validation/validate-production-password-from-environment.sh"
+      hint: 'Use the substitution ${POSTGRES_PASSWORD} as the value, like the other connection keys.'
+    - name: "files-kept"
+      description: "Both configuration files and the example entity still exist"
+      type: "file"
+      source: "validation/validate-files-kept.sh"
+      hint: "Edit values. Do not delete files or the checker."
+
+teardown:
+  keepCluster: false

@@ -1,0 +1,63 @@
+# Wire A New Plugin Into The Backend (LAB). Graded on the virtual machine. UNTESTED.
+metadata:
+  name: "ats-069-lab-020-02"
+  docs:
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+
+bootstrap:
+  init:
+    - name: "seed-plugins"
+      description: "Install Node.js 22 and Yarn, then create the plugin workspace with the faults"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "plugin-in-workspace"
+      description: "Yarn lists the plugin @internal/plugin-hello-backend as a workspace"
+      type: "file"
+      source: "validation/validate-plugin-in-workspace.sh"
+      hint: "The workspaces field in the root package.json must include plugins/*. Run yarn install afterwards."
+    - name: "plugin-id-matches-route"
+      description: "The plugin id is hello and the unchanged tests pass"
+      type: "file"
+      source: "validation/validate-plugin-id.sh"
+      hint: "The id decides the route prefix /api/<id>. The app calls /api/hello."
+    - name: "backend-adds-plugin"
+      description: "The backend source calls backend.add with the hello backend plugin"
+      type: "file"
+      source: "validation/validate-backend-adds-plugin.sh"
+      hint: "Add backend.add(helloBackendPlugin); to packages/backend/src/index.ts before backend.start."
+    - name: "backend-declares-dependency"
+      description: "packages/backend/package.json depends on the plugin with the workspace protocol"
+      type: "file"
+      source: "validation/validate-backend-dependency.sh"
+      hint: "Add @internal/plugin-hello-backend with the version workspace:^ to dependencies."
+    - name: "route-answers"
+      description: "The started backend answers GET /api/hello/greeting with status 200"
+      type: "file"
+      source: "validation/validate-route-answers.sh"
+      hint: "Start the backend with yarn start and request the route with curl."
+
+teardown:
+  keepCluster: false

@@ -250,3 +250,443 @@ questions:
   correct_option: b
   explanation: The browser configuration is a snapshot made at build time. Build again
     to update it.
+- id: ats069-010-q10
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Describe what the project generator creates"
+  source_readings:
+  - sections/section-010/module-02/course-01-what-the-project-generator-creates.md
+  prompt: "A team runs npx @backstage/create-app@latest and later wants to know who maintains the generated root scripts. Who owns them?"
+  options:
+  - id: a
+    text: "The Backstage project, which updates them with each release."
+    explanation: "The generator copies a template once. It does not update files later."
+  - id: b
+    text: "The project owner, because the generator copies a template and does not manage it afterwards."
+    explanation: "Correct. After generation every file belongs to the project owner."
+  - id: c
+    text: "Yarn, which regenerates them at install."
+    explanation: "Yarn installs dependencies. It does not rewrite project scripts."
+  - id: d
+    text: "The npm registry, which serves the latest copy."
+    explanation: "The registry serves packages, not the files of an existing project."
+  correct_option: b
+  explanation: "The generator copies a template once, so the project owner owns every file afterwards."
+- id: ats069-010-q11
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Describe what the project generator creates"
+  source_readings:
+  - sections/section-010/module-02/course-01-what-the-project-generator-creates.md
+  prompt: "Which folder holds the browser application in a generated project?"
+  options:
+  - id: a
+    text: "plugins/app"
+    explanation: "The plugins folder starts empty and holds plugins written by the team."
+  - id: b
+    text: "packages/backend"
+    explanation: "This folder holds the backend process."
+  - id: c
+    text: "packages/app"
+    explanation: "Correct. The frontend application is in packages/app."
+  - id: d
+    text: "examples"
+    explanation: "This folder holds example catalog entities."
+  correct_option: c
+  explanation: "The frontend application is in packages/app and the backend is in packages/backend."
+- id: ats069-010-q12
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Describe what the project generator creates"
+  source_readings:
+  - sections/section-010/module-02/course-01-what-the-project-generator-creates.md
+  prompt: "A developer wants a configuration file for settings that belong to one machine only, such as a local token. Which approach matches the generated project?"
+  options:
+  - id: a
+    text: "Edit app-config.production.yaml and commit it."
+    explanation: "The production file is shared and committed."
+  - id: b
+    text: "Create app-config.local.yaml, which the generated .gitignore excludes, and pass it with --config."
+    explanation: "Correct. The local file name is excluded from version control by convention."
+  - id: c
+    text: "Edit files under node_modules."
+    explanation: "Yarn replaces node_modules at the next install."
+  - id: d
+    text: "Put the token in backstage.json."
+    explanation: "backstage.json records the Backstage release."
+  correct_option: b
+  explanation: "A local configuration file that the .gitignore excludes keeps machine settings out of the repository."
+- id: ats069-010-q13
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Name the main backstage-cli commands"
+  source_readings:
+  - sections/section-010/module-02/course-02-the-backstage-cli-commands.md
+  prompt: "What is the difference between backstage-cli package build and backstage-cli repo build --all?"
+  options:
+  - id: a
+    text: "The first builds one package and the second builds every package in the workspace."
+    explanation: "Correct. Package commands have the scope of one package and repo commands work on the whole repository."
+  - id: b
+    text: "The first builds the frontend and the second builds the backend."
+    explanation: "Both commands choose the build method from the role of each package."
+  - id: c
+    text: "The first builds for development and the second for production."
+    explanation: "Neither command is tied to one environment."
+  - id: d
+    text: "There is no difference."
+    explanation: "The scope differs."
+  correct_option: a
+  explanation: "Package commands work on one package. Repo commands work on every package."
+- id: ats069-010-q14
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Name the main backstage-cli commands"
+  source_readings:
+  - sections/section-010/module-02/course-02-the-backstage-cli-commands.md
+  prompt: "Which command prints the configuration after all files named with --config are merged?"
+  options:
+  - id: a
+    text: "backstage-cli package start"
+    explanation: "This starts a package for development."
+  - id: b
+    text: "backstage-cli config:print"
+    explanation: "Correct. It prints the merged configuration."
+  - id: c
+    text: "backstage-cli repo clean"
+    explanation: "This removes build output."
+  - id: d
+    text: "backstage-cli versions:bump"
+    explanation: "This upgrades Backstage packages."
+  correct_option: b
+  explanation: "config:print shows the merged configuration, which is the quickest way to see what a process will read."
+- id: ats069-010-q15
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Name the main backstage-cli commands"
+  source_readings:
+  - sections/section-010/module-02/course-02-the-backstage-cli-commands.md
+  prompt: "A root script named build:all fails. A developer wants to know its scope. What does the developer do first?"
+  options:
+  - id: a
+    text: "Assume it builds only the backend."
+    explanation: "The script name is defined by the project, not by Backstage."
+  - id: b
+    text: "Read the script in package.json to see which backstage-cli command it calls."
+    explanation: "Correct. The command and its options give the scope."
+  - id: c
+    text: "Delete node_modules."
+    explanation: "This does not explain the scope."
+  - id: d
+    text: "Run backstage-cli repo clean."
+    explanation: "This removes output and does not explain the script."
+  correct_option: b
+  explanation: "A script name is project-defined, so read the command it runs."
+- id: ats069-010-q16
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Explain what the backstage.role field controls"
+  source_readings:
+  - sections/section-010/module-02/course-03-package-roles-and-the-workspace-layout.md
+  prompt: "A new plugin folder plugins/billing is created by hand. yarn workspaces list does not show it. What is the most likely cause?"
+  options:
+  - id: a
+    text: "The plugin has no tests."
+    explanation: "Tests do not decide whether Yarn lists a workspace."
+  - id: b
+    text: "The workspaces field in the root package.json has no pattern that matches plugins/billing."
+    explanation: "Correct. A folder that no pattern matches is invisible to Yarn."
+  - id: c
+    text: "The plugin role is frontend."
+    explanation: "The role does not decide whether Yarn lists a workspace."
+  - id: d
+    text: "Node.js is too new."
+    explanation: "The Node.js version does not remove a folder from the list."
+  correct_option: b
+  explanation: "Yarn lists only folders that a workspaces pattern matches."
+- id: ats069-010-q17
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Explain what the backstage.role field controls"
+  source_readings:
+  - sections/section-010/module-02/course-03-package-roles-and-the-workspace-layout.md
+  prompt: "What does the backstage.role field of a package.json tell backstage-cli?"
+  options:
+  - id: a
+    text: "The release of Backstage that the package supports."
+    explanation: "That is recorded in backstage.json."
+  - id: b
+    text: "How to build, start and publish the package, and which dependency directions are allowed."
+    explanation: "Correct. The role selects the method of the build tool."
+  - id: c
+    text: "Which port the package listens on."
+    explanation: "Ports are set in configuration files."
+  - id: d
+    text: "Which users may open the package."
+    explanation: "Roles are not permissions."
+  correct_option: b
+  explanation: "The role tells the tool how to build, start and publish the package."
+- id: ats069-010-q18
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Check that the Node.js and Yarn versions match"
+  source_readings:
+  - sections/section-010/module-02/course-04-node-js-yarn-and-version-alignment.md
+  prompt: "Which field and tool make every developer use the same Yarn version?"
+  options:
+  - id: a
+    text: "engines.node and nvm."
+    explanation: "engines.node describes Node.js."
+  - id: b
+    text: "packageManager in the root package.json, read by Corepack."
+    explanation: "Correct. Corepack runs exactly the Yarn version that the field names."
+  - id: c
+    text: "backstage.json and npm."
+    explanation: "backstage.json records the Backstage release."
+  - id: d
+    text: "workspaces and Docker."
+    explanation: "These do not pin Yarn."
+  correct_option: b
+  explanation: "The packageManager field, together with Corepack, pins the Yarn version."
+- id: ats069-010-q19
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Check that the Node.js and Yarn versions match"
+  source_readings:
+  - sections/section-010/module-02/course-04-node-js-yarn-and-version-alignment.md
+  prompt: "After a manual upgrade of one @backstage/* package, the build reports a missing export. What is the right repair?"
+  options:
+  - id: a
+    text: "Upgrade every other package to latest by hand."
+    explanation: "Versions are released as a tested set, so manual guessing repeats the problem."
+  - id: b
+    text: "Run backstage-cli versions:bump so that all @backstage/* packages move to one matching release."
+    explanation: "Correct. The packages are tested together."
+  - id: c
+    text: "Delete backstage.json."
+    explanation: "The file is only a record."
+  - id: d
+    text: "Change the engines field."
+    explanation: "The Node.js range does not cause a missing export."
+  correct_option: b
+  explanation: "A mixed set of @backstage/* versions is repaired by upgrading the whole set with versions:bump."
+- id: ats069-010-q20
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Explain the roles of ports 3000 and 7007"
+  source_readings:
+  - sections/section-010/module-03/course-01-ports-base-urls-and-cors.md
+  prompt: "Which two origins are different for a browser?"
+  options:
+  - id: a
+    text: "http://localhost:3000 and http://localhost:3000/catalog"
+    explanation: "Only the path differs, so the origin is the same."
+  - id: b
+    text: "http://localhost:3000 and http://localhost:7007"
+    explanation: "Correct. The port is part of the origin."
+  - id: c
+    text: "http://localhost:7007/api and http://localhost:7007/healthcheck"
+    explanation: "Only the path differs."
+  - id: d
+    text: "http://localhost:3000 and http://localhost:3000?x=1"
+    explanation: "Only the query differs."
+  correct_option: b
+  explanation: "An origin is scheme, host and port, so a different port is a different origin."
+- id: ats069-010-q21
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Explain the roles of ports 3000 and 7007"
+  source_readings:
+  - sections/section-010/module-03/course-01-ports-base-urls-and-cors.md
+  prompt: "The app loads, but every card shows a network error. The browser developer tools report a CORS error for requests to port 7007. Which value is the first to check?"
+  options:
+  - id: a
+    text: "backend.database.client"
+    explanation: "The database does not decide CORS answers."
+  - id: b
+    text: "backend.cors.origin, which must equal app.baseUrl"
+    explanation: "Correct. The backend must allow the origin of the app."
+  - id: c
+    text: "catalog.locations"
+    explanation: "Locations decide catalog data, not CORS."
+  - id: d
+    text: "auth.environment"
+    explanation: "This decides the sign-in mode."
+  correct_option: b
+  explanation: "CORS errors are decided by backend.cors, whose origin must match the app origin exactly."
+- id: ats069-010-q22
+  type: single_choice
+  difficulty: beginner
+  learning_objective: "Compare the SQLite database of a local start with a PostgreSQL database"
+  source_readings:
+  - sections/section-010/module-03/course-02-databases-sqlite-and-postgresql.md
+  prompt: "What happens to data stored in SQLite with the connection ':memory:' when the backend stops?"
+  options:
+  - id: a
+    text: "It is saved to a file in packages/backend."
+    explanation: "The memory connection does not write a file."
+  - id: b
+    text: "It is lost, because it lived in the memory of the process."
+    explanation: "Correct. Catalog data from locations loads again at the next start."
+  - id: c
+    text: "It moves to PostgreSQL."
+    explanation: "No migration happens."
+  - id: d
+    text: "It stays in the browser."
+    explanation: "The database belongs to the backend."
+  correct_option: b
+  explanation: "In-memory SQLite data is lost when the process stops."
+- id: ats069-010-q23
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Compare the SQLite database of a local start with a PostgreSQL database"
+  source_readings:
+  - sections/section-010/module-03/course-02-databases-sqlite-and-postgresql.md
+  prompt: "Where should the PostgreSQL password be stored for a team project?"
+  options:
+  - id: a
+    text: "As a literal value in app-config.yaml."
+    explanation: "It would enter the repository."
+  - id: b
+    text: "As a ${POSTGRES_PASSWORD} substitution, with the value in the process environment."
+    explanation: "Correct. The secret stays out of the committed file."
+  - id: c
+    text: "In the frontend configuration."
+    explanation: "The browser would receive it."
+  - id: d
+    text: "In catalog-info.yaml."
+    explanation: "This file describes the project as an entity."
+  correct_option: b
+  explanation: "Use the substitution syntax and set the variable in the environment."
+- id: ats069-010-q24
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Compare the SQLite database of a local start with a PostgreSQL database"
+  source_readings:
+  - sections/section-010/module-03/course-02-databases-sqlite-and-postgresql.md
+  prompt: "The backend stops at start with a PostgreSQL permission error while creating a database named backstage_plugin_catalog. What does this show?"
+  options:
+  - id: a
+    text: "The user lacks the permission to create databases, because each plugin gets its own database."
+    explanation: "Correct. The error comes from PostgreSQL about the user permissions."
+  - id: b
+    text: "The catalog location file is missing."
+    explanation: "A missing location does not stop the backend."
+  - id: c
+    text: "The CORS origin is wrong."
+    explanation: "CORS is a browser check."
+  - id: d
+    text: "The guest provider is disabled."
+    explanation: "Sign-in does not create databases."
+  correct_option: a
+  explanation: "Each plugin database is created by the configured user, which needs the permission to create databases."
+- id: ats069-010-q25
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Enable guest sign-in for development and explain why it stays out of production"
+  source_readings:
+  - sections/section-010/module-03/course-03-guest-sign-in-and-secret-values.md
+  prompt: "Why must auth.providers.guest not be defined in the production configuration?"
+  options:
+  - id: a
+    text: "Because it slows the backend."
+    explanation: "Speed is not the reason."
+  - id: b
+    text: "Because it signs every visitor in without a password and is meant for development only."
+    explanation: "Correct. Production needs a real identity provider."
+  - id: c
+    text: "Because YAML does not allow it."
+    explanation: "The syntax is valid."
+  - id: d
+    text: "Because it needs PostgreSQL."
+    explanation: "It does not depend on the database."
+  correct_option: b
+  explanation: "The guest provider signs everyone in without a password, so it belongs only in development."
+- id: ats069-010-q26
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Enable guest sign-in for development and explain why it stays out of production"
+  source_readings:
+  - sections/section-010/module-03/course-03-guest-sign-in-and-secret-values.md
+  prompt: "A token for an outside system must be used by the backend only. Which setup is correct?"
+  options:
+  - id: a
+    text: "Put it in a key that the frontend build exposes."
+    explanation: "The browser would receive it."
+  - id: b
+    text: "Write ${EXTERNAL_TOKEN} under a backend key and set the variable in the process environment."
+    explanation: "Correct. The value is read on the server and is not committed."
+  - id: c
+    text: "Commit it in app-config.yaml with a comment."
+    explanation: "It stays in the history."
+  - id: d
+    text: "Place it in the app title."
+    explanation: "The title is public."
+  correct_option: b
+  explanation: "Secrets belong in backend-only keys, set through the environment."
+- id: ats069-010-q27
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: "Add a catalog location and a proxy endpoint, and say where each is resolved"
+  source_readings:
+  - sections/section-010/module-03/course-04-catalog-locations-and-the-proxy.md
+  prompt: "A file location has the target ../../examples/entities.yaml. From which folder is it resolved when yarn starts the backend?"
+  options:
+  - id: a
+    text: "packages/backend, the working directory of the backend process."
+    explanation: "Correct. Two levels up is the repository root."
+  - id: b
+    text: "The home directory of the user."
+    explanation: "Targets are not resolved from the home directory."
+  - id: c
+    text: "The folder of the entity file."
+    explanation: "The file is the target, not the base."
+  - id: d
+    text: "/etc/backstage."
+    explanation: "No such rule exists."
+  correct_option: a
+  explanation: "A relative file target is resolved from the working directory of the process."
+- id: ats069-010-q28
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Add a catalog location and a proxy endpoint, and say where each is resolved"
+  source_readings:
+  - sections/section-010/module-03/course-04-catalog-locations-and-the-proxy.md
+  prompt: "The backend starts, but the catalog page is empty after a path typo in a file location. Where is the evidence?"
+  options:
+  - id: a
+    text: "In the backend log, as an error for that location."
+    explanation: "Correct. A bad location does not stop the backend."
+  - id: b
+    text: "In the output of yarn install."
+    explanation: "Install does not read locations."
+  - id: c
+    text: "In backstage.json."
+    explanation: "The file only records the release."
+  - id: d
+    text: "In the browser CORS panel."
+    explanation: "CORS is unrelated."
+  correct_option: a
+  explanation: "A bad location logs an error and leaves the catalog without those entities."
+- id: ats069-010-q29
+  type: single_choice
+  difficulty: advanced
+  learning_objective: "Add a catalog location and a proxy endpoint, and say where each is resolved"
+  source_readings:
+  - sections/section-010/module-03/course-04-catalog-locations-and-the-proxy.md
+  prompt: "An app must call an outside API that needs a secret Authorization header. How does the proxy help?"
+  options:
+  - id: a
+    text: "The app sends the secret directly to the outside API."
+    explanation: "The browser would hold the secret."
+  - id: b
+    text: "The app calls /api/proxy/<path> on the backend, which forwards the request and adds the header on the server."
+    explanation: "Correct. The browser never sees the header and no CORS check applies to the outside API."
+  - id: c
+    text: "The proxy stores the secret in the catalog."
+    explanation: "The proxy does not store secrets in the catalog."
+  - id: d
+    text: "The proxy replaces the database."
+    explanation: "It forwards requests only."
+  correct_option: b
+  explanation: "The backend proxy forwards the request and adds the header server side."

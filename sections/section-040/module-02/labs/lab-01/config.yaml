@@ -1,0 +1,69 @@
+# Add Dependencies And Run Scripts In Every Workspace (LAB). Graded on the VM. The backend imports semver, which only the root declares.
+metadata:
+  name: "ats-069-lab-040-02"
+  docs:
+    prerequisites: "prerequisites.md"
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+
+bootstrap:
+  init:
+    - name: "seed"
+      description: "Install Node.js 22 and create the workspace with its faults"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "semver-not-at-root"
+      description: "The root manifest does not declare semver"
+      type: "file"
+      source: "validation/validate-semver-not-at-root.sh"
+      hint: "Remove semver from the root package.json. A package at the root is not a declaration of the workspace that imports it."
+    - name: "backend-declares-semver"
+      description: "The backend manifest declares semver under dependencies"
+      type: "file"
+      source: "validation/validate-backend-declares-semver.sh"
+      hint: "Run yarn workspace backend add semver."
+    - name: "lint-all-script"
+      description: "The root script lint:all runs lint in every workspace and exits with code 0"
+      type: "file"
+      source: "validation/validate-lint-all-script.sh"
+      hint: "Add a root script: yarn workspaces foreach -A run lint. Give it the name lint:all."
+    - name: "lockfile-lists-backend-semver"
+      description: "yarn.lock records semver as a dependency of backend"
+      type: "file"
+      source: "validation/validate-lockfile-lists-backend-semver.sh"
+      hint: "Run a plain yarn install so yarn.lock is rewritten."
+    - name: "immutable-install-passes"
+      description: "yarn install --immutable exits with code 0"
+      type: "file"
+      source: "validation/validate-immutable-install-passes.sh"
+      hint: "Run yarn install once, then yarn install --immutable to confirm."
+    - name: "project-setup-unchanged"
+      description: "Yarn stays the package manager and backstage.json keeps version 1.30.0"
+      type: "file"
+      source: "validation/validate-project-setup-unchanged.sh"
+      hint: "Do not change packageManager, backstage.json or nodeLinker, and do not add package-lock.json."
+
+teardown:
+  keepCluster: false

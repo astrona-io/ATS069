@@ -1,5 +1,7 @@
+---
 version: 1
-approval: CBA requested 2026-10-11; reading-only rule lifted 2026-11-03 (labs, playgrounds, capstones, quizzes in scope)
+approval: CBA requested 2026-10-11; reading-only rule lifted 2026-11-03 (labs, playgrounds,
+  capstones, quizzes in scope)
 course:
   id: ATS069
   certification:
@@ -40,7 +42,34 @@ sections:
     module_lab: true
     sources:
     - reading: sections/section-010/module-01/course-01-local-projects-development-servers-and-production-builds.md
-      adapted_from: null
+      adapted_from: 
+  - id: module-02
+    title: Backstage CLI, Scaffolding And Project Creation
+    objectives:
+    - Describe what `@backstage/create-app` creates and which files a developer owns
+      afterwards.
+    - Name the main `backstage-cli` commands and say what each one does to a package
+      or to the repository.
+    - Explain what the `backstage.role` field in a `package.json` controls.
+    - Check that the Node.js and Yarn versions match what the project requires.
+    outline:
+    - Backstage CLI, Scaffolding And Project Creation
+    playground: true
+    module_lab: true
+    sources: []
+  - id: module-03
+    title: Database, Ports, Proxies And Local Integrations
+    objectives:
+    - Explain the roles of ports 3000 and 7007, the two base URLs and the CORS settings.
+    - Compare the SQLite database of a local start with a PostgreSQL database and
+      set the connection safely.
+    - Enable guest sign-in for development and explain why it stays out of production.
+    - Add a catalog location and a proxy endpoint, and say where each is resolved.
+    outline:
+    - Database, Ports, Proxies And Local Integrations
+    playground: true
+    module_lab: true
+    sources: []
 - id: section-020
   title: Understand local development workflows
   curriculum_item: Understand local development workflows
@@ -59,7 +88,33 @@ sections:
     module_lab: true
     sources:
     - reading: sections/section-020/module-01/course-01-changes-workspace-feedback-and-reviewable-development.md
-      adapted_from: null
+      adapted_from: 
+  - id: module-02
+    title: Developing Plugins Locally
+    objectives:
+    - Create a plugin package with `yarn new` and find the files it generates.
+    - Run a plugin alone from its `dev/` entry point and explain hot reload.
+    - Explain how a backend plugin id decides its route prefix.
+    - Connect a plugin to the app and to the backend, and name the files that change.
+    outline:
+    - Developing Plugins Locally
+    playground: true
+    module_lab: true
+    sources: []
+  - id: module-03
+    title: Testing, Linting And Formatting Workflow
+    objectives:
+    - Run the tests of one package and of the whole repository with `backstage-cli`.
+    - Run the linter and fix the problems it reports, for all packages and for changed
+      packages only.
+    - Check and apply formatting with Prettier, and run the type check with `tsc`.
+    - Combine the checks into one command that matches the CI pipeline, and run it
+      from a Git hook.
+    outline:
+    - Testing, Linting And Formatting Workflow
+    playground: true
+    module_lab: true
+    sources: []
 - id: section-030
   title: Compile a Backstage project with TypeScript
   curriculum_item: Compile a Backstage project with TypeScript
@@ -78,10 +133,38 @@ sections:
     module_lab: true
     sources:
     - reading: sections/section-030/module-01/course-01-type-checking-transpilation-and-workspace-build-contracts.md
-      adapted_from: null
+      adapted_from: 
+  - id: module-02
+    title: Shared tsconfig, Strictness And Type Check Scripts
+    objectives:
+    - Explain what a shared base `tsconfig.json` sets and how a root file extends
+      it.
+    - Describe what `strict` switches on and what a check means without it.
+    - Explain what `skipLibCheck` skips and why a repository also has a full check.
+    - Run the root check scripts and say where declaration files go and why.
+    outline:
+    - Shared tsconfig, Strictness And Type Check Scripts
+    playground: true
+    module_lab: true
+    sources: []
+  - id: module-03
+    title: Backstage Build Pipelines And Package Roles
+    objectives:
+    - Explain what a package role is and what the build tooling decides from it.
+    - Distinguish transpiling from type checking and say which one the Backstage build
+      does.
+    - Describe the build output of a library, a frontend app and a backend.
+    - Explain how the root scripts build all packages and in which order a pipeline
+      runs them.
+    outline:
+    - Backstage Build Pipelines And Package Roles
+    playground: true
+    module_lab: true
+    sources: []
 - id: section-040
   title: Download and install dependencies for a Backstage project with NPM/Yarn
-  curriculum_item: Download and install dependencies for a Backstage project with NPM/Yarn
+  curriculum_item: Download and install dependencies for a Backstage project with
+    NPM/Yarn
   capstone: true
   section_quiz: true
   modules:
@@ -97,7 +180,38 @@ sections:
     module_lab: true
     sources:
     - reading: sections/section-040/module-01/course-01-package-managers-lockfiles-and-reproducible-dependencies.md
-      adapted_from: null
+      adapted_from: 
+  - id: module-02
+    title: Yarn Workflows In A Backstage Repository
+    objectives:
+    - Read `.yarnrc.yml` and say what `yarnPath`, `nodeLinker` and `enableGlobalCache`
+      control.
+    - Add, change and remove a dependency in one workspace with `yarn add`, `yarn
+      up` and `yarn remove`.
+    - Run one script in every workspace with `yarn workspaces foreach`, and choose
+      the order and the scope.
+    - Explain what `backstage.json` records and how the `backstage:` protocol resolves
+      a version.
+    outline:
+    - Yarn Workflows In A Backstage Repository
+    playground: true
+    module_lab: true
+    sources: []
+  - id: module-03
+    title: Upgrading, Auditing And Private Registries
+    objectives:
+    - Describe what `backstage-cli versions:bump` changes and how to review the result.
+    - Find why a package is installed with `yarn why`, remove duplicates with `yarn
+      dedupe` and report vulnerabilities with `yarn npm audit`.
+    - Declare a peer dependency in a plugin and explain what the application must
+      provide.
+    - Route a package scope to a private registry with `npmScopes` and `npmRegistryServer`,
+      and keep the token out of the repository.
+    outline:
+    - Upgrading, Auditing And Private Registries
+    playground: true
+    module_lab: true
+    sources: []
 - id: section-050
   title: Use Docker to build a container image of a Backstage project
   curriculum_item: Use Docker to build a container image of a Backstage project
@@ -116,4 +230,32 @@ sections:
     module_lab: true
     sources:
     - reading: sections/section-050/module-01/course-01-container-artifacts-build-inputs-and-runtime-responsibilities.md
-      adapted_from: null
+      adapted_from: 
+  - id: module-02
+    title: Dockerfile Layers, Caching And Build Context
+    objectives:
+    - Control the build context with a `.dockerignore` file.
+    - Explain what `skeleton.tar.gz` and `bundle.tar.gz` contain and why the Dockerfile
+      unpacks them in two steps.
+    - Predict which build steps Docker reuses from its cache after a change.
+    - Use BuildKit cache mounts and secret mounts for dependency downloads and credentials.
+    outline:
+    - Dockerfile Layers, Caching And Build Context
+    playground: true
+    module_lab: true
+    sources: []
+  - id: module-03
+    title: Running And Securing The Image
+    objectives:
+    - Start, inspect and stop a container, and publish its port.
+    - Supply configuration files and environment variables at run time, including
+      `APP_CONFIG_` variables.
+    - Run the container as a non-root user with a read-only filesystem and fewer privileges.
+    - Connect the backend to PostgreSQL through environment variables and check container
+      health.
+    - Describe a separate frontend image served by nginx.
+    outline:
+    - Running And Securing The Image
+    playground: true
+    module_lab: true
+    sources: []

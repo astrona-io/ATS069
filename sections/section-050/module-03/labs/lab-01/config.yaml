@@ -1,0 +1,73 @@
+# Run The Image With Runtime Configuration (LAB). Graded on the virtual machine. Nothing runs at the start.
+metadata:
+  name: "ats-069-lab-050-03"
+  docs:
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+
+bootstrap:
+  init:
+    - name: "seed-portal"
+      description: "Install Node.js and Docker, then build the image portal:run"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "container-running"
+      description: "A container named portal is running from portal:run"
+      type: "file"
+      source: "validation/validate-container-running.sh"
+      hint: "Start it with docker run -d --name portal and the image portal:run."
+    - name: "runtime-config-loaded"
+      description: "The runtime file is mounted read-only and loaded as the last --config"
+      type: "file"
+      source: "validation/validate-runtime-config.sh"
+      hint: "Mount /opt/portal/runtime/app-config.runtime.yaml at /config/app-config.runtime.yaml with :ro and repeat the two image files before it in the command."
+    - name: "published-port"
+      description: "Host port 7007 reaches the backend"
+      type: "file"
+      source: "validation/validate-published-port.sh"
+      hint: "The runtime file sets the container port to 7100. Publish it with -p 7007:7100."
+    - name: "token-at-runtime"
+      description: "The token reaches the process but is not in the image"
+      type: "file"
+      source: "validation/validate-token-at-runtime.sh"
+      hint: "Use --env-file /opt/portal/runtime/portal.env. Do not rebuild the image."
+    - name: "hardened"
+      description: "Non-root, read-only root filesystem, all capabilities dropped, no new privileges"
+      type: "file"
+      source: "validation/validate-hardened.sh"
+      hint: "Add --read-only, --cap-drop ALL and --security-opt no-new-privileges. The image already uses the user node."
+    - name: "healthy-and-restarts"
+      description: "The container has a passing health check and a restart policy"
+      type: "file"
+      source: "validation/validate-health.sh"
+      hint: "Use --health-cmd with a Node.js one-liner that requests /healthcheck on port 7100, and --restart unless-stopped."
+    - name: "image-unchanged"
+      description: "The image portal:run was not rebuilt"
+      type: "file"
+      source: "validation/validate-image-unchanged.sh"
+      hint: "Change the run command, not the image."
+
+teardown:
+  keepCluster: false

@@ -281,3 +281,471 @@ questions:
     explanation: Image building has its own inputs and steps.
   correct_option: a
   explanation: This is exactly what the command proves.
+- id: ats069-040-q11
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Read .yarnrc.yml and say what its settings control
+  source_readings:
+  - sections/section-040/module-02/course-01-the-yarn-configuration-file-and-the-linker.md
+  prompt: 'A Backstage repository sets `nodeLinker: node-modules` in `.yarnrc.yml`.
+    What does this setting control?'
+  options:
+  - id: a
+    text: 'How Yarn writes installed packages to disk: as a `node_modules` folder.'
+    explanation: Correct. The linker decides the on-disk layout, and Backstage tooling
+      expects `node_modules`.
+  - id: b
+    text: Which registry Yarn downloads packages from.
+    explanation: The registry is set by `npmRegistryServer`.
+  - id: c
+    text: Which Node.js release runs the scripts.
+    explanation: Yarn does not choose the Node.js release with this setting.
+  - id: d
+    text: Whether `yarn.lock` is written.
+    explanation: The lockfile is written whatever the linker is.
+  correct_option: a
+  explanation: Correct. The linker decides the on-disk layout, and Backstage tooling
+    expects `node_modules`.
+- id: ats069-040-q12
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Read .yarnrc.yml and say what its settings control
+  source_readings:
+  - sections/section-040/module-02/course-01-the-yarn-configuration-file-and-the-linker.md
+  prompt: On a build server, `yarn config get enableGlobalCache` prints `true`, but
+    the repository `.yarnrc.yml` says `false`. What is the most likely cause?
+  options:
+  - id: a
+    text: Yarn ignores `.yarnrc.yml` files in repositories.
+    explanation: Yarn reads the repository file and merges it with other sources.
+  - id: b
+    text: A user-level `.yarnrc.yml` or a `YARN_ENABLE_GLOBAL_CACHE` environment variable
+      overrides the repository file.
+    explanation: Correct. Yarn merges settings from several places, and environment
+      variables win over files.
+  - id: c
+    text: The lockfile overrides the setting.
+    explanation: The lockfile records resolved packages, not settings.
+  - id: d
+    text: "`enableGlobalCache` cannot be set in a file."
+    explanation: It is a normal setting that a file can hold.
+  correct_option: b
+  explanation: Correct. Yarn merges settings from several places, and environment
+    variables win over files.
+- id: ats069-040-q13
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Read .yarnrc.yml and say what its settings control
+  source_readings:
+  - sections/section-040/module-02/course-01-the-yarn-configuration-file-and-the-linker.md
+  prompt: Which items does a Backstage repository normally commit?
+  options:
+  - id: a
+    text: The `node_modules` folder and `.yarn/install-state.gz`.
+    explanation: These are outputs of an install, so they belong in `.gitignore`.
+  - id: b
+    text: Only `yarn.lock`.
+    explanation: Without the manifests the lockfile has nothing to match.
+  - id: c
+    text: The manifests, `yarn.lock`, `.yarnrc.yml` and the release file under `.yarn/releases`.
+    explanation: Correct. These are inputs that describe the project.
+  - id: d
+    text: Only the manifests.
+    explanation: Without the lockfile, installs are not reproducible.
+  correct_option: c
+  explanation: Correct. These are inputs that describe the project.
+- id: ats069-040-q14
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Add, change and remove a dependency in one workspace
+  source_readings:
+  - sections/section-040/module-02/course-02-adding-and-removing-dependencies-in-a-workspace.md
+  prompt: Which command adds `semver` to the `backend` workspace of a Yarn 4 project
+    from the repository root?
+  options:
+  - id: a
+    text: "`yarn add semver --root`"
+    explanation: Yarn 4 has no such option, and it would not target the backend.
+  - id: b
+    text: "`yarn --cwd packages/backend add semver`"
+    explanation: "`--cwd` belongs to Yarn 1."
+  - id: c
+    text: "`npm add semver --workspace-all`"
+    explanation: This is not a Yarn command and the flag does not exist.
+  - id: d
+    text: "`yarn workspace backend add semver`"
+    explanation: Correct. The `workspace` command targets a workspace by the `name`
+      in its manifest.
+  correct_option: d
+  explanation: Correct. The `workspace` command targets a workspace by the `name`
+    in its manifest.
+- id: ats069-040-q15
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Add, change and remove a dependency in one workspace
+  source_readings:
+  - sections/section-040/module-02/course-02-adding-and-removing-dependencies-in-a-workspace.md
+  prompt: A developer runs `yarn add semver` in the repository root, and the backend
+    then imports `semver`. What is wrong?
+  options:
+  - id: a
+    text: The root manifest now declares the package, but the backend does not, so
+      the backend works only because of hoisting.
+    explanation: Correct. A package must be declared by the workspace that imports
+      it.
+  - id: b
+    text: Nothing; the root declaration covers every workspace.
+    explanation: A root declaration does not declare the package for other workspaces.
+  - id: c
+    text: Yarn refuses to add packages at the root.
+    explanation: Yarn allows it, which is the problem.
+  - id: d
+    text: The lockfile cannot record the package.
+    explanation: The lockfile records it normally.
+  correct_option: a
+  explanation: Correct. A package must be declared by the workspace that imports it.
+- id: ats069-040-q16
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Add, change and remove a dependency in one workspace
+  source_readings:
+  - sections/section-040/module-02/course-02-adding-and-removing-dependencies-in-a-workspace.md
+  prompt: Which flag of `yarn add` writes the package under `devDependencies`?
+  options:
+  - id: a
+    text: "`-E`"
+    explanation: "`-E` writes an exact version, not a different field."
+  - id: b
+    text: "`-D` (or `--dev`)"
+    explanation: Correct. This field is for packages that only the development workflow
+      needs.
+  - id: c
+    text: "`-T`"
+    explanation: "`-T` writes a tilde range."
+  - id: d
+    text: "`-R`"
+    explanation: "`-R` is used with `yarn up` to include dependants."
+  correct_option: b
+  explanation: Correct. This field is for packages that only the development workflow
+    needs.
+- id: ats069-040-q17
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Run one script in every workspace with yarn workspaces foreach
+  source_readings:
+  - sections/section-040/module-02/course-03-running-scripts-across-workspaces.md
+  prompt: Which command runs the `lint` script in every workspace of a Yarn 4 project?
+  options:
+  - id: a
+    text: "`yarn run lint --all`"
+    explanation: This passes `--all` to the script, not to Yarn.
+  - id: b
+    text: "`yarn workspace lint`"
+    explanation: "`workspace` expects a workspace name first."
+  - id: c
+    text: "`yarn workspaces foreach -A run lint`"
+    explanation: Correct. `-A` selects all workspaces.
+  - id: d
+    text: "`yarn foreach lint`"
+    explanation: There is no top-level `foreach` command.
+  correct_option: c
+  explanation: Correct. `-A` selects all workspaces.
+- id: ats069-040-q18
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Run one script in every workspace with yarn workspaces foreach
+  source_readings:
+  - sections/section-040/module-02/course-03-running-scripts-across-workspaces.md
+  prompt: The backend build imports the output of `@internal/shared`. Which flag makes
+    `foreach` build the shared package first?
+  options:
+  - id: a
+    text: "`--parallel`"
+    explanation: This runs workspaces at the same time and can start the backend too
+      early.
+  - id: b
+    text: "`--verbose`"
+    explanation: This only prints more output.
+  - id: c
+    text: "`--since`"
+    explanation: This selects changed workspaces; it does not order them.
+  - id: d
+    text: "`--topological`"
+    explanation: Correct. It runs a workspace after the workspaces it depends on.
+  correct_option: d
+  explanation: Correct. It runs a workspace after the workspaces it depends on.
+- id: ats069-040-q19
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Run one script in every workspace with yarn workspaces foreach
+  source_readings:
+  - sections/section-040/module-02/course-03-running-scripts-across-workspaces.md
+  prompt: A `foreach` run fails in the `app` workspace. What does the exit code of
+    the whole command show?
+  options:
+  - id: a
+    text: A non-zero code, so a build server stops.
+    explanation: Correct. A failure in one workspace makes the run fail.
+  - id: b
+    text: Zero, because the other workspaces passed.
+    explanation: "`foreach` does not hide a failure."
+  - id: c
+    text: Zero, because `foreach` only reports.
+    explanation: It returns the failure.
+  - id: d
+    text: It depends on the order of the workspaces.
+    explanation: The result does not depend on the order.
+  correct_option: a
+  explanation: Correct. A failure in one workspace makes the run fail.
+- id: ats069-040-q20
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: 'Explain what backstage.json records and how the backstage:
+    protocol resolves a version'
+  source_readings:
+  - sections/section-040/module-02/course-04-the-backstage-json-file-and-the-backstage-protocol.md
+  prompt: 'A manifest contains `"@backstage/core-components": "backstage:^"`. Where
+    does the installed version come from?'
+  options:
+  - id: a
+    text: From the newest release on the registry at install time.
+    explanation: The release is chosen by `backstage.json`.
+  - id: b
+    text: From the release named in `backstage.json`, looked up by a Yarn plugin in
+      the release manifest.
+    explanation: Correct. The version lives in one place.
+  - id: c
+    text: From the `version` field of the app package.
+    explanation: The app version is unrelated.
+  - id: d
+    text: From `yarn.lock` before any resolution.
+    explanation: The lockfile receives the resolved version.
+  correct_option: b
+  explanation: Correct. The version lives in one place.
+- id: ats069-040-q21
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Describe what backstage-cli versions:bump changes
+  source_readings:
+  - sections/section-040/module-03/course-01-upgrading-backstage-with-versions-bump.md
+  prompt: Which files does `yarn backstage-cli versions:bump` change?
+  options:
+  - id: a
+    text: Only `yarn.lock`.
+    explanation: Manifests and `backstage.json` change too.
+  - id: b
+    text: The source code of the plugins.
+    explanation: It does not fix breaking code changes.
+  - id: c
+    text: The manifests with `@backstage` ranges, `backstage.json` and, through the
+      install, `yarn.lock`.
+    explanation: Correct. It also runs the install step.
+  - id: d
+    text: The `Dockerfile` of the project.
+    explanation: Template files are not rewritten.
+  correct_option: c
+  explanation: Correct. It also runs the install step.
+- id: ats069-040-q22
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Describe what backstage-cli versions:bump changes
+  source_readings:
+  - sections/section-040/module-03/course-01-upgrading-backstage-with-versions-bump.md
+  prompt: After a bump, `yarn install --immutable` passes. Which claim does this support?
+  options:
+  - id: a
+    text: The upgraded code compiles.
+    explanation: The install does not run the compiler.
+  - id: b
+    text: The tests pass.
+    explanation: The install does not run tests.
+  - id: c
+    text: The release notes need no reading.
+    explanation: Breaking changes still need to be read.
+  - id: d
+    text: The manifests and the lockfile agree.
+    explanation: Correct. It does not prove that the code compiles or passes tests.
+  correct_option: d
+  explanation: Correct. It does not prove that the code compiles or passes tests.
+- id: ats069-040-q23
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Find why a package is installed with yarn why
+  source_readings:
+  - sections/section-040/module-03/course-02-finding-duplicate-and-vulnerable-packages.md
+  prompt: Which command shows which packages ask for `semver` and which version Yarn
+    selected?
+  options:
+  - id: a
+    text: "`yarn why semver`"
+    explanation: Correct. The flag `-R` adds the chain to the workspace.
+  - id: b
+    text: "`yarn dedupe semver`"
+    explanation: It rewrites the lockfile; it does not explain.
+  - id: c
+    text: "`yarn npm audit semver`"
+    explanation: It reports advisories.
+  - id: d
+    text: "`yarn up semver`"
+    explanation: It updates the package.
+  correct_option: a
+  explanation: Correct. The flag `-R` adds the chain to the workspace.
+- id: ats069-040-q24
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Remove duplicates with yarn dedupe
+  source_readings:
+  - sections/section-040/module-03/course-02-finding-duplicate-and-vulnerable-packages.md
+  prompt: What does `yarn dedupe --check` do?
+  options:
+  - id: a
+    text: It rewrites the lockfile to the newest versions.
+    explanation: That is the strategy `highest`, and `--check` writes nothing.
+  - id: b
+    text: It writes nothing and exits with a non-zero code if a dedupe would change
+      the lockfile.
+    explanation: Correct. It works as a gate in a build.
+  - id: c
+    text: It audits the packages for advisories.
+    explanation: That is `yarn npm audit`.
+  - id: d
+    text: It deletes `node_modules`.
+    explanation: It never deletes installed packages.
+  correct_option: b
+  explanation: Correct. It works as a gate in a build.
+- id: ats069-040-q25
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Report vulnerabilities with yarn npm audit
+  source_readings:
+  - sections/section-040/module-03/course-02-finding-duplicate-and-vulnerable-packages.md
+  prompt: "`yarn npm audit` reports an advisory in a transitive package that no direct
+    dependency can fix. Which action fits?"
+  options:
+  - id: a
+    text: Add the package to `devDependencies`.
+    explanation: This does not change the version in the graph.
+  - id: b
+    text: Delete `yarn.lock`.
+    explanation: The lockfile would be rebuilt with unknown versions.
+  - id: c
+    text: Select the patched release with a `resolutions` entry or `yarn up -R`, then
+      run `yarn install --immutable`.
+    explanation: Correct. The cause decides the fix.
+  - id: d
+    text: Run `yarn dedupe --check` and stop.
+    explanation: It reports only; it does not select a version.
+  correct_option: c
+  explanation: Correct. The cause decides the fix.
+- id: ats069-040-q26
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Declare a peer dependency in a plugin
+  source_readings:
+  - sections/section-040/module-03/course-03-peer-dependencies-in-plugins.md
+  prompt: What does `peerDependencies` in a plugin manifest declare?
+  options:
+  - id: a
+    text: A package to install for the plugin only.
+    explanation: That is `dependencies`.
+  - id: b
+    text: A package for tests only.
+    explanation: That is `devDependencies`.
+  - id: c
+    text: A package to publish with the plugin.
+    explanation: Publishing is not set here.
+  - id: d
+    text: A requirement that the application using the plugin must provide.
+    explanation: Correct. A peer dependency installs nothing for the plugin.
+  correct_option: d
+  explanation: Correct. A peer dependency installs nothing for the plugin.
+- id: ats069-040-q27
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Declare a peer dependency in a plugin
+  source_readings:
+  - sections/section-040/module-03/course-03-peer-dependencies-in-plugins.md
+  prompt: Why does a plugin that has a peer dependency also list it in `devDependencies`?
+  options:
+  - id: a
+    text: So the plugin can be built and tested alone, when no application provides
+      it.
+    explanation: Correct. The two entries serve different readers.
+  - id: b
+    text: Yarn requires both fields to match.
+    explanation: Yarn does not require it.
+  - id: c
+    text: It makes the peer install twice for consumers.
+    explanation: The development entry does not affect consumers.
+  - id: d
+    text: It replaces the peer range for consumers.
+    explanation: Consumers read the peer range.
+  correct_option: a
+  explanation: Correct. The two entries serve different readers.
+- id: ats069-040-q28
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Route a package scope to a private registry
+  source_readings:
+  - sections/section-040/module-03/course-04-private-registries-and-authentication.md
+  prompt: Which setting sends the packages of the scope `internal` to a private server?
+  options:
+  - id: a
+    text: A top-level `npmRegistryServer`.
+    explanation: This sends every package to that server.
+  - id: b
+    text: "`npmScopes` with an `internal` entry that sets `npmRegistryServer`."
+    explanation: Correct. Other packages keep the default registry.
+  - id: c
+    text: "`nodeLinker`."
+    explanation: This sets the on-disk layout.
+  - id: d
+    text: "`yarnPath`."
+    explanation: This points at the Yarn release file.
+  correct_option: b
+  explanation: Correct. Other packages keep the default registry.
+- id: ats069-040-q29
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Keep the token out of the repository
+  source_readings:
+  - sections/section-040/module-03/course-04-private-registries-and-authentication.md
+  prompt: Which value keeps a registry token out of a committed `.yarnrc.yml`?
+  options:
+  - id: a
+    text: '`npmAuthToken: "npm_abc123"`'
+    explanation: A literal token stays in the history of version control.
+  - id: b
+    text: '`npmAuthIdent: "user:password"` in the repository file'
+    explanation: This commits a credential too.
+  - id: c
+    text: '`npmAuthToken: "${NPM_TOKEN:-}"`'
+    explanation: Correct. Yarn reads the environment variable.
+  - id: d
+    text: '`unsafeHttpWhitelist: ["*"]`'
+    explanation: This allows plain `http` hosts and has nothing to do with tokens.
+  correct_option: c
+  explanation: Correct. Yarn reads the environment variable.
+- id: ats069-040-q30
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Name the cause of an install failure from its error
+  source_readings:
+  - sections/section-040/module-03/course-04-private-registries-and-authentication.md
+  prompt: "`yarn install` fails with `404` for a private package that exists. The
+    scope has no `npmScopes` entry. What is the likely cause?"
+  options:
+  - id: a
+    text: The token has expired.
+    explanation: An expired token usually gives `401`.
+  - id: b
+    text: The user may not read the package.
+    explanation: That gives `403`.
+  - id: c
+    text: The lockfile is corrupt.
+    explanation: A corrupt lockfile gives an integrity or parse error.
+  - id: d
+    text: Yarn asked the public registry, which does not hold the private package.
+    explanation: Correct. Route the scope to the private registry.
+  correct_option: d
+  explanation: Correct. Route the scope to the private registry.

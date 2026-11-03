@@ -74,6 +74,74 @@ modules:
         title: "Summary"
         path: sections/section-010/module-01/course-04-summary.md
       - type: reading
+        title: "Backstage CLI, Scaffolding And Project Creation"
+        path: sections/section-010/module-02/course.md
+      - type: reading
+        title: "What The Project Generator Creates"
+        path: sections/section-010/module-02/course-01-what-the-project-generator-creates.md
+      - type: reading
+        title: "The Backstage CLI Commands"
+        path: sections/section-010/module-02/course-02-the-backstage-cli-commands.md
+      - type: reading
+        title: "Package Roles And The Workspace Layout"
+        path: sections/section-010/module-02/course-03-package-roles-and-the-workspace-layout.md
+      - type: reading
+        title: "Node.js, Yarn And Version Alignment"
+        path: sections/section-010/module-02/course-04-node-js-yarn-and-version-alignment.md
+      - type: reading
+        title: "Question"
+        path: sections/section-010/module-02/labs/lab-01/question.md
+      - type: lab
+        title: "Repair A Scaffolded Project Lab"
+        path: sections/section-010/module-02/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 20m
+        topic: backstage-development
+        task_kind: fix
+        tags: [yarn, workspaces, package-roles, engines, corepack]
+        learning_goals:
+          - Add the plugins folder to the workspaces field
+          - Allow the installed Node.js version in engines
+          - Pin Yarn 4 with packageManager
+          - Declare the backend-plugin role
+      - type: reading
+        title: "Summary"
+        path: sections/section-010/module-02/course-05-summary.md
+      - type: reading
+        title: "Database, Ports, Proxies And Local Integrations"
+        path: sections/section-010/module-03/course.md
+      - type: reading
+        title: "Ports, Base URLs And CORS"
+        path: sections/section-010/module-03/course-01-ports-base-urls-and-cors.md
+      - type: reading
+        title: "Databases: SQLite And PostgreSQL"
+        path: sections/section-010/module-03/course-02-databases-sqlite-and-postgresql.md
+      - type: reading
+        title: "Guest Sign-In And Secret Values"
+        path: sections/section-010/module-03/course-03-guest-sign-in-and-secret-values.md
+      - type: reading
+        title: "Catalog Locations And The Proxy"
+        path: sections/section-010/module-03/course-04-catalog-locations-and-the-proxy.md
+      - type: reading
+        title: "Question"
+        path: sections/section-010/module-03/labs/lab-01/question.md
+      - type: lab
+        title: "Repair The Local Configuration Lab"
+        path: sections/section-010/module-03/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 20m
+        topic: backstage-development
+        task_kind: fix
+        tags: [configuration, cors, postgresql, guest, catalog, secrets]
+        learning_goals:
+          - Match the CORS origin to app.baseUrl
+          - Enable guest sign-in for development only
+          - Fix a catalog file location
+          - Read the production database password from the environment
+      - type: reading
+        title: "Summary"
+        path: sections/section-010/module-03/course-05-summary.md
+      - type: reading
         title: "Question"
         path: sections/section-010/capstone/labs/lab-01/question.md
       - type: lab
@@ -137,6 +205,72 @@ modules:
       - type: reading
         title: "Summary"
         path: sections/section-020/module-01/course-04-summary.md
+      - type: reading
+        title: "Developing Plugins Locally"
+        path: sections/section-020/module-02/course.md
+      - type: reading
+        title: "Creating A Plugin With yarn new"
+        path: sections/section-020/module-02/course-01-creating-a-plugin-with-yarn-new.md
+      - type: reading
+        title: "The Plugin Development Entry And Hot Reload"
+        path: sections/section-020/module-02/course-02-the-plugin-development-entry-and-hot-reload.md
+      - type: reading
+        title: "Backend Plugins And Their Routes"
+        path: sections/section-020/module-02/course-03-backend-plugins-and-their-routes.md
+      - type: reading
+        title: "Wiring A Plugin Into The App And The Backend"
+        path: sections/section-020/module-02/course-04-wiring-a-plugin-into-the-app-and-the-backend.md
+      - type: reading
+        title: "Question"
+        path: sections/section-020/module-02/labs/lab-01/question.md
+      - type: lab
+        title: "Wire A New Plugin Into The Backend Lab"
+        path: sections/section-020/module-02/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 25m
+        topic: development-workflow
+        task_kind: fix
+        tags: [yarn-workspace, plugin, backend, dependency, routes]
+        learning_goals:
+          - Make a plugin folder a Yarn workspace and fix its plugin id
+          - Add the plugin to the backend and declare the workspace dependency
+          - Check the route through the started backend
+      - type: reading
+        title: "Summary"
+        path: sections/section-020/module-02/course-05-summary.md
+      - type: reading
+        title: "Testing, Linting And Formatting Workflow"
+        path: sections/section-020/module-03/course.md
+      - type: reading
+        title: "Running Tests With backstage-cli"
+        path: sections/section-020/module-03/course-01-running-tests-with-backstage-cli.md
+      - type: reading
+        title: "Linting With backstage-cli"
+        path: sections/section-020/module-03/course-02-linting-with-backstage-cli.md
+      - type: reading
+        title: "Formatting With Prettier And Checking Types With tsc"
+        path: sections/section-020/module-03/course-03-formatting-with-prettier-and-checking-types-with-tsc.md
+      - type: reading
+        title: "One Check Command, CI And Git Hooks"
+        path: sections/section-020/module-03/course-04-one-check-command-ci-and-git-hooks.md
+      - type: reading
+        title: "Question"
+        path: sections/section-020/module-03/labs/lab-01/question.md
+      - type: lab
+        title: "Add A Check Script And A Pre-Commit Hook Lab"
+        path: sections/section-020/module-03/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 25m
+        topic: development-workflow
+        task_kind: fix
+        tags: [lint, format, check-script, git-hooks]
+        learning_goals:
+          - Fix a lint problem and format a file with the formatter
+          - Add one check script that runs the four checks in order
+          - Install a pre-commit hook that stops a failing commit
+      - type: reading
+        title: "Summary"
+        path: sections/section-020/module-03/course-05-summary.md
 
       - type: reading
         title: "Question"
@@ -210,6 +344,83 @@ modules:
         path: sections/section-030/module-01/course-04-summary.md
 
       - type: reading
+        title: "Shared tsconfig, Strictness And Type Check Scripts"
+        path: sections/section-030/module-02/course.md
+      - type: reading
+        title: "What The Shared Base Configuration Sets"
+        path: sections/section-030/module-02/course-01-what-the-shared-base-configuration-sets.md
+      - type: reading
+        title: "Strict Mode And What It Switches On"
+        path: sections/section-030/module-02/course-02-strict-mode-and-what-it-switches-on.md
+      - type: reading
+        title: "skipLibCheck And Declaration Files"
+        path: sections/section-030/module-02/course-03-skiplibcheck-and-declaration-files.md
+      - type: reading
+        title: "Check Scripts, dist-types And Incremental Checks"
+        path: sections/section-030/module-02/course-04-check-scripts-dist-types-and-incremental-checks.md
+      - type: reading
+        title: "Question"
+        path: sections/section-030/module-02/labs/lab-01/question.md
+      - type: lab
+        title: "Extend The Shared Base And Add The Check Scripts Lab"
+        path: sections/section-030/module-02/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 25m
+        topic: typescript
+        task_kind: fix
+        tags: [typescript, tsconfig, extends, strict, skiplibcheck, dist-types]
+        learning_goals:
+          - Extend a shared base configuration instead of copying its options
+          - Fix an implicit any error that strict reports
+          - Add a full check script and keep generated declarations out of version control
+        resources:
+          - name: "TSConfig reference"
+            url: https://www.typescriptlang.org/tsconfig/
+          - name: "Backstage build system"
+            url: https://backstage.io/docs/tooling/cli/build-system/
+      - type: reading
+        title: "Summary"
+        path: sections/section-030/module-02/course-05-summary.md
+      - type: reading
+        title: "Backstage Build Pipelines And Package Roles"
+        path: sections/section-030/module-03/course.md
+      - type: reading
+        title: "Package Roles In package.json"
+        path: sections/section-030/module-03/course-01-package-roles-in-package-json.md
+      - type: reading
+        title: "Transpiling Without Type Checking"
+        path: sections/section-030/module-03/course-02-transpiling-without-type-checking.md
+      - type: reading
+        title: "Build Output: Libraries, The App And The Backend"
+        path: sections/section-030/module-03/course-03-build-output-libraries-the-app-and-the-backend.md
+      - type: reading
+        title: "Building The Whole Repository"
+        path: sections/section-030/module-03/course-04-building-the-whole-repository.md
+      - type: reading
+        title: "Question"
+        path: sections/section-030/module-03/labs/lab-01/question.md
+      - type: lab
+        title: "Package Roles, Build Scripts And A Hidden Type Error Lab"
+        path: sections/section-030/module-03/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 25m
+        topic: typescript
+        task_kind: fix
+        tags: [backstage-cli, package-roles, build, files, tsc]
+        learning_goals:
+          - Set the backstage.role of a package
+          - Make a root script build every package and publish the build output
+          - Find a type error that a transpile-only build does not report
+        resources:
+          - name: "Backstage build system"
+            url: https://backstage.io/docs/tooling/cli/build-system/
+          - name: "Backstage CLI commands"
+            url: https://backstage.io/docs/tooling/cli/commands/
+      - type: reading
+        title: "Summary"
+        path: sections/section-030/module-03/course-05-summary.md
+
+      - type: reading
         title: "Question"
         path: sections/section-030/capstone/labs/lab-01/question.md
       - type: lab
@@ -274,6 +485,72 @@ modules:
       - type: reading
         title: "Summary"
         path: sections/section-040/module-01/course-04-summary.md
+      - type: reading
+        title: "Yarn Workflows In A Backstage Repository"
+        path: sections/section-040/module-02/course.md
+      - type: reading
+        title: "The Yarn Configuration File And The Linker"
+        path: sections/section-040/module-02/course-01-the-yarn-configuration-file-and-the-linker.md
+      - type: reading
+        title: "Adding And Removing Dependencies In A Workspace"
+        path: sections/section-040/module-02/course-02-adding-and-removing-dependencies-in-a-workspace.md
+      - type: reading
+        title: "Running Scripts Across Workspaces"
+        path: sections/section-040/module-02/course-03-running-scripts-across-workspaces.md
+      - type: reading
+        title: "Question"
+        path: sections/section-040/module-02/labs/lab-01/question.md
+      - type: lab
+        title: "Add Dependencies And Run Scripts In Every Workspace Lab"
+        path: sections/section-040/module-02/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 25m
+        topic: dependencies
+        task_kind: fix
+        tags: [yarn, workspaces, foreach, hidden-dependency]
+        learning_goals:
+          - Move a dependency from the root to the workspace that imports it
+          - Add a root script that runs lint in every workspace with yarn workspaces foreach
+          - Confirm the lockfile with yarn install --immutable
+      - type: reading
+        title: "The backstage.json File And The backstage: Protocol"
+        path: sections/section-040/module-02/course-04-the-backstage-json-file-and-the-backstage-protocol.md
+      - type: reading
+        title: "Summary"
+        path: sections/section-040/module-02/course-05-summary.md
+      - type: reading
+        title: "Upgrading, Auditing And Private Registries"
+        path: sections/section-040/module-03/course.md
+      - type: reading
+        title: "Upgrading Backstage With versions:bump"
+        path: sections/section-040/module-03/course-01-upgrading-backstage-with-versions-bump.md
+      - type: reading
+        title: "Finding Duplicate And Vulnerable Packages"
+        path: sections/section-040/module-03/course-02-finding-duplicate-and-vulnerable-packages.md
+      - type: reading
+        title: "Peer Dependencies In Plugins"
+        path: sections/section-040/module-03/course-03-peer-dependencies-in-plugins.md
+      - type: reading
+        title: "Private Registries And Authentication"
+        path: sections/section-040/module-03/course-04-private-registries-and-authentication.md
+      - type: reading
+        title: "Question"
+        path: sections/section-040/module-03/labs/lab-01/question.md
+      - type: lab
+        title: "Declare A Peer Dependency And Route A Scope To A Private Registry Lab"
+        path: sections/section-040/module-03/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 25m
+        topic: dependencies
+        task_kind: fix
+        tags: [yarn, peer-dependencies, registry, npmScopes, token]
+        learning_goals:
+          - Declare a peer dependency and a matching development dependency in a plugin
+          - Route a package scope to a private registry and read the token from the environment
+          - Find the dependants of a package with yarn why
+      - type: reading
+        title: "Summary"
+        path: sections/section-040/module-03/course-05-summary.md
 
       - type: reading
         title: "Question"
@@ -341,6 +618,80 @@ modules:
       - type: reading
         title: "Summary"
         path: sections/section-050/module-01/course-04-summary.md
+
+      - type: reading
+        title: "Dockerfile Layers, Caching And Build Context"
+        path: sections/section-050/module-02/course.md
+      - type: reading
+        title: "The Build Context And The Ignore File"
+        path: sections/section-050/module-02/course-01-the-build-context-and-the-ignore-file.md
+      - type: reading
+        title: "The Skeleton And Bundle Archives"
+        path: sections/section-050/module-02/course-02-the-skeleton-and-bundle-archives.md
+      - type: reading
+        title: "Layers And The Build Cache"
+        path: sections/section-050/module-02/course-03-layers-and-the-build-cache.md
+      - type: reading
+        title: "BuildKit Cache Mounts And Secret Mounts"
+        path: sections/section-050/module-02/course-04-buildkit-cache-mounts-and-secret-mounts.md
+      - type: reading
+        title: "Question"
+        path: sections/section-050/module-02/labs/lab-01/question.md
+      - type: lab
+        title: "Make The Image Build Small And Cacheable Lab"
+        path: sections/section-050/module-02/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 30m
+        topic: docker
+        task_kind: fix
+        tags: [docker, dockerignore, build-context, layer-cache, cache-friendly-dockerfile]
+        learning_goals:
+          - Exclude large and private files from the build context and verify it with a probe image
+          - Copy named files so the image holds no local configuration
+          - Order the Dockerfile so an unrelated change keeps the unpack step cached
+        resources:
+          - name: "Docker: build cache"
+            url: https://docs.docker.com/build/cache/
+      - type: reading
+        title: "Summary"
+        path: sections/section-050/module-02/course-05-summary.md
+
+      - type: reading
+        title: "Running And Securing The Image"
+        path: sections/section-050/module-03/course.md
+      - type: reading
+        title: "Running And Inspecting A Container"
+        path: sections/section-050/module-03/course-01-running-and-inspecting-a-container.md
+      - type: reading
+        title: "Configuration At Run Time"
+        path: sections/section-050/module-03/course-02-configuration-at-run-time.md
+      - type: reading
+        title: "Identity, Privileges And Secrets"
+        path: sections/section-050/module-03/course-03-identity-privileges-and-secrets.md
+      - type: reading
+        title: "Database, Health Checks And The Frontend Image"
+        path: sections/section-050/module-03/course-04-database-health-checks-and-the-frontend-image.md
+      - type: reading
+        title: "Question"
+        path: sections/section-050/module-03/labs/lab-01/question.md
+      - type: lab
+        title: "Run The Image With Runtime Configuration Lab"
+        path: sections/section-050/module-03/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 30m
+        topic: docker
+        task_kind: build
+        tags: [docker, runtime-configuration, bind-mount, env-file, hardening, healthcheck, restart-policy]
+        learning_goals:
+          - Mount a configuration file read-only and load it as the last config option
+          - Publish a container port that differs from the image default
+          - Run with a read-only root filesystem, dropped capabilities and a health check
+        resources:
+          - name: "Backstage: building a Docker image"
+            url: https://backstage.io/docs/deployment/docker/
+      - type: reading
+        title: "Summary"
+        path: sections/section-050/module-03/course-05-summary.md
 
       - type: reading
         title: "Question"

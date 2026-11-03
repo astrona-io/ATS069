@@ -1,0 +1,63 @@
+# Make The Image Build Small And Cacheable (LAB). Graded on the virtual machine. The host-build image has three faults.
+metadata:
+  name: "ats-069-lab-050-02"
+  docs:
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+
+bootstrap:
+  init:
+    - name: "seed-portal"
+      description: "Install Node.js and Docker, then create the portal workspace with its faults"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "image-built"
+      description: "The image backstage:cache exists and starts"
+      type: "file"
+      source: "validation/validate-image-built.sh"
+      hint: "Run docker image build . -f packages/backend/Dockerfile --tag backstage:cache from /opt/portal."
+    - name: "context-excludes-recordings"
+      description: "The build context no longer includes the recordings folder or local files"
+      type: "file"
+      source: "validation/validate-context-excluded.sh"
+      hint: "Add recordings and **/*.local.yaml to .dockerignore, then copy a probe of the context to check it."
+    - name: "no-local-config-in-image"
+      description: "app-config.local.yaml and its secret are not in the image"
+      type: "file"
+      source: "validation/validate-no-local-config-in-image.sh"
+      hint: "Replace COPY . . with a COPY of the bundle and the two configuration files by name."
+    - name: "unpack-layer-cached"
+      description: "A change to an unrelated file keeps the bundle unpack step cached"
+      type: "file"
+      source: "validation/validate-cache-stable.sh"
+      hint: "Copy the bundle first, unpack it, and copy only the two configuration files after it. Do not use COPY . .."
+    - name: "source-unchanged"
+      description: "The backend source was not edited"
+      type: "file"
+      source: "validation/validate-source-unchanged.sh"
+      hint: "Fix the Dockerfile and the .dockerignore file, not packages/backend/src."
+
+teardown:
+  keepCluster: false
