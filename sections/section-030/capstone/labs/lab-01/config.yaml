@@ -1,0 +1,75 @@
+# TypeScript Workspace Build Capstone (LAB). Graded on the virtual machine.
+# A composite workspace whose references, types and runtime parsing are broken.
+metadata:
+  name: "ats-069-capstone-030-01"
+  docs:
+    prerequisites: "prerequisites.md"
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+
+bootstrap:
+  init:
+    - name: "seed-workspace"
+      description: "Install Node.js and TypeScript, then create the faulty composite workspace in /opt/portal"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "root-references-all-projects"
+      description: "The root solution file references all three projects"
+      type: "file"
+      source: "validation/validate-root-references-all-projects.sh"
+      hint: "Add the packages/app project to references in /opt/portal/tsconfig.json. Check it with tsc -p tsconfig.json --showConfig."
+    - name: "backend-references-common"
+      description: "deploy-backend declares its dependency on deploy-common"
+      type: "file"
+      source: "validation/validate-backend-references-common.sh"
+      hint: "Add a references entry that points to ../deploy-common in plugins/deploy-backend/tsconfig.json."
+    - name: "clean-build-passes"
+      description: "A forced build of the whole workspace ends without error"
+      type: "file"
+      source: "validation/validate-clean-build-passes.sh"
+      hint: "Run tsc --build --force in /opt/portal and fix the first error. A project is skipped when a project it references fails."
+    - name: "declarations-emitted"
+      description: "Each of the three projects emitted JavaScript and declaration files in dist"
+      type: "file"
+      source: "validation/validate-declarations-emitted.sh"
+      hint: "Run tsc --build in /opt/portal and look at the dist folder of each project."
+    - name: "parser-rejects-invalid-status"
+      description: "deploy-common exports parseDeployment, which accepts valid data and throws for an invalid status"
+      type: "file"
+      source: "validation/validate-parser-rejects-invalid-status.sh"
+      hint: "Export parseDeployment(input: unknown) from deploy-common. It must throw when status is not running or failed."
+    - name: "app-validates-input"
+      description: "The app calls parseDeployment, with no assertion, any or ts comment directive"
+      type: "file"
+      source: "validation/validate-app-validates-input.sh"
+      hint: "Replace the assertion on JSON.parse with a call to parseDeployment, and give sample a valid status."
+    - name: "build-all-script-uses-build-mode"
+      description: "The build:all script runs tsc in build mode"
+      type: "file"
+      source: "validation/validate-build-all-script.sh"
+      hint: "Set scripts.build:all in /opt/portal/package.json to tsc --build."
+
+teardown:
+  keepCluster: false

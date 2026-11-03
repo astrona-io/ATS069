@@ -1,0 +1,252 @@
+# Knowledge check for section 010. Listed in astrona.yaml as a `type: quiz` entry after the capstone lab.
+schema_version: 1
+kind: question_bank
+id: ats069-010
+course_id: ATS069
+exam_code: CBA
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: section
+  id: section-010
+  title: Build and run Backstage projects locally
+questions:
+- id: ats069-010-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Explain the responsibilities of the app and backend workspaces
+  source_readings:
+  - sections/section-010/module-01/course-01-workspaces-and-the-parts-of-a-project.md
+  prompt: A portal page loads, but a deployment-status card shows a request failure.
+    Which part must you inspect first?
+  options:
+  - id: a
+    text: The app workspace build, because the page is part of it.
+    explanation: The page loaded, so the app delivered its files. The failing request
+      goes to the backend.
+  - id: b
+    text: The backend process and the route the card calls.
+    explanation: Correct. The card calls a backend route, so the evidence is the requested
+      route, the response status and the backend log.
+  - id: c
+    text: The root package, because it lists the workspaces.
+    explanation: The root package only describes the workspaces and scripts. It serves
+      nothing.
+  - id: d
+    text: The browser cache of the page.
+    explanation: A cache can cause stale pages, but it does not explain a failed API
+      request.
+  correct_option: b
+  explanation: The card calls a backend route, so the evidence is the requested route,
+    the response status and the backend log.
+- id: ats069-010-q02
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Explain the responsibilities of the app and backend workspaces
+  source_readings:
+  - sections/section-010/module-01/course-01-workspaces-and-the-parts-of-a-project.md
+  prompt: Which workspace may hold the credentials for an outside system, and why?
+  options:
+  - id: a
+    text: The backend, because it runs on the server and the browser never receives
+      its private configuration.
+    explanation: Correct. The backend is a server process. Server-only values stay
+      with it.
+  - id: b
+    text: The app, because it talks to the user.
+    explanation: The app code is delivered to every browser, so a credential there
+      is public.
+  - id: c
+    text: Either one, because both read app-config.yaml.
+    explanation: Both read the files, but only the app block is meant for the browser.
+  - id: d
+    text: The root package, because it is private.
+    explanation: A private package is only not published. It does not run anything.
+  correct_option: a
+  explanation: The backend is a server process. Server-only values stay with it.
+- id: ats069-010-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain the responsibilities of the app and backend workspaces
+  source_readings:
+  - sections/section-010/module-01/course-01-workspaces-and-the-parts-of-a-project.md
+  prompt: A script in packages/backend/package.json uses --config app-config.yaml,
+    and the file lives in the repository root. Running yarn workspace backend start
+    fails to read the file. Why?
+  options:
+  - id: a
+    text: Yarn does not support the --config option.
+    explanation: The option belongs to the program in the script, not to Yarn.
+  - id: b
+    text: The root package.json must list the file in workspaces.
+    explanation: The workspaces field lists package folders, not configuration files.
+  - id: c
+    text: Node.js cannot read YAML.
+    explanation: Node.js can read any file. The program in the example parses the
+      YAML itself.
+  - id: d
+    text: Yarn runs the script with the package folder as the working directory.
+    explanation: Correct. The relative path resolves from packages/backend, where
+      no such file exists. The script needs ../../app-config.yaml.
+  correct_option: d
+  explanation: The relative path resolves from packages/backend, where no such file
+    exists. The script needs ../../app-config.yaml.
+- id: ats069-010-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Locate startup failures by dependency, configuration and process
+    boundaries
+  source_readings:
+  - sections/section-010/module-01/course-02-development-servers-and-configuration.md
+  prompt: 'The backend prints: Missing required config value at ''backend.listen.port''
+    and exits. A request to port 7007 is then refused. What is the cause of the refused
+    request?'
+  options:
+  - id: a
+    text: A firewall blocks port 7007.
+    explanation: Nothing in the evidence points at a firewall. The process never listened.
+  - id: b
+    text: The frontend development server took the port.
+    explanation: The frontend uses its own port. It would not stop the backend from
+      printing this error.
+  - id: c
+    text: The process exited before it bound the port, because a required configuration
+      key is missing.
+    explanation: Correct. The configuration contract failed first, so the port was
+      never bound. The refused connection is the symptom.
+  - id: d
+    text: Yarn cached an old port number.
+    explanation: Yarn does not cache the port in this way. The key is simply absent.
+  correct_option: c
+  explanation: The configuration contract failed first, so the port was never bound.
+    The refused connection is the symptom.
+- id: ats069-010-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Locate startup failures by dependency, configuration and process
+    boundaries
+  source_readings:
+  - sections/section-010/module-01/course-02-development-servers-and-configuration.md
+  prompt: Which order of startup conditions is correct?
+  options:
+  - id: a
+    text: Bind the port, load configuration, resolve packages, compile.
+    explanation: The port is bound late, after the process has what it needs.
+  - id: b
+    text: Resolve packages, compile source, load configuration, bind the port.
+    explanation: Correct. Each step needs the one before it, so the first failing
+      step is the one to repair.
+  - id: c
+    text: Compile source, bind the port, resolve packages, load configuration.
+    explanation: A process cannot bind its port before it has loaded its configuration.
+  - id: d
+    text: Load configuration, resolve packages, bind the port, compile.
+    explanation: The code must exist and compile before the configuration is read.
+  correct_option: b
+  explanation: Each step needs the one before it, so the first failing step is the
+    one to repair.
+- id: ats069-010-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Locate startup failures by dependency, configuration and process
+    boundaries
+  source_readings:
+  - sections/section-010/module-01/course-02-development-servers-and-configuration.md
+  prompt: app-config.yaml is loaded first and app-config.production.yaml second, and
+    both define environment. Which value does the backend use?
+  options:
+  - id: a
+    text: The value from app-config.production.yaml.
+    explanation: Correct. Later --config files win where they define the same key.
+  - id: b
+    text: The value from app-config.yaml.
+    explanation: The base file is loaded first, so a later file overrides it.
+  - id: c
+    text: 'Neither: the backend stops with a conflict error.'
+    explanation: Overriding is the normal way to layer configuration, not an error.
+  - id: d
+    text: The value that is longer.
+    explanation: Length plays no role.
+  correct_option: a
+  explanation: Later --config files win where they define the same key.
+- id: ats069-010-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain the responsibilities of the app and backend workspaces
+  source_readings:
+  - sections/section-010/module-01/course-02-development-servers-and-configuration.md
+  prompt: A developer puts an API token under the app block of the configuration so
+    the frontend code can read it. What is the result?
+  options:
+  - id: a
+    text: The token stays private because it is in a YAML file.
+    explanation: A file on the server is private only if its content is not sent out.
+      The app block is.
+  - id: b
+    text: The token is encrypted by the build.
+    explanation: The build does not encrypt configuration values.
+  - id: c
+    text: The backend refuses to start.
+    explanation: The backend does not check for this.
+  - id: d
+    text: The token is delivered to every browser that loads the page.
+    explanation: Correct. Values in the browser-visible configuration are public to
+      every user of the page.
+  correct_option: d
+  explanation: Values in the browser-visible configuration are public to every user
+    of the page.
+- id: ats069-010-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish a development server from a production artifact
+  source_readings:
+  - sections/section-010/module-01/course-03-production-builds-and-artifacts.md
+  prompt: yarn build:backend succeeds, and the development server works. Which check
+    best shows that the artifact is ready to deploy?
+  options:
+  - id: a
+    text: Run the development server again.
+    explanation: The development server reads the source and hides missing build output.
+  - id: b
+    text: Count the lines in dist.
+    explanation: Line counts show nothing about whether the files load.
+  - id: c
+    text: Run the built output alone with Node.js, without the source folder, using
+      the target configuration.
+    explanation: Correct. Only a run without the development path proves that the
+      artifact holds every runtime file.
+  - id: d
+    text: Run yarn install again.
+    explanation: Installing does not test the build output.
+  correct_option: c
+  explanation: Only a run without the development path proves that the artifact holds
+    every runtime file.
+- id: ats069-010-q09
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Distinguish a development server from a production artifact
+  source_readings:
+  - sections/section-010/module-01/course-03-production-builds-and-artifacts.md
+  prompt: You change a value that the browser reads in app-config.yaml. The development
+    server shows the new value, but the built app still shows the old one. What explains
+    this?
+  options:
+  - id: a
+    text: The development server caches nothing and the build is broken.
+    explanation: The development server reads the file at each start, which is expected.
+      The build is not broken.
+  - id: b
+    text: The build wrote the configuration into the artifact when it ran, so the
+      artifact needs a new build.
+    explanation: Correct. The browser configuration is a snapshot made at build time.
+      Build again to update it.
+  - id: c
+    text: Yarn ignores the file during production.
+    explanation: Yarn does not decide which configuration an artifact contains.
+  - id: d
+    text: The browser rejects the new value.
+    explanation: The browser shows what the artifact serves.
+  correct_option: b
+  explanation: The browser configuration is a snapshot made at build time. Build again
+    to update it.

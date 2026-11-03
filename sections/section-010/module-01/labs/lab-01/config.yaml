@@ -1,0 +1,65 @@
+# Local Projects, Development Servers And Production Builds (LAB). Graded on the virtual machine.
+# The workspace /opt/portal starts with three faults.
+metadata:
+  name: "ats-069-lab-010-01"
+  docs:
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+      sshPasswordAuth: false
+
+bootstrap:
+  init:
+    - name: "seed-portal"
+      description: "Install Node.js and Yarn, then create the workspace with its faults"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "backend-config-complete"
+      description: "The merged configuration has every key the backend requires"
+      type: "file"
+      source: "validation/validate-backend-config-complete.sh"
+      hint: "The error names the missing key. Add backend.listen.port to app-config.yaml under the backend block."
+    - name: "backend-starts-from-source"
+      description: "yarn workspace backend start serves the health check on port 7007"
+      type: "file"
+      source: "validation/validate-backend-starts-from-source.sh"
+      hint: "yarn runs a package script from the package directory. The configuration file is two directories up."
+    - name: "backend-build-complete"
+      description: "packages/backend/dist has every runtime file"
+      type: "file"
+      source: "validation/validate-backend-build-complete.sh"
+      hint: "The build script copies only one file. Copy the whole src directory, then run yarn build:backend."
+    - name: "production-artifact-runs"
+      description: "The built backend runs alone with both configuration files"
+      type: "file"
+      source: "validation/validate-production-artifact-runs.sh"
+      hint: "Run node packages/backend/dist/index.js with --config app-config.yaml and --config app-config.production.yaml from /opt/portal."
+    - name: "sources-kept"
+      description: "The backend source files still exist"
+      type: "file"
+      source: "validation/validate-sources-kept.sh"
+      hint: "Fix the build script. Do not delete or move the source files."
+
+teardown:
+  keepCluster: false

@@ -1,0 +1,270 @@
+# Knowledge check for section 050. Listed in astrona.yaml as a `type: quiz` entry after the capstone lab.
+schema_version: 1
+kind: question_bank
+id: ats069-050
+course_id: ATS069
+exam_code: CBA
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: section
+  id: section-050
+  title: Use Docker to build a container image of a Backstage project
+questions:
+- id: ats069-050-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Describe the files and dependencies a Backstage container needs
+  source_readings:
+  - sections/section-050/module-01/course-01-image-contents-and-build-context.md
+  prompt: Which set of files does a standard Backstage backend image need at run time?
+  options:
+  - id: a
+    text: The whole repository, including the Git history and the test files.
+    explanation: The image does not need the repository. Extra files only add size
+      and exposure.
+  - id: b
+    text: The compiled backend output, the production dependencies, the configuration
+      files and a Node.js runtime.
+    explanation: Correct. These are the inputs the backend needs to start.
+  - id: c
+    text: Only the TypeScript source, because the container compiles it on start.
+    explanation: The standard image runs compiled output and does not compile at start.
+  - id: d
+    text: Only `app-config.local.yaml`, because it holds every setting.
+    explanation: The local file is developer-only and must not be in the image.
+  correct_option: b
+  explanation: Correct. These are the inputs the backend needs to start.
+- id: ats069-050-q02
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Describe the files and dependencies a Backstage container needs
+  source_readings:
+  - sections/section-050/module-01/course-01-image-contents-and-build-context.md
+  prompt: In a host-build arrangement, `docker image build . -f packages/backend/Dockerfile
+    --tag backstage` fails at the instruction that copies `packages/backend/dist/bundle.tar.gz`,
+    with a message that the file is not found. The file exists on disk. What is the
+    most likely cause?
+  options:
+  - id: a
+    text: The Dockerfile is in a subdirectory, and Docker only accepts a Dockerfile
+      in the context root.
+    explanation: The `-f` flag selects a Dockerfile in any directory.
+  - id: b
+    text: The tag `backstage` is reserved.
+    explanation: Any valid name can be a tag. A tag does not cause a missing file.
+  - id: c
+    text: "`.dockerignore` excludes `packages/*/dist`, so the file is not in the build
+      context."
+    explanation: Correct. The daemon can read only files in the context, and the ignore
+      file removed it.
+  - id: d
+    text: The Node.js base image has no `tar` command.
+    explanation: A missing `tar` would cause a different error, at a later instruction.
+  correct_option: c
+  explanation: Correct. The daemon can read only files in the context, and the ignore
+    file removed it.
+- id: ats069-050-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain host-build and multi-stage packaging tradeoffs
+  source_readings:
+  - sections/section-050/module-01/course-02-host-build-and-multi-stage-builds.md
+  prompt: A continuous integration job runs `yarn build:backend` on commit A. A later
+    job packages the `packages/backend/dist` directory of a cached workspace from
+    commit B with a host-build Dockerfile. The build succeeds. What is the risk?
+  options:
+  - id: a
+    text: The image holds a backend from the wrong revision, and no step reports it.
+    explanation: Correct. A host build packages whatever archives are present.
+  - id: b
+    text: Docker refuses to build because the revisions differ.
+    explanation: Docker does not know about revisions. It copies files.
+  - id: c
+    text: The image runs as root because the revisions differ.
+    explanation: The user comes from the `USER` instruction, not from the revision.
+  - id: d
+    text: The image has no `node_modules` directory.
+    explanation: The dependency installation is a separate instruction.
+  correct_option: a
+  explanation: Correct. A host build packages whatever archives are present.
+- id: ats069-050-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain host-build and multi-stage packaging tradeoffs
+  source_readings:
+  - sections/section-050/module-01/course-02-host-build-and-multi-stage-builds.md
+  prompt: A multi-stage Dockerfile ends with `COPY --from=build /app /app`. What does
+    this do to the intended separation of build and runtime?
+  options:
+  - id: a
+    text: It keeps the separation, because the build stage is discarded.
+    explanation: Only the copied files survive. This instruction copies everything.
+  - id: b
+    text: It copies the whole build directory, so source, scripts and local files
+      can end up in the final image.
+    explanation: Correct. The final stage must copy named files only.
+  - id: c
+    text: It makes the final image smaller than a host-build image.
+    explanation: It can make the image larger, because it copies the build tree.
+  - id: d
+    text: It fails, because `COPY --from` needs a tag name and not a stage name.
+    explanation: "`COPY --from` accepts a stage name."
+  correct_option: b
+  explanation: Correct. The final stage must copy named files only.
+- id: ats069-050-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain host-build and multi-stage packaging tradeoffs
+  source_readings:
+  - sections/section-050/module-01/course-02-host-build-and-multi-stage-builds.md
+  prompt: A team copies the `.dockerignore` of a host-build project to a project that
+    uses a multi-stage Dockerfile. The file contains `packages/*/src`. What happens?
+  options:
+  - id: a
+    text: Nothing, because ignore files apply only to the final stage.
+    explanation: The ignore file edits the whole build context.
+  - id: b
+    text: The final image is smaller and correct.
+    explanation: The build stage cannot compile without the source.
+  - id: c
+    text: Docker ignores the pattern, because it matches a directory.
+    explanation: Directory patterns are valid.
+  - id: d
+    text: The build stage cannot read the source it compiles, and the build fails.
+    explanation: Correct. The source must be in the context when Docker builds the
+      backend.
+  correct_option: d
+  explanation: Correct. The source must be in the context when Docker builds the backend.
+- id: ats069-050-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain host-build and multi-stage packaging tradeoffs
+  source_readings:
+  - sections/section-050/module-01/course-02-host-build-and-multi-stage-builds.md
+  prompt: Which statement about the Dockerfile of a host build is correct?
+  options:
+  - id: a
+    text: It is short, because the archives are built before Docker runs.
+    explanation: Correct. The Dockerfile unpacks archives and does no compiling.
+  - id: b
+    text: It must contain a `FROM` line for every package of the workspace.
+    explanation: One base image is enough. Multiple `FROM` lines are for multi-stage
+      builds.
+  - id: c
+    text: It type-checks the project with `yarn tsc`.
+    explanation: A host build runs `yarn tsc` before Docker, not in the Dockerfile.
+  - id: d
+    text: It cannot use a Node.js base image.
+    explanation: The standard Dockerfile uses a Node.js base image.
+  correct_option: a
+  explanation: Correct. The Dockerfile unpacks archives and does no compiling.
+- id: ats069-050-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish a built image from a correctly configured deployment
+  source_readings:
+  - sections/section-050/module-01/course-03-runtime-configuration-identity-and-evidence.md
+  prompt: A container starts and the log shows no error. A request to the published
+    port `-p 7007:7007` is refused. The base `app-config.yaml` sets `listen.host`
+    to `127.0.0.1`, and the production file sets `0.0.0.0`. The start command is `node
+    packages/backend --config app-config.yaml`. What is the cause?
+  options:
+  - id: a
+    text: The production file is not loaded, so the server listens only on the loopback
+      address inside the container.
+    explanation: Correct. Traffic from the published port arrives on the container
+      interface, where nothing listens.
+  - id: b
+    text: The port 7007 is reserved by Docker.
+    explanation: Docker does not reserve port 7007.
+  - id: c
+    text: Later `--config` files are ignored when the first file sets a host.
+    explanation: Later files override earlier ones.
+  - id: d
+    text: The image runs as the `node` user, which cannot open port 7007.
+    explanation: Port 7007 is above 1024, and any user can listen on it.
+  correct_option: a
+  explanation: Correct. Traffic from the published port arrives on the container interface,
+    where nothing listens.
+- id: ats069-050-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish a built image from a correctly configured deployment
+  source_readings:
+  - sections/section-050/module-01/course-03-runtime-configuration-identity-and-evidence.md
+  prompt: A Dockerfile has `COPY app-config*.yaml ./` and the build context contains
+    `app-config.local.yaml` with a token. A later line runs `RUN rm app-config.local.yaml`.
+    Is the token safe?
+  options:
+  - id: a
+    text: Yes, because the file no longer exists in the final filesystem.
+    explanation: The earlier layer still stores the file.
+  - id: b
+    text: Yes, because `.yaml` files are encrypted in images.
+    explanation: Images do not encrypt files.
+  - id: c
+    text: No, because the earlier layer still holds the file, and anyone who can pull
+      the image can read it.
+    explanation: Correct. A later layer only hides the file. Keep it out of the context
+      instead.
+  - id: d
+    text: No, but only when the image is pushed to a public registry.
+    explanation: A private registry and every machine that pulls the image also receive
+      the layer.
+  correct_option: c
+  explanation: Correct. A later layer only hides the file. Keep it out of the context
+    instead.
+- id: ats069-050-q09
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish a built image from a correctly configured deployment
+  source_readings:
+  - sections/section-050/module-01/course-03-runtime-configuration-identity-and-evidence.md
+  prompt: A Dockerfile contains `WORKDIR /app`, `USER node` and then `RUN tar xzf
+    bundle.tar.gz` with the archive copied by `COPY bundle.tar.gz ./`. The build fails
+    with a permission error on the unpack. Which change fixes it?
+  options:
+  - id: a
+    text: Move `USER node` to the end of the file and run everything as root.
+    explanation: This keeps the build working but the container runs as root.
+  - id: b
+    text: Remove `WORKDIR`, because the user cannot use it.
+    explanation: "`WORKDIR` is needed. The problem is who owns the directory."
+  - id: c
+    text: Add `RUN chmod 777 /` before `USER node`.
+    explanation: This opens the whole filesystem and is not a fix.
+  - id: d
+    text: Run `RUN chown node:node /app` before `USER node`, and use `COPY --chown=node:node`.
+    explanation: Correct. Docker creates `WORKDIR` as root, so the `node` user needs
+      ownership.
+  correct_option: d
+  explanation: Correct. Docker creates `WORKDIR` as root, so the `node` user needs
+    ownership.
+- id: ats069-050-q10
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Distinguish a built image from a correctly configured deployment
+  source_readings:
+  - sections/section-050/module-01/course-03-runtime-configuration-identity-and-evidence.md
+  prompt: The image build completes and `docker image inspect` shows the user `node`,
+    port 7007 and the expected command. The team states that the deployment is ready.
+    Which claim is still unproved?
+  options:
+  - id: a
+    text: The database is reachable and the ingress sends traffic to port 7007.
+    explanation: Correct. A build and its metadata prove packaging only. Connectivity
+      and permissions need separate checks.
+  - id: b
+    text: The image has layers.
+    explanation: Every image has layers, and this is proved by the build.
+  - id: c
+    text: The image has a user.
+    explanation: The inspect output shows the user.
+  - id: d
+    text: The image has a start command.
+    explanation: The inspect output shows the command.
+  correct_option: a
+  explanation: Correct. A build and its metadata prove packaging only. Connectivity
+    and permissions need separate checks.

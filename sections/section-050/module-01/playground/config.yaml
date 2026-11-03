@@ -1,0 +1,28 @@
+# Container Image Build (PLAYGROUND). A portal workspace in /opt/portal with a host-build and a multi-stage Dockerfile.
+# No task, no grading, no `astrona submit`.
+metadata:
+  name: "ats-069-playground-050-01"
+  docs:
+    guide: "docs/overview.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+      sshPasswordAuth: false
+
+bootstrap:
+  init:
+    - name: "seed-portal"
+      description: "Install Node.js and Docker, then create the portal workspace and its Dockerfiles"
+      type: "folder"
+      source: "bootstrap/"
+
+teardown:
+  keepCluster: false

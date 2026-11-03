@@ -1,0 +1,65 @@
+# TypeScript Checking Scope And Optional Values (LAB). Graded on the virtual machine.
+# The root tsconfig.json skips the plugins, and a plugin reads an optional property unsafely.
+metadata:
+  name: "ats-069-lab-030-01"
+  docs:
+    prerequisites: "prerequisites.md"
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+
+bootstrap:
+  init:
+    - name: "seed-workspace"
+      description: "Install Node.js and TypeScript, then create the faulty workspace in /opt/portal"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "scope-covers-all-packages"
+      description: "One tsc run covers the app package and both plugins"
+      type: "file"
+      source: "validation/validate-scope-covers-all-packages.sh"
+      hint: "Add plugins/*/src to the include list of /opt/portal/tsconfig.json. Check the result with tsc --listFilesOnly."
+    - name: "type-check-passes"
+      description: "tsc reports no type error over the full scope"
+      type: "file"
+      source: "validation/validate-type-check-passes.sh"
+      hint: "Run tsc in /opt/portal and fix the error in the deploy-backend plugin."
+    - name: "absence-handled-at-runtime"
+      description: "describeOwner returns unassigned for a record without an owner"
+      type: "file"
+      source: "validation/validate-absence-handled-at-runtime.sh"
+      hint: "Compare record.owner with undefined before calling toUpperCase, and return the text unassigned."
+    - name: "strict-kept-no-escapes"
+      description: "strict is still on and the source has no assertion, non-null operator or ts-ignore"
+      type: "file"
+      source: "validation/validate-strict-kept-no-escapes.sh"
+      hint: "Fix the code instead of weakening the compiler. Do not use as, the exclamation mark operator or @ts-ignore."
+    - name: "check-writes-no-files"
+      description: "The check is configured with noEmit and no .js file sits next to a source file"
+      type: "file"
+      source: "validation/validate-check-writes-no-files.sh"
+      hint: "Set noEmit to true in compilerOptions and delete any .js files that tsc created in the src folders."
+
+teardown:
+  keepCluster: false

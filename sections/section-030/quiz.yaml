@@ -1,0 +1,229 @@
+# Knowledge check for section 030. Listed in astrona.yaml as a `type: quiz` entry after the capstone lab.
+schema_version: 1
+kind: question_bank
+id: ats069-030
+course_id: ATS069
+exam_code: CBA
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: section
+  id: section-030
+  title: Compile a Backstage project with TypeScript
+questions:
+- id: ats069-030-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Distinguish type checking, emit and bundling
+  source_readings:
+  - sections/section-030/module-01/course-01-checking-emitting-and-tsconfig-scope.md
+  prompt: A pipeline step runs `tsc --noEmit` in the repository root and ends with
+    exit code 0. What does this result show?
+  options:
+  - id: a
+    text: The compiler found no type error in the files covered by the project, and
+      wrote no files.
+    explanation: Correct. Exit code 0 with `noEmit` means no errors for the files
+      in scope. Nothing was emitted or bundled.
+  - id: b
+    text: The backend package builds and starts without error.
+    explanation: Starting a backend needs configuration and runtime dependencies,
+      which a type check does not touch.
+  - id: c
+    text: Every package in the workspace has current declaration files.
+    explanation: "`noEmit` writes no files, so no declaration file was created."
+  - id: d
+    text: The browser bundle contains no unused code.
+    explanation: Bundling is done by another tool, not by `tsc`.
+  correct_option: a
+  explanation: Exit code 0 with `noEmit` means no errors for the files in scope. Nothing
+    was emitted or bundled.
+- id: ats069-030-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain how include patterns decide the scope of a check
+  source_readings:
+  - sections/section-030/module-01/course-01-checking-emitting-and-tsconfig-scope.md
+  prompt: 'The root `tsconfig.json` has `"include": ["packages/*/src"]`. A plugin
+    in `plugins/deploy-backend/src` has a type error and no file under `packages`
+    imports it. What does `tsc -p tsconfig.json` do?'
+  options:
+  - id: a
+    text: It reports the error, because tsc scans the whole repository.
+    explanation: "`tsc` only reads the files that the project selects and the files
+      they import."
+  - id: b
+    text: It reports no error for that plugin, because the file is not part of the
+      project.
+    explanation: Correct. The plugin is neither matched by `include` nor imported
+      by a matched file, so it is outside the check.
+  - id: c
+    text: It fails with a configuration error about the unmatched folder.
+    explanation: An `include` pattern that matches fewer folders is valid and raises
+      no error.
+  - id: d
+    text: It reports the error only when `strict` is turned off.
+    explanation: "`strict` makes the compiler stricter and does not change which files
+      are read."
+  correct_option: b
+  explanation: The plugin is neither matched by `include` nor imported by a matched
+    file, so it is outside the check.
+- id: ats069-030-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Use tsc options to see what a result covers
+  source_readings:
+  - sections/section-030/module-01/course-01-checking-emitting-and-tsconfig-scope.md
+  prompt: A reviewer doubts that a green `tsc` run covered a new plugin. Which command
+    shows directly which files the project contains?
+  options:
+  - id: a
+    text: "`yarn install`, which prints the list of compiler inputs."
+    explanation: A package manager install does not list compiler inputs.
+  - id: b
+    text: "`tsc -p tsconfig.json --listFilesOnly`"
+    explanation: Correct. `--listFilesOnly` prints each file of the project and stops,
+      so a missing plugin file is visible.
+  - id: c
+    text: "`tsc --build --clean`"
+    explanation: "`--clean` deletes build output and does not list inputs."
+  - id: d
+    text: "`node --check tsconfig.json`"
+    explanation: "`node --check` checks JavaScript syntax and does not read project
+      settings."
+  correct_option: b
+  explanation: "`--listFilesOnly` prints each file of the project and stops, so a
+    missing plugin file is visible."
+- id: ats069-030-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Handle an optional property without hiding the error
+  source_readings:
+  - sections/section-030/module-01/course-02-types-optional-values-and-runtime-boundaries.md
+  prompt: 'The type has `owner?: string`. The code `record.owner.toUpperCase()` is
+    reported by the compiler. Which change removes the crash path at runtime?'
+  options:
+  - id: a
+    text: "`(record.owner as string).toUpperCase()`"
+    explanation: An assertion emits no code, so a record without an owner still throws.
+  - id: b
+    text: "`record.owner!.toUpperCase()`"
+    explanation: The non-null operator also emits no code and keeps the crash path.
+  - id: c
+    text: '`record.owner === undefined ? "unassigned" : record.owner.toUpperCase()`'
+    explanation: Correct. The code decides what a missing owner means and narrows
+      the type inside the other branch.
+  - id: d
+    text: Turn off `strict` in `tsconfig.json`.
+    explanation: Turning off `strict` hides the error for every file and changes nothing
+      at runtime.
+  correct_option: c
+  explanation: The code decides what a missing owner means and narrows the type inside
+    the other branch.
+- id: ats069-030-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain why types do not validate external data
+  source_readings:
+  - sections/section-030/module-01/course-02-types-optional-values-and-runtime-boundaries.md
+  prompt: A backend handler uses `const record = JSON.parse(body) as DeploymentRecord`.
+    A client sends `{"id":"a","status":"done"}`. What happens?
+  options:
+  - id: a
+    text: The compiler rejects the program because `done` is not a valid status.
+    explanation: The compiler never sees the request body, so it cannot reject it.
+  - id: b
+    text: The handler throws at the `as` expression.
+    explanation: An assertion emits no code, so nothing throws there.
+  - id: c
+    text: The assertion compiles and runs, and the record has a status that the type
+      does not allow.
+    explanation: Correct. The compiler trusts the assertion and nothing checks the
+      data when it arrives.
+  - id: d
+    text: TypeScript adds a runtime check for the declared type.
+    explanation: TypeScript removes all types from the emitted JavaScript.
+  correct_option: c
+  explanation: The compiler trusts the assertion and nothing checks the data when
+    it arrives.
+- id: ats069-030-q06
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Choose the right place for a runtime check
+  source_readings:
+  - sections/section-030/module-01/course-02-types-optional-values-and-runtime-boundaries.md
+  prompt: Where should the check that a JSON body has a valid `status` live?
+  options:
+  - id: a
+    text: In a type alias next to the `DeploymentRecord` interface.
+    explanation: A type alias is removed during emit and cannot check a value.
+  - id: b
+    text: At the edge where the data enters, in a function that takes `unknown` and
+      returns a typed record.
+    explanation: Correct. The function turns untrusted data into a typed record or
+      throws, and the compiler checks the code behind it.
+  - id: c
+    text: In `tsconfig.json`, with the option `strict`.
+    explanation: "`strict` changes compile-time rules and has no effect on incoming
+      data."
+  - id: d
+    text: In the build script, with `tsc --build`.
+    explanation: A build runs before the program and never sees runtime data.
+  correct_option: b
+  explanation: The function turns untrusted data into a typed record or throws, and
+    the compiler checks the code behind it.
+- id: ats069-030-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain project references and build order
+  source_readings:
+  - sections/section-030/module-01/course-03-workspace-builds-references-and-declarations.md
+  prompt: "`deploy-backend` imports types from `deploy-common`, but its `tsconfig.json`
+    has no `references`. On a machine with old output the build passes. On a clean
+    machine it fails. Why?"
+  options:
+  - id: a
+    text: "`deploy-common` is a plugin, and plugins cannot be built on a clean machine."
+    explanation: Any package can be built; the problem is the missing dependency declaration.
+  - id: b
+    text: The missing reference is not declared, so a clean build has no declaration
+      output of `deploy-common` to read and no order to build it first.
+    explanation: Correct. References give the compiler the order and the declaration
+      files that a project needs; old output only hid the gap.
+  - id: c
+    text: "`tsc` ignores `paths` mappings on clean machines."
+    explanation: The `paths` mapping works the same way on every machine.
+  - id: d
+    text: Old output makes `strict` checks pass.
+    explanation: "`strict` does not depend on output files."
+  correct_option: b
+  explanation: References give the compiler the order and the declaration files that
+    a project needs; old output only hid the gap.
+- id: ats069-030-q08
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Separate the layers that own a failure
+  source_readings:
+  - sections/section-030/module-01/course-03-workspace-builds-references-and-declarations.md
+  prompt: The Backstage command-line build of a package succeeds, and the root type
+    check reports an incompatible property in the same package. What follows?
+  options:
+  - id: a
+    text: The build proves the types are correct, so the type check is wrong.
+    explanation: The build does not check types, so its success says nothing about
+      them.
+  - id: b
+    text: 'The two steps are separate: the build transpiles without checking types,
+      so the type error is real and needs a source fix.'
+    explanation: Correct. Building and type checking are separate pieces of evidence,
+      and the type check owns this finding.
+  - id: c
+    text: The build must be run again with `--clean` to remove the error.
+    explanation: A clean build does not change a type error in source.
+  - id: d
+    text: The type error can only be a network problem.
+    explanation: A type error comes from declarations and callers, not from the network.
+  correct_option: b
+  explanation: Building and type checking are separate pieces of evidence, and the
+    type check owns this finding.

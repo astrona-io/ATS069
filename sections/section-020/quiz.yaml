@@ -1,0 +1,225 @@
+# Knowledge check for section 020. Listed in astrona.yaml as a `type: quiz` entry after the capstone lab.
+schema_version: 1
+kind: question_bank
+id: ats069-020
+course_id: ATS069
+exam_code: CBA
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: section
+  id: section-020
+  title: Understand local development workflows
+questions:
+- id: ats069-020-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Trace a source change through the relevant workspace and checks
+  source_readings:
+  - sections/section-020/module-01/course-01-tracing-a-change-through-the-workspace.md
+  prompt: A developer renames the field `owner` to `ownedBy` in the shared `Entity`
+    type of `catalog-common`. Which check finds the packages that still read the old
+    name?
+  options:
+  - id: a
+    text: Reading `git status`, because it lists the packages that were edited.
+    explanation: "`git status` lists edited files only. The packages that still use
+      the old name were not edited."
+  - id: b
+    text: "`yarn tsc` for the whole workspace, because the type check compares every
+      package with the shared type."
+    explanation: Correct. The type check reads every file in `include` and reports
+      each use of a property that no longer exists on the type.
+  - id: c
+    text: Restarting the backend, because the backend imports the type at runtime.
+    explanation: The backend restart does not check types, and type annotations are
+      removed before the code runs.
+  - id: d
+    text: "`yarn lint`, because the linter compares field names across packages."
+    explanation: The linter reads text patterns. It has no knowledge of the shared
+      type.
+  correct_option: b
+  explanation: Correct. The type check reads every file in `include` and reports each
+    use of a property that no longer exists on the type.
+- id: ats069-020-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Trace a source change through the relevant workspace and checks
+  source_readings:
+  - sections/section-020/module-01/course-01-tracing-a-change-through-the-workspace.md
+  prompt: A catalog card shows the message `request failed`. The page layout renders
+    correctly. Where does the diagnosis start?
+  options:
+  - id: a
+    text: The frontend build, because the page layout is part of the app package.
+    explanation: The layout rendered, so the browser code compiled and ran.
+  - id: b
+    text: The backend route that the card calls, its status code and its log, because
+      the request crossed a process boundary.
+    explanation: Correct. The browser and the backend are separate processes. A failed
+      request points at the route and its response.
+  - id: c
+    text: The `tsconfig.json` of the root, because type errors cause failed requests.
+    explanation: A type error stops compilation. It does not produce a failed network
+      request.
+  - id: d
+    text: The lockfile, because a failed request means a dependency changed.
+    explanation: A changed dependency would more likely stop an installation or a
+      startup than one request.
+  correct_option: b
+  explanation: Correct. The browser and the backend are separate processes. A failed
+    request points at the route and its response.
+- id: ats069-020-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain why fast feedback needs both type and behavior checks
+  source_readings:
+  - sections/section-020/module-01/course-02-fast-feedback-type-checks-tests-and-lint.md
+  prompt: A function should return `missing` for an entity without an owner but returns
+    `error`. Both are valid values of the type `OwnerState`. Which statement is correct?
+  options:
+  - id: a
+    text: "`yarn tsc` reports the mistake because the value is wrong."
+    explanation: A wrong value of a valid type is not a type error.
+  - id: b
+    text: "`yarn tsc` passes and a test that names the case reports the mistake."
+    explanation: Correct. The type check guards the shape of data. A test with an
+      expected value guards the meaning.
+  - id: c
+    text: "`yarn lint` reports the mistake because it reads the return value."
+    explanation: The linter matches text patterns and does not run the function.
+  - id: d
+    text: Only a production build can find the mistake.
+    explanation: A test finds it on the development machine without any build.
+  correct_option: b
+  explanation: Correct. The type check guards the shape of data. A test with an expected
+    value guards the meaning.
+- id: ats069-020-q04
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Explain why fast feedback needs both type and behavior checks
+  source_readings:
+  - sections/section-020/module-01/course-02-fast-feedback-type-checks-tests-and-lint.md
+  prompt: What does `node --watch` do when a file that the backend loaded changes?
+  options:
+  - id: a
+    text: It updates the changed module inside the running process without a restart.
+    explanation: Module updates in place are a feature of browser development servers,
+      not of this flag.
+  - id: b
+    text: It restarts the whole process and runs the program again.
+    explanation: Correct. In the backend the watcher starts a new process.
+  - id: c
+    text: It runs the type check and stops on an error.
+    explanation: The flag does not check types.
+  - id: d
+    text: It rebuilds the production artifact.
+    explanation: It does not build anything. It only restarts the process.
+  correct_option: b
+  explanation: Correct. In the backend the watcher starts a new process.
+- id: ats069-020-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain why fast feedback needs both type and behavior checks
+  source_readings:
+  - sections/section-020/module-01/course-02-fast-feedback-type-checks-tests-and-lint.md
+  prompt: A page renders after a hot reload. A teammate says the change is therefore
+    type correct. Why is that not proven?
+  options:
+  - id: a
+    text: Because browsers cannot render TypeScript.
+    explanation: The development server converts the code to something the browser
+      can run.
+  - id: b
+    text: Because a development server can transpile code without checking its types,
+      so only the type check proves type agreement.
+    explanation: Correct. Rendering shows that the code runs. It does not show that
+      the types agree.
+  - id: c
+    text: Because hot reload only works with plain JavaScript.
+    explanation: Hot reload works with TypeScript sources.
+  - id: d
+    text: Because rendering requires the production build first.
+    explanation: The development server does not need a production build.
+  correct_option: b
+  explanation: Correct. Rendering shows that the code runs. It does not show that
+    the types agree.
+- id: ats069-020-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish local overrides from committed project configuration
+  source_readings:
+  - sections/section-020/module-01/course-03-local-overrides-configuration-and-reviewable-changes.md
+  prompt: 'A developer adds `catalog.ownerWarning.enabled: true` to `app-config.local.yaml`.
+    The feature works locally and is off on every other checkout. What is the correct
+    fix?'
+  options:
+  - id: a
+    text: Commit `app-config.local.yaml` so every checkout has it.
+    explanation: The local file holds personal values and can hold secrets, so it
+      must stay out of Git.
+  - id: b
+    text: Add the key to `app-config.yaml` and keep only machine-specific values in
+      the local file.
+    explanation: Correct. A key that every checkout needs belongs in the committed
+      shared file.
+  - id: c
+    text: Add the key to `.gitignore`.
+    explanation: "`.gitignore` lists files, not configuration keys."
+  - id: d
+    text: Pass the key as a `--config` flag on every machine.
+    explanation: A flag does not make the key part of the reviewed project configuration.
+  correct_option: b
+  explanation: Correct. A key that every checkout needs belongs in the committed shared
+    file.
+- id: ats069-020-q07
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Distinguish local overrides from committed project configuration
+  source_readings:
+  - sections/section-020/module-01/course-03-local-overrides-configuration-and-reviewable-changes.md
+  prompt: A production start command is `node packages/backend --config app-config.yaml
+    --config app-config.production.yaml`. A file `app-config.local.yaml` exists on
+    the server. What happens to it?
+  options:
+  - id: a
+    text: It is loaded last and wins over both files.
+    explanation: That is the behavior only when no `--config` flag is given.
+  - id: b
+    text: It is not loaded, because any `--config` flag turns off the default files.
+    explanation: Correct. With `--config` flags the loader reads only the named files.
+  - id: c
+    text: It is loaded first and both named files win over it.
+    explanation: The local file is not read at all, so it has no priority.
+  - id: d
+    text: The start fails because the file is not named.
+    explanation: The loader does not fail for a file it does not read.
+  correct_option: b
+  explanation: Correct. With `--config` flags the loader reads only the named files.
+- id: ats069-020-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish local overrides from committed project configuration
+  source_readings:
+  - sections/section-020/module-01/course-03-local-overrides-configuration-and-reviewable-changes.md
+  prompt: "`app-config.yaml` contains `password: hunter2` and is committed. What is
+    the correct change?"
+  options:
+  - id: a
+    text: Replace it with `${BACKEND_DB_PASSWORD}` and provide the variable at runtime.
+      Treat the old value as exposed, because Git history keeps it.
+    explanation: Correct. The reference reads the value from the environment, and
+      the old value stays in history, so it must be changed.
+  - id: b
+    text: Delete the line and commit. The history no longer matters.
+    explanation: Removing the line does not remove earlier commits.
+  - id: c
+    text: Move the line to `app-config.production.yaml`.
+    explanation: The production file is also committed.
+  - id: d
+    text: Encode the value in base64.
+    explanation: Encoding does not protect a value that is committed.
+  correct_option: a
+  explanation: Correct. The reference reads the value from the environment, and the
+    old value stays in history, so it must be changed.

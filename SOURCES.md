@@ -1,6 +1,6 @@
 # Primary Authoring Sources
 
-[Official CBA objectives](https://training.linuxfoundation.org/certification/certified-backstage-associate-cba/) checked on 2026-10-11. The examination is multiple-choice. These primary references support author review; learner pages are self-contained. Adaptation paths are recorded per reading in AUTHORING.yaml. No runtime or command-output validation is claimed.
+[Official CBA objectives](https://training.linuxfoundation.org/certification/certified-backstage-associate-cba/) checked on 2026-10-11. The examination is multiple-choice. These primary references support author review; learner pages are self-contained. Adaptation paths are recorded per reading in AUTHORING.yaml. Labs and playgrounds are built but not yet run; no runtime validation is claimed.
 
 - [Framework overview](https://backstage.io/docs/overview/what-is-backstage/)
 - [Architecture](https://backstage.io/docs/overview/architecture-overview/)

@@ -1,0 +1,69 @@
+# Reproducible Dependencies Capstone (LAB). Graded on the VM. A CI install step is not reproducible.
+metadata:
+  name: "ats-069-capstone-040-01"
+  docs:
+    prerequisites: "prerequisites.md"
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+
+bootstrap:
+  init:
+    - name: "seed"
+      description: "Install Node.js 22 and create the workspace with its faults"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "ci-install-is-immutable"
+      description: "ci/install.sh runs yarn install --immutable and no other install command"
+      type: "file"
+      source: "validation/validate-ci-install-is-immutable.sh"
+      hint: "Replace the plain yarn install in ci/install.sh with yarn install --immutable."
+    - name: "backend-declares-semver"
+      description: "The backend manifest declares semver under dependencies"
+      type: "file"
+      source: "validation/validate-backend-declares-semver.sh"
+      hint: "Run yarn workspace backend add semver@^7.6.0 or edit packages/backend/package.json."
+    - name: "single-semver-release"
+      description: "yarn.lock holds one semver release and it is 7.5.2 or later"
+      type: "file"
+      source: "validation/validate-single-semver-release.sh"
+      hint: "legacy-tool asks for semver ^5.7.2. Add a resolutions entry in the root package.json, then run yarn install."
+    - name: "legacy-tool-range-kept"
+      description: "legacy-tool still declares its own range, and resolutions is the only override"
+      type: "file"
+      source: "validation/validate-legacy-tool-range-kept.sh"
+      hint: "Do not edit the range in packages/legacy-tool/package.json. Use resolutions in the root manifest."
+    - name: "no-second-lockfile"
+      description: "package-lock.json is gone and Yarn stays the package manager"
+      type: "file"
+      source: "validation/validate-no-second-lockfile.sh"
+      hint: "Delete package-lock.json. Keep packageManager yarn@4.4.1."
+    - name: "immutable-install-passes"
+      description: "yarn install --immutable exits with code 0"
+      type: "file"
+      source: "validation/validate-immutable-install-passes.sh"
+      hint: "After the manifest changes, run yarn install once so that yarn.lock is rewritten, then run yarn install --immutable."
+
+teardown:
+  keepCluster: false

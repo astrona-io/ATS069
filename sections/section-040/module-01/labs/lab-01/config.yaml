@@ -1,0 +1,64 @@
+# Make The Install Reproducible (LAB). Graded on the VM. A workspace fails `yarn install --immutable`.
+metadata:
+  name: "ats-069-lab-040-01"
+  docs:
+    prerequisites: "prerequisites.md"
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+
+bootstrap:
+  init:
+    - name: "seed"
+      description: "Install Node.js 22 and create the workspace with its faults"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "app-range-matches-shared"
+      description: "The app package asks for a range of @internal/shared that the local package satisfies"
+      type: "file"
+      source: "validation/validate-app-range-matches-shared.sh"
+      hint: "The local version of @internal/shared is 1.0.0. Use workspace:^ or a range such as ^1.0.0 in packages/app/package.json."
+    - name: "backend-declares-shared"
+      description: "The backend manifest declares @internal/shared"
+      type: "file"
+      source: "validation/validate-backend-declares-shared.sh"
+      hint: "Run yarn workspace backend add @internal/shared, or write the dependency in packages/backend/package.json."
+    - name: "lockfile-lists-backend-dependency"
+      description: "yarn.lock records the backend dependency on @internal/shared"
+      type: "file"
+      source: "validation/validate-lockfile-lists-backend-dependency.sh"
+      hint: "After you change a manifest, run a plain yarn install so that yarn.lock is rewritten."
+    - name: "immutable-install-passes"
+      description: "yarn install --immutable exits with code 0"
+      type: "file"
+      source: "validation/validate-immutable-install-passes.sh"
+      hint: "Fix the manifests, run yarn install once, then run yarn install --immutable to confirm."
+    - name: "project-setup-unchanged"
+      description: "Yarn stays the package manager and the shared package keeps version 1.0.0"
+      type: "file"
+      source: "validation/validate-project-setup-unchanged.sh"
+      hint: "Do not change the version of @internal/shared, do not add package-lock.json and keep nodeLinker: node-modules."
+
+teardown:
+  keepCluster: false

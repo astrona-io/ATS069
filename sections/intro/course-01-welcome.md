@@ -1,9 +1,9 @@
 # Welcome To The Course
 
-This course develops the official Backstage Development Workflow objectives for Certified Backstage Associate (CBA). The certification uses a multiple-choice examination. The course is independently authored reading material and does not claim to simulate the examination.
+This course is for learners preparing for the Certified Backstage Associate (CBA) examination. It covers Backstage Development Workflow, worth 24% of the published curriculum. The examination tests knowledge through multiple-choice questions. The explanations in this course build the reasoning needed to choose an answer, and the hands-on labs let you run each step of the workflow yourself.
 
-Each section starts with its own introduction and learning outcomes. Each module provides goals, developed teaching and a final summary. Lesson counts follow the subject rather than a fixed number.
+At the end, you can build and run a Backstage project locally, explain how a change moves through the workspaces and their checks, compile a project with TypeScript, install dependencies with Yarn or npm, and build a container image with Docker. Technical terms and acronyms are defined when they appear. The examples use a small portal workspace with an `app` package and a `backend` package. The names identify packages only and do not change the technical meaning.
 
-YAML knowledge checks are registered separately for future presentation. They follow the relevant summaries and include original questions and answer feedback. Technical pages remain draft for review.
+Each section begins with an introduction and learning outcomes. Each module starts with a short map, continues with teaching parts, and ends with a summary. Every module has a playground, which is a clean Ubuntu virtual machine you can explore without any task, and a graded lab, which gives you a task and checks the result on the machine. Each section ends with a capstone lab and a knowledge check. A final knowledge check closes the course.
 
-Read the explanations and worked examples to identify the responsible component, intended operation and limits of each claim. No live environment or executed results are required.
+Read the examples carefully, identify which component does the work, and predict what changes when a condition changes. The practice questions are original and are not copied from the examination.

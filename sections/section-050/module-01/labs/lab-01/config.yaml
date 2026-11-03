@@ -1,0 +1,68 @@
+# Package The Backend As A Container Image (LAB). Graded on the virtual machine. The host-build image has four faults.
+metadata:
+  name: "ats-069-lab-050-01"
+  docs:
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+
+bootstrap:
+  init:
+    - name: "seed-portal"
+      description: "Install Node.js and Docker, then create the portal workspace with its faults"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "image-built"
+      description: "The image backstage:lab exists"
+      type: "file"
+      source: "validation/validate-image-built.sh"
+      hint: "Run docker image build . -f packages/backend/Dockerfile --tag backstage:lab from /opt/portal. If it fails, read the first error."
+    - name: "runs-as-non-root"
+      description: "The container runs as a user other than root"
+      type: "file"
+      source: "validation/validate-runs-as-non-root.sh"
+      hint: "The base image has a user named node. Make it the owner of /app, then add USER node before the files are unpacked."
+    - name: "no-local-config-in-image"
+      description: "app-config.local.yaml and its secret are not in the image"
+      type: "file"
+      source: "validation/validate-no-local-config-in-image.sh"
+      hint: "Copy only app-config.yaml and app-config.production.yaml by name, and add *.local.yaml to .dockerignore."
+    - name: "bundle-matches-source"
+      description: "The backend in the image was built from the current source"
+      type: "file"
+      source: "validation/validate-bundle-matches-source.sh"
+      hint: "The bundle in packages/backend/dist is older than the source. Run npm run build:backend, then build the image again."
+    - name: "serves-on-7007"
+      description: "A container answers the health check on the published port"
+      type: "file"
+      source: "validation/validate-serves-on-7007.sh"
+      hint: "The command line of the container must load both app-config files. Check what the image does when it starts with docker logs."
+    - name: "source-unchanged"
+      description: "The backend source was not edited"
+      type: "file"
+      source: "validation/validate-source-unchanged.sh"
+      hint: "Fix the Dockerfile, the .dockerignore file and the build, not packages/backend/src."
+
+teardown:
+  keepCluster: false

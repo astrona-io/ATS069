@@ -5,7 +5,7 @@ exam_objectives:
 ---
 # Container Artifacts, Build Inputs And Runtime Responsibilities
 
-This module develops container Artifacts, Build Inputs And Runtime Responsibilities. Use the explanations to connect intended behavior with responsible components and observable evidence.
+This module explains what a Backstage container image contains, how a host build and a multi-stage build produce it, and which responsibilities remain with the running container. You build and run the images in a virtual machine with Docker.
 
 ## Learning Goals
 
@@ -15,9 +15,13 @@ This module develops container Artifacts, Build Inputs And Runtime Responsibilit
 
 ## Before You Start
 
-Examples illustrate declared relationships and reasoning. No execution environment is required or claimed.
+You should know what a container is and what a Node.js application is. The hands-on part uses a playground with an Ubuntu virtual machine, Node.js and Docker. The workspace in the playground is a simplified fixture with the shape of a Backstage project. Technical terms are defined where they first appear.
 
 ## Reading Order
 
-1. Container Artifacts, Build Inputs And Runtime Responsibilities
-2. Summary
+1. What Goes Into A Backstage Image
+2. Host Build And Multi-Stage Build
+3. Runtime Configuration, Identity And What A Build Proves
+4. Summary
+
+<!-- astrona:playground -->

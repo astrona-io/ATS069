@@ -1,0 +1,283 @@
+# Knowledge check for section 040. Listed in astrona.yaml as a `type: quiz` entry after the capstone lab.
+schema_version: 1
+kind: question_bank
+id: ats069-040
+course_id: ATS069
+exam_code: CBA
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: section
+  id: section-040
+  title: Download and install dependencies for a Backstage project with NPM/Yarn
+questions:
+- id: ats069-040-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Explain what a manifest declares and what a lockfile records
+  source_readings:
+  - sections/section-040/module-01/course-01-manifests-version-ranges-and-the-lockfile.md
+  prompt: 'A project has `"semver": "^7.6.0"` in a manifest and a `yarn.lock` that
+    selects `7.6.3`. A new `7.8.0` release is published. What does `yarn install --immutable`
+    install?'
+  options:
+  - id: a
+    text: "`7.8.0`, because it satisfies the range."
+    explanation: The range allows `7.8.0`, but the lockfile already selects a release
+      for this range and an install that reuses it does not look for newer ones.
+  - id: b
+    text: "`7.6.3`, the release that the lockfile records."
+    explanation: Correct. A range allows a set of releases. The lockfile records the
+      one that was selected, and the install reuses it.
+  - id: c
+    text: "`7.6.0`, the lowest release that the range allows."
+    explanation: The range gives a lower bound, but the lockfile is the source of
+      the selected version.
+  - id: d
+    text: Nothing, because the manifest and the lockfile differ.
+    explanation: 'They do not differ: `7.6.3` satisfies `^7.6.0`.'
+  correct_option: b
+  explanation: A range allows a set of releases. The lockfile records the one that
+    was selected, and the install reuses it.
+- id: ats069-040-q02
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Read a version range and say which releases it allows
+  source_readings:
+  - sections/section-040/module-01/course-01-manifests-version-ranges-and-the-lockfile.md
+  prompt: Which releases does the range `^0.4.1` accept?
+  options:
+  - id: a
+    text: Every release from `0.4.1` up to, but not including, `1.0.0`.
+    explanation: This is the rule for `^1.x`. For a `0.x` version the caret is narrower.
+  - id: b
+    text: Only `0.4.1`.
+    explanation: That is the plain version `0.4.1`, not a caret range.
+  - id: c
+    text: Releases from `0.4.1` up to, but not including, `0.5.0`.
+    explanation: Correct. For a version that starts with `0`, the caret accepts patch
+      releases only.
+  - id: d
+    text: Releases from `0.4.1` up to, but not including, `0.4.2`.
+    explanation: That is a tilde range limit in a different form, and it is too narrow
+      for a caret.
+  correct_option: c
+  explanation: For a version that starts with `0`, the caret accepts patch releases
+    only.
+- id: ats069-040-q03
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Explain what a manifest declares and what a lockfile records
+  source_readings:
+  - sections/section-040/module-01/course-01-manifests-version-ranges-and-the-lockfile.md
+  prompt: A pull request changes `yarn.lock` and no `package.json`. What should the
+    reviewer conclude first?
+  options:
+  - id: a
+    text: 'Nothing: a lockfile is generated and needs no review.'
+    explanation: Reviewers read lockfile changes, because they change the installed
+      packages.
+  - id: b
+    text: The change is invalid, because only manifests may change.
+    explanation: The package manager can legitimately rewrite a lockfile, for example
+      for a refresh. The change needs a stated reason.
+  - id: c
+    text: Some install selected new versions that no manifest change explains, so
+      the author must state the reason.
+    explanation: Correct. A lockfile change with no manifest change means that the
+      resolution moved without a declared decision.
+  - id: d
+    text: The `packageManager` field must be wrong.
+    explanation: The field is unrelated to a lockfile-only change.
+  correct_option: c
+  explanation: A lockfile change with no manifest change means that the resolution
+    moved without a declared decision.
+- id: ats069-040-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Declare a dependency in the workspace that imports it
+  source_readings:
+  - sections/section-040/module-01/course-02-workspaces-and-the-dependency-boundary.md
+  prompt: The `backend` workspace imports `semver`. The `shared` workspace declares
+    `semver`, and the backend manifest does not. The code runs after `yarn install`.
+    What is the correct statement?
+  options:
+  - id: a
+    text: The code is correct, because the import resolves.
+    explanation: The import resolves because of hoisting, which is a layout effect
+      and not a declaration.
+  - id: b
+    text: 'The backend has a hidden dependency: it works because `semver` is hoisted
+      to the root `node_modules`, and it must declare `semver` itself.'
+    explanation: Correct. Node.js finds `semver` by walking up to the root folder
+      and does not check the manifest.
+  - id: c
+    text: The `shared` workspace must move `semver` to `devDependencies`.
+    explanation: This changes nothing for the backend, and a run-time import must
+      not be in `devDependencies`.
+  - id: d
+    text: The lockfile must list `semver` twice.
+    explanation: The number of lockfile entries does not declare anything for the
+      backend.
+  correct_option: b
+  explanation: Node.js finds `semver` by walking up to the root folder and does not
+    check the manifest.
+- id: ats069-040-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Declare a dependency in the workspace that imports it
+  source_readings:
+  - sections/section-040/module-01/course-02-workspaces-and-the-dependency-boundary.md
+  prompt: 'A manifest in a workspace repository asks for `"@internal/shared": "^2.0.0"`.
+    The local workspace with that name has version `1.0.0`. What does Yarn do?'
+  options:
+  - id: a
+    text: It links the local package, because the name matches.
+    explanation: A local package is used only when its version satisfies the range,
+      or when the `workspace:` protocol is used.
+  - id: b
+    text: It asks the public registry for a package with that name, because no workspace
+      satisfies the range.
+    explanation: Correct. This can fail with a not-found error or, worse, install
+      an unrelated package.
+  - id: c
+    text: It rewrites the range to `^1.0.0` in the manifest.
+    explanation: The package manager does not change a range on its own.
+  - id: d
+    text: It skips the dependency and installs the rest.
+    explanation: An unsatisfied dependency is an error, not a skipped entry.
+  correct_option: b
+  explanation: This can fail with a not-found error or, worse, install an unrelated
+    package.
+- id: ats069-040-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Use immutable installs to install exactly what the lockfile
+    says
+  source_readings:
+  - sections/section-040/module-01/course-03-reproducible-installs-resolutions-and-failures.md
+  prompt: A build server runs `yarn install --immutable`. A developer committed a
+    manifest change without the updated `yarn.lock`. What happens?
+  options:
+  - id: a
+    text: The install passes and writes the new lockfile in the build.
+    explanation: The immutable mode refuses to write a lockfile.
+  - id: b
+    text: The install fails with a non-zero exit code, because the lockfile would
+      have to change.
+    explanation: 'Correct. This is the purpose of the mode: a reviewed commit must
+      contain its own lockfile.'
+  - id: c
+    text: The install passes and ignores the new range.
+    explanation: The mode does not ignore a manifest range with no lockfile entry.
+  - id: d
+    text: The install deletes `node_modules` and retries without the flag.
+    explanation: Yarn does not retry without the flag.
+  correct_option: b
+  explanation: 'This is the purpose of the mode: a reviewed commit must contain its
+    own lockfile.'
+- id: ats069-040-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Use immutable installs to install exactly what the lockfile
+    says
+  source_readings:
+  - sections/section-040/module-01/course-03-reproducible-installs-resolutions-and-failures.md
+  prompt: A project is installed with npm in continuous integration. Which command
+    gives a lockfile-based clean install that fails when `package.json` and `package-lock.json`
+    disagree?
+  options:
+  - id: a
+    text: "`npm install`"
+    explanation: This command can update the lockfile.
+  - id: b
+    text: "`npm update`"
+    explanation: This command moves packages to newer releases inside their ranges.
+  - id: c
+    text: "`npm ci`"
+    explanation: Correct. It removes `node_modules`, installs the tree from the lockfile
+      and fails when the files disagree.
+  - id: d
+    text: "`yarn install --immutable`"
+    explanation: This is the Yarn command, and it needs `yarn.lock`.
+  correct_option: c
+  explanation: It removes `node_modules`, installs the tree from the lockfile and
+    fails when the files disagree.
+- id: ats069-040-q08
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Use resolutions to force one version of a transitive dependency
+  source_readings:
+  - sections/section-040/module-01/course-03-reproducible-installs-resolutions-and-failures.md
+  prompt: A tool package in the workspace asks for `semver@^5.7.2`. The project must
+    have only `semver` `7.6` or later, and the tool package cannot be edited. Which
+    change achieves this?
+  options:
+  - id: a
+    text: Edit `yarn.lock` and replace the `5.7.2` version by hand.
+    explanation: A hand edit breaks the checksum and is not a reviewed declaration.
+  - id: b
+    text: 'Add `"resolutions": {"semver@^5.7.2": "^7.6.0"}` to the root `package.json`,
+      then run `yarn install`.'
+    explanation: Correct. The root manifest overrides the request, and the install
+      rewrites the lockfile with one release.
+  - id: c
+    text: Add `semver` `^7.6.0` to the `devDependencies` of the tool package.
+    explanation: This edits the package that cannot be edited, and a second range
+      does not remove the first.
+  - id: d
+    text: Run `yarn install --immutable` three times.
+    explanation: The immutable mode never changes the graph.
+  correct_option: b
+  explanation: The root manifest overrides the request, and the install rewrites the
+    lockfile with one release.
+- id: ats069-040-q09
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Name the cause of an install failure from its error
+  source_readings:
+  - sections/section-040/module-01/course-03-reproducible-installs-resolutions-and-failures.md
+  prompt: An install of a private scoped package fails with an unauthorized response
+    from the registry. What is the correct next step?
+  options:
+  - id: a
+    text: Delete the checksum of the package in the lockfile.
+    explanation: A checksum is not involved in an authorization failure.
+  - id: b
+    text: Switch the project from Yarn to npm.
+    explanation: Both tools need a credential for the private registry.
+  - id: c
+    text: Provide the credential through the approved user or project registry configuration,
+      without writing a token into a committed file.
+    explanation: Correct. The failure belongs to the registry authentication group.
+  - id: d
+    text: Add the package to `resolutions`.
+    explanation: A resolution changes which version is selected, not whether a request
+      is allowed.
+  correct_option: c
+  explanation: The failure belongs to the registry authentication group.
+- id: ats069-040-q10
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Name the cause of an install failure from its error
+  source_readings:
+  - sections/section-040/module-01/course-03-reproducible-installs-resolutions-and-failures.md
+  prompt: An install finishes with exit code 0 after `yarn install --immutable`. Which
+    claim does this result support?
+  options:
+  - id: a
+    text: The declared graph matches the lockfile and the packages can be acquired.
+    explanation: Correct. This is exactly what the command proves.
+  - id: b
+    text: The application compiles and its tests pass.
+    explanation: The install does not run the compiler or the tests.
+  - id: c
+    text: None of the installed packages runs a lifecycle script with side effects.
+    explanation: An install can run lifecycle scripts, and the exit code does not
+      report on them.
+  - id: d
+    text: The container image will build.
+    explanation: Image building has its own inputs and steps.
+  correct_option: a
+  explanation: This is exactly what the command proves.

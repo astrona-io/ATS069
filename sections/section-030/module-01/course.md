@@ -5,7 +5,7 @@ exam_objectives:
 ---
 # Type Checking, Transpilation And Workspace Build Contracts
 
-This module develops type Checking, Transpilation And Workspace Build Contracts. Use the explanations to connect intended behavior with responsible components and observable evidence.
+This module explains what the TypeScript compiler checks and what it emits, how `tsconfig.json` sets the scope of a check, why a type is not a runtime guarantee, and how a workspace of packages is built in dependency order. You practise on a small workspace that has the shape of a Backstage repository.
 
 ## Learning Goals
 
@@ -15,9 +15,13 @@ This module develops type Checking, Transpilation And Workspace Build Contracts.
 
 ## Before You Start
 
-Examples illustrate declared relationships and reasoning. No execution environment is required or claimed.
+You should be able to read a short JavaScript or TypeScript function and a JSON file. The hands-on part uses a playground, an Ubuntu virtual machine with Node.js and the `tsc` compiler. Technical terms are defined where they first appear.
 
 ## Reading Order
 
-1. Type Checking, Transpilation And Workspace Build Contracts
-2. Summary
+1. Checking, Emitting And The Scope Of tsconfig.json
+2. Types, Optional Values And Runtime Boundaries
+3. Workspace Builds, Project References And Declaration Files
+4. Summary
+
+<!-- astrona:playground -->

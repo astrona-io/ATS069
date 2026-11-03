@@ -1,0 +1,386 @@
+# Final domain knowledge check across all five sections.
+---
+schema_version: 1
+kind: question_bank
+id: ats069-final
+course_id: ATS069
+exam_code: CBA
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: domain
+  id: backstage-development-workflow
+  title: Backstage Development Workflow
+questions:
+- id: ats069-final-q01
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain the responsibilities of the app and backend workspaces
+  source_readings:
+  - sections/section-010/module-01/course-01-workspaces-and-the-parts-of-a-project.md
+  prompt: The `portal` page renders, but the deployment-status card shows a failed
+    request. Which check comes first?
+  options:
+  - id: a
+    text: Read the requested route, the response status and the backend log.
+    explanation: Correct. The page renders, so the app workspace works. The failed
+      request crosses to the backend, so the route, status and server log show the
+      first failing boundary.
+  - id: b
+    text: Rebuild the logo asset in the `app` package.
+    explanation: This option does not address the situation.
+  - id: c
+    text: Reinstall the browser.
+    explanation: This option does not address the situation.
+  - id: d
+    text: Change the TypeScript target.
+    explanation: This option does not address the situation.
+  correct_option: a
+  explanation: The page renders, so the app workspace works. The failed request crosses
+    to the backend, so the route, status and server log show the first failing boundary.
+- id: ats069-final-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Locate startup failures by dependency, configuration and process
+    boundaries
+  source_readings:
+  - sections/section-010/module-01/course-02-development-servers-and-configuration.md
+  prompt: The backend compiles but stops at startup with a message about a missing
+    required configuration key. Which boundary failed?
+  options:
+  - id: a
+    text: Package resolution.
+    explanation: This option does not address the situation.
+  - id: b
+    text: Configuration loading.
+    explanation: Correct. Compilation passed, so the configuration the process reads
+      at startup is missing a key.
+  - id: c
+    text: Browser rendering.
+    explanation: This option does not address the situation.
+  - id: d
+    text: Image layering.
+    explanation: This option does not address the situation.
+  correct_option: b
+  explanation: Compilation passed, so the configuration the process reads at startup
+    is missing a key.
+- id: ats069-final-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish a development server from a production artifact
+  source_readings:
+  - sections/section-010/module-01/course-03-production-builds-and-artifacts.md
+  prompt: A project runs with the development script. Why does that not show the production
+    build works?
+  options:
+  - id: a
+    text: Development scripts cannot start a backend.
+    explanation: This option does not address the situation.
+  - id: b
+    text: Production builds skip configuration.
+    explanation: This option does not address the situation.
+  - id: c
+    text: The artifact has its own build output and runtime files that the development
+      server never uses.
+    explanation: Correct. Only running the built output shows that it holds every
+      file it needs.
+  - id: d
+    text: The development server compiles for a different language.
+    explanation: This option does not address the situation.
+  correct_option: c
+  explanation: Only running the built output shows that it holds every file it needs.
+- id: ats069-final-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Trace a source change through the relevant workspace and checks
+  source_readings:
+  - sections/section-020/module-01/course-01-tracing-a-change-through-the-workspace.md
+  prompt: A change edits a type exported by a shared package used by `app` and `backend`.
+    Which checks are relevant?
+  options:
+  - id: a
+    text: Only the shared package tests.
+    explanation: This option does not address the situation.
+  - id: b
+    text: Only the `app` package.
+    explanation: This option does not address the situation.
+  - id: c
+    text: No check, because types are removed at run time.
+    explanation: This option does not address the situation.
+  - id: d
+    text: Checks for the shared package and for every package that imports it.
+    explanation: Correct. Packages that import the type can break at compile time,
+      so their checks matter.
+  correct_option: d
+  explanation: Packages that import the type can break at compile time, so their checks
+    matter.
+- id: ats069-final-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain why fast feedback needs both type and behavior checks
+  source_readings:
+  - sections/section-020/module-01/course-02-fast-feedback-type-checks-tests-and-lint.md
+  prompt: A function passes `tsc` but returns the wrong value for an input. Which
+    check finds it?
+  options:
+  - id: a
+    text: A test that runs the function.
+    explanation: Correct. Types describe shape. Behavior needs a test that runs the
+      code.
+  - id: b
+    text: A lint rule only.
+    explanation: This option does not address the situation.
+  - id: c
+    text: The type checker with a stricter flag.
+    explanation: This option does not address the situation.
+  - id: d
+    text: The package lockfile.
+    explanation: This option does not address the situation.
+  correct_option: a
+  explanation: Types describe shape. Behavior needs a test that runs the code.
+- id: ats069-final-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish local overrides from committed project configuration
+  source_readings:
+  - sections/section-020/module-01/course-03-local-overrides-configuration-and-reviewable-changes.md
+  prompt: A developer needs a personal database password. Where does it belong?
+  options:
+  - id: a
+    text: In `app-config.yaml`, committed.
+    explanation: This option does not address the situation.
+  - id: b
+    text: In an uncommitted local override file such as `app-config.local.yaml`.
+    explanation: Correct. Local override files stay out of the repository, so a personal
+      secret is not shared with reviewers.
+  - id: c
+    text: In `package.json`.
+    explanation: This option does not address the situation.
+  - id: d
+    text: In `tsconfig.json`.
+    explanation: This option does not address the situation.
+  correct_option: b
+  explanation: Local override files stay out of the repository, so a personal secret
+    is not shared with reviewers.
+- id: ats069-final-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish TypeScript checking from JavaScript execution
+  source_readings:
+  - sections/section-030/module-01/course-01-checking-emitting-and-tsconfig-scope.md
+  prompt: What does `tsc --noEmit` do?
+  options:
+  - id: a
+    text: It runs the program.
+    explanation: This option does not address the situation.
+  - id: b
+    text: It installs dependencies.
+    explanation: This option does not address the situation.
+  - id: c
+    text: It checks types and writes no JavaScript output.
+    explanation: Correct. The flag stops the compiler from writing files, so only
+      checking happens.
+  - id: d
+    text: It bundles the backend.
+    explanation: This option does not address the situation.
+  correct_option: c
+  explanation: The flag stops the compiler from writing files, so only checking happens.
+- id: ats069-final-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Diagnose type errors separately from runtime integration failures
+  source_readings:
+  - sections/section-030/module-01/course-02-types-optional-values-and-runtime-boundaries.md
+  prompt: A value typed as `string` is `undefined` at run time because an API response
+    lacked a field. Why did `tsc` not report it?
+  options:
+  - id: a
+    text: "`tsc` only reads comments."
+    explanation: This option does not address the situation.
+  - id: b
+    text: The field was in `node_modules`.
+    explanation: This option does not address the situation.
+  - id: c
+    text: "`tsc` skips functions."
+    explanation: This option does not address the situation.
+  - id: d
+    text: Types are erased and do not validate data that arrives at run time.
+    explanation: Correct. A type assertion trusts the data. Run-time validation is
+      the check.
+  correct_option: d
+  explanation: A type assertion trusts the data. Run-time validation is the check.
+- id: ats069-final-q09
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain workspace build dependencies and generated artifacts
+  source_readings:
+  - sections/section-030/module-01/course-03-workspace-builds-references-and-declarations.md
+  prompt: Why do project references order the build of packages?
+  options:
+  - id: a
+    text: A package must build its declarations before a package that imports its
+      types.
+    explanation: Correct. The importing package reads the declaration output of the
+      package it depends on.
+  - id: b
+    text: They install packages in parallel.
+    explanation: This option does not address the situation.
+  - id: c
+    text: They remove the lockfile.
+    explanation: This option does not address the situation.
+  - id: d
+    text: They only rename output folders.
+    explanation: This option does not address the situation.
+  correct_option: a
+  explanation: The importing package reads the declaration output of the package it
+    depends on.
+- id: ats069-final-q10
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain manifest and lockfile responsibilities in a workspace
+    project
+  source_readings:
+  - sections/section-040/module-01/course-01-manifests-version-ranges-and-the-lockfile.md
+  prompt: What does the lockfile record that `package.json` does not?
+  options:
+  - id: a
+    text: The project description.
+    explanation: This option does not address the situation.
+  - id: b
+    text: The exact resolved version of each dependency.
+    explanation: Correct. `package.json` holds ranges. The lockfile pins the exact
+      versions.
+  - id: c
+    text: The scripts.
+    explanation: This option does not address the situation.
+  - id: d
+    text: The workspace names.
+    explanation: This option does not address the situation.
+  correct_option: b
+  explanation: "`package.json` holds ranges. The lockfile pins the exact versions."
+- id: ats069-final-q11
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish compatible dependency resolution from arbitrary
+    upgrades
+  source_readings:
+  - sections/section-040/module-01/course-02-workspaces-and-the-dependency-boundary.md
+  prompt: A range `^1.2.0` is in a manifest. Which version can an install without
+    a lockfile choose?
+  options:
+  - id: a
+    text: Only 1.2.0.
+    explanation: This option does not address the situation.
+  - id: b
+    text: Version 2.0.0.
+    explanation: This option does not address the situation.
+  - id: c
+    text: Any 1.x version at or above 1.2.0.
+    explanation: Correct. A caret range allows compatible minor and patch releases
+      and blocks the next major.
+  - id: d
+    text: Any version at all.
+    explanation: This option does not address the situation.
+  correct_option: c
+  explanation: A caret range allows compatible minor and patch releases and blocks
+    the next major.
+- id: ats069-final-q12
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Identify environment and dependency causes of installation failure
+  source_readings:
+  - sections/section-040/module-01/course-03-reproducible-installs-resolutions-and-failures.md
+  prompt: A CI job runs `yarn install --immutable` and fails because the lockfile
+    would change. What is the most likely cause?
+  options:
+  - id: a
+    text: The Node.js version is too new.
+    explanation: This option does not address the situation.
+  - id: b
+    text: Docker is not installed.
+    explanation: This option does not address the situation.
+  - id: c
+    text: The backend port is in use.
+    explanation: This option does not address the situation.
+  - id: d
+    text: "`package.json` changed without a matching lockfile update."
+    explanation: Correct. The flag refuses to modify the lockfile, so a stale lockfile
+      fails the install.
+  correct_option: d
+  explanation: The flag refuses to modify the lockfile, so a stale lockfile fails
+    the install.
+- id: ats069-final-q13
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Describe the files and dependencies a Backstage container needs
+  source_readings:
+  - sections/section-050/module-01/course-01-image-contents-and-build-context.md
+  prompt: A host-build image starts with a missing-file error for the bundle. A `.dockerignore`
+    file is the likely cause because it...
+  options:
+  - id: a
+    text: Excludes the built files from the build context.
+    explanation: Correct. Files excluded from the build context cannot be copied into
+      the image.
+  - id: b
+    text: Changes the base image.
+    explanation: This option does not address the situation.
+  - id: c
+    text: Sets the container user.
+    explanation: This option does not address the situation.
+  - id: d
+    text: Removes port 7007.
+    explanation: This option does not address the situation.
+  correct_option: a
+  explanation: Files excluded from the build context cannot be copied into the image.
+- id: ats069-final-q14
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain host-build and multi-stage packaging tradeoffs
+  source_readings:
+  - sections/section-050/module-01/course-02-host-build-and-multi-stage-builds.md
+  prompt: What does a multi-stage build change compared with a host build?
+  options:
+  - id: a
+    text: It skips the build.
+    explanation: This option does not address the situation.
+  - id: b
+    text: The build runs inside the image build, and only the needed output reaches
+      the final stage.
+    explanation: Correct. A builder stage compiles the project. The final stage copies
+      only the output it needs.
+  - id: c
+    text: It needs no Dockerfile.
+    explanation: This option does not address the situation.
+  - id: d
+    text: It uses the host's `node_modules`.
+    explanation: This option does not address the situation.
+  correct_option: b
+  explanation: A builder stage compiles the project. The final stage copies only the
+    output it needs.
+- id: ats069-final-q15
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Distinguish a built image from a correctly configured deployment
+  source_readings:
+  - sections/section-050/module-01/course-03-runtime-configuration-identity-and-evidence.md
+  prompt: The image builds and starts, but the backend rejects requests that need
+    a secret. What is the likely gap?
+  options:
+  - id: a
+    text: The image has too many layers.
+    explanation: This option does not address the situation.
+  - id: b
+    text: The Dockerfile has a comment.
+    explanation: This option does not address the situation.
+  - id: c
+    text: The secret was not given to the container at run time.
+    explanation: Correct. An image holds the build output. Secrets and environment-specific
+      configuration arrive when the container runs.
+  - id: d
+    text: The lockfile is missing.
+    explanation: This option does not address the situation.
+  correct_option: c
+  explanation: An image holds the build output. Secrets and environment-specific configuration
+    arrive when the container runs.

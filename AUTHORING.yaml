@@ -1,5 +1,5 @@
 version: 1
-approval: CBA requested 2026-10-11; established reading-only scope
+approval: CBA requested 2026-10-11; reading-only rule lifted 2026-11-03 (labs, playgrounds, capstones, quizzes in scope)
 course:
   id: ATS069
   certification:
@@ -15,18 +15,18 @@ course:
     - Download and install dependencies for a Backstage project with NPM/Yarn
     - Use Docker to build a container image of a Backstage project
 defaults:
-  playground: false
-  module_lab: false
-  capstone: false
-  section_quiz: false
+  playground: true
+  module_lab: true
+  capstone: true
+  section_quiz: true
   final_quiz: true
 assessment_format: YAML question banks v1, registered in assessments/index.yaml
 sections:
 - id: section-010
   title: Build and run Backstage projects locally
   curriculum_item: Build and run Backstage projects locally
-  capstone: false
-  section_quiz: false
+  capstone: true
+  section_quiz: true
   modules:
   - id: module-01
     title: Local Projects, Development Servers And Production Builds
@@ -36,16 +36,16 @@ sections:
     - Locate startup failures by dependency, configuration and process boundaries.
     outline:
     - Local Projects, Development Servers And Production Builds
-    playground: false
-    module_lab: false
+    playground: true
+    module_lab: true
     sources:
     - reading: sections/section-010/module-01/course-01-local-projects-development-servers-and-production-builds.md
       adapted_from: null
 - id: section-020
   title: Understand local development workflows
   curriculum_item: Understand local development workflows
-  capstone: false
-  section_quiz: false
+  capstone: true
+  section_quiz: true
   modules:
   - id: module-01
     title: Changes, Workspace Feedback And Reviewable Development
@@ -55,16 +55,16 @@ sections:
     - Distinguish local overrides from committed project configuration.
     outline:
     - Changes, Workspace Feedback And Reviewable Development
-    playground: false
-    module_lab: false
+    playground: true
+    module_lab: true
     sources:
     - reading: sections/section-020/module-01/course-01-changes-workspace-feedback-and-reviewable-development.md
       adapted_from: null
 - id: section-030
   title: Compile a Backstage project with TypeScript
   curriculum_item: Compile a Backstage project with TypeScript
-  capstone: false
-  section_quiz: false
+  capstone: true
+  section_quiz: true
   modules:
   - id: module-01
     title: Type Checking, Transpilation And Workspace Build Contracts
@@ -74,16 +74,16 @@ sections:
     - Diagnose type errors separately from runtime integration failures.
     outline:
     - Type Checking, Transpilation And Workspace Build Contracts
-    playground: false
-    module_lab: false
+    playground: true
+    module_lab: true
     sources:
     - reading: sections/section-030/module-01/course-01-type-checking-transpilation-and-workspace-build-contracts.md
       adapted_from: null
 - id: section-040
   title: Download and install dependencies for a Backstage project with NPM/Yarn
   curriculum_item: Download and install dependencies for a Backstage project with NPM/Yarn
-  capstone: false
-  section_quiz: false
+  capstone: true
+  section_quiz: true
   modules:
   - id: module-01
     title: Package Managers, Lockfiles And Reproducible Dependencies
@@ -93,16 +93,16 @@ sections:
     - Identify environment and dependency causes of installation failure.
     outline:
     - Package Managers, Lockfiles And Reproducible Dependencies
-    playground: false
-    module_lab: false
+    playground: true
+    module_lab: true
     sources:
     - reading: sections/section-040/module-01/course-01-package-managers-lockfiles-and-reproducible-dependencies.md
       adapted_from: null
 - id: section-050
   title: Use Docker to build a container image of a Backstage project
   curriculum_item: Use Docker to build a container image of a Backstage project
-  capstone: false
-  section_quiz: false
+  capstone: true
+  section_quiz: true
   modules:
   - id: module-01
     title: Container Artifacts, Build Inputs And Runtime Responsibilities
@@ -112,8 +112,8 @@ sections:
     - Distinguish a built image from a correctly configured deployment.
     outline:
     - Container Artifacts, Build Inputs And Runtime Responsibilities
-    playground: false
-    module_lab: false
+    playground: true
+    module_lab: true
     sources:
     - reading: sections/section-050/module-01/course-01-container-artifacts-build-inputs-and-runtime-responsibilities.md
       adapted_from: null

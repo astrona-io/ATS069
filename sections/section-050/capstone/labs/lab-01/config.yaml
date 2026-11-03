@@ -1,0 +1,78 @@
+# Multi-Stage Image And Runtime Configuration (CAPSTONE). Graded on the virtual machine.
+metadata:
+  name: "ats-069-capstone-050-01"
+  docs:
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+
+bootstrap:
+  init:
+    - name: "seed-portal"
+      description: "Install Node.js and Docker, then create the portal workspace with a faulty multi-stage Dockerfile"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "image-built"
+      description: "The image backstage:multistage exists and the Dockerfile has two stages"
+      type: "file"
+      source: "validation/validate-image-built.sh"
+      hint: "Build from /opt/portal with docker image build . --tag backstage:multistage. Read the first error of the build."
+    - name: "dockerignore"
+      description: "The ignore file keeps the source and excludes local configuration"
+      type: "file"
+      source: "validation/validate-dockerignore.sh"
+      hint: "A multi-stage build compiles inside Docker, so the source must be in the context. Add *.local.yaml."
+    - name: "final-stage-contents"
+      description: "The final image has no source, build script or local configuration"
+      type: "file"
+      source: "validation/validate-final-stage-contents.sh"
+      hint: "Copy only the bundle and the two app-config files from the build stage, not the whole /app directory."
+    - name: "runs-as-non-root"
+      description: "The final image runs as a user other than root"
+      type: "file"
+      source: "validation/validate-runs-as-non-root.sh"
+      hint: "Give the node user the /app directory and add USER node to the final stage."
+    - name: "bundle-matches-source"
+      description: "The image holds the build of the current source"
+      type: "file"
+      source: "validation/validate-bundle-matches-source.sh"
+      hint: "Rebuild the image after you fix the Dockerfile. The build stage creates the bundle."
+    - name: "container-running"
+      description: "The container portal-backend runs the image and answers on port 7007"
+      type: "file"
+      source: "validation/validate-container-running.sh"
+      hint: "Run docker run -d --name portal-backend -p 7007:7007 backstage:multistage. If it does not answer, check the CMD and the host setting of the config files."
+    - name: "token-at-runtime"
+      description: "PORTAL_TOKEN is passed at run time and is not in the image"
+      type: "file"
+      source: "validation/validate-token-at-runtime.sh"
+      hint: "Use docker run -e PORTAL_TOKEN=<value>. Do not use ENV or ARG in the Dockerfile."
+    - name: "source-unchanged"
+      description: "The backend source was not edited"
+      type: "file"
+      source: "validation/validate-source-unchanged.sh"
+      hint: "Fix the Dockerfile, the .dockerignore file and the run command, not packages/backend/src."
+
+teardown:
+  keepCluster: false

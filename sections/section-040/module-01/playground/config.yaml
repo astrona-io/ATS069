@@ -1,0 +1,28 @@
+# Package Managers, Lockfiles And Reproducible Dependencies (PLAYGROUND).
+# A clean Ubuntu VM with Node.js 22, Yarn 4.4.1 and a small workspace. No task, no grading, no `astrona submit`.
+metadata:
+  name: "ats-069-playground-040-01"
+  docs:
+    guide: "docs/overview.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+      sshPasswordAuth: false
+
+bootstrap:
+  init:
+    - name: "prepare"
+      description: "Install Node.js 22, then create the Yarn workspace /opt/portal and the npm project /opt/npm-demo."
+      type: "folder"
+      source: "bootstrap/"
+
+teardown:
+  keepCluster: false

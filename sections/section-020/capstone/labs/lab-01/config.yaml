@@ -1,0 +1,63 @@
+# Local Development Workflow Capstone (LAB). Graded on the virtual machine. UNTESTED.
+metadata:
+  name: "ats-069-capstone-020-01"
+  docs:
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+
+bootstrap:
+  init:
+    - name: "seed-portal"
+      description: "Install Node.js 22 and Yarn, then create the portal workspace with an unfinished status feature"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "typecheck-passes"
+      description: "yarn tsc finishes without errors in all three packages"
+      type: "file"
+      source: "validation/validate-typecheck.sh"
+      hint: "Two errors: the backend returns the property status instead of state, and StatusBadge is not exported by catalog-common."
+    - name: "tests-pass-unchanged"
+      description: "The unchanged tests of the backend and the app pass"
+      type: "file"
+      source: "validation/validate-tests.sh"
+      hint: "A missing raw status is unknown, the clock argument sets updatedAt, and unknown shows a neutral Unknown badge."
+    - name: "lint-passes"
+      description: "yarn lint reports no problems"
+      type: "file"
+      source: "validation/validate-lint.sh"
+      hint: "Remove the console.debug call and replace the any type with DeploymentStatus."
+    - name: "shared-config-correct"
+      description: "The deploymentStatus key is shared, the password is read from the environment and the local file is ignored"
+      type: "file"
+      source: "validation/validate-config.sh"
+      hint: "Move catalog.deploymentStatus to app-config.yaml, use ${BACKEND_DB_PASSWORD} and ignore app-config.local.yaml."
+    - name: "change-described"
+      description: "CHANGE.md describes the behavior, the changed packages and the evidence"
+      type: "file"
+      source: "validation/validate-change-description.sh"
+      hint: "Use the headings Behavior, Boundaries and Evidence. Name every package that Git shows as changed."
+
+teardown:
+  keepCluster: false

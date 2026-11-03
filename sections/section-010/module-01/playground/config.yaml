@@ -1,0 +1,29 @@
+# Local Projects, Development Servers And Production Builds (PLAYGROUND).
+# A working example workspace in /opt/portal. No task, no grading, no astrona submit.
+metadata:
+  name: "ats-069-playground-010-01"
+  docs:
+    guide: "docs/overview.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+      sshPasswordAuth: false
+
+bootstrap:
+  init:
+    - name: "seed-portal"
+      description: "Install Node.js and Yarn, then create the working example workspace"
+      type: "folder"
+      source: "bootstrap/"
+  manifests: []
+
+teardown:
+  keepCluster: false

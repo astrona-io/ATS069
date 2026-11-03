@@ -1,9 +1,8 @@
-# Reading-only content; YAML knowledge checks have a separate index.
+# Course manifest for ATS069. Each section lists its README, module (landing, parts, lab Question reading and lab entry after the part tested, summary), a capstone and a quiz.
 training:
   id: ATS069
   title: 'CBA: Backstage Development Workflow'
-  description: 'Detailed reading material and reusable YAML knowledge checks for CBA: Backstage Development
-    Workflow. Technical content remains draft. No labs or playgrounds.'
+  description: Concept lessons, diagrams, playgrounds, graded labs, capstones and original scenario quizzes covering every published objective in this CBA domain. Labs run on Ubuntu 24.04 QEMU virtual machines.
   certification:
     name: Certified Backstage Associate
     code: CBA
@@ -17,106 +16,355 @@ training:
     - Download and install dependencies for a Backstage project with NPM/Yarn
     - Use Docker to build a container image of a Backstage project
 modules:
-- id: module-intro
-  title: Introduction
-  description: Audience, reading method and review process.
-  content:
-  - type: reading
+  - id: module-intro
     title: Introduction
-    path: sections/intro/README.md
-  - type: reading
-    title: Welcome To The Course
-    path: sections/intro/course-01-welcome.md
-  - type: reading
-    title: Get Your Machine Ready
-    path: sections/intro/course-02-get-your-machine-ready.md
-  - type: reading
-    title: How This Course Is Made
-    path: sections/intro/course-03-how-this-course-is-made.md
-- id: module-010
-  title: Build and run Backstage projects locally
-  description: Developed reading and reasoning for Build and run Backstage projects locally.
-  maturity: alpha
-  content:
-  - type: reading
-    title: Build and run Backstage projects locally
-    path: sections/section-010/README.md
-  - type: reading
-    title: Local Projects, Development Servers And Production Builds
-    path: sections/section-010/module-01/course.md
-  - type: reading
-    title: Local Projects, Development Servers And Production Builds
-    path: sections/section-010/module-01/course-01-local-projects-development-servers-and-production-builds.md
-  - type: reading
-    title: Summary
-    path: sections/section-010/module-01/course-02-summary.md
-- id: module-020
-  title: Understand local development workflows
-  description: Developed reading and reasoning for Understand local development workflows.
-  maturity: alpha
-  content:
-  - type: reading
-    title: Understand local development workflows
-    path: sections/section-020/README.md
-  - type: reading
-    title: Changes, Workspace Feedback And Reviewable Development
-    path: sections/section-020/module-01/course.md
-  - type: reading
-    title: Changes, Workspace Feedback And Reviewable Development
-    path: sections/section-020/module-01/course-01-changes-workspace-feedback-and-reviewable-development.md
-  - type: reading
-    title: Summary
-    path: sections/section-020/module-01/course-02-summary.md
-- id: module-030
-  title: Compile a Backstage project with TypeScript
-  description: Developed reading and reasoning for Compile a Backstage project with TypeScript.
-  maturity: alpha
-  content:
-  - type: reading
-    title: Compile a Backstage project with TypeScript
-    path: sections/section-030/README.md
-  - type: reading
-    title: Type Checking, Transpilation And Workspace Build Contracts
-    path: sections/section-030/module-01/course.md
-  - type: reading
-    title: Type Checking, Transpilation And Workspace Build Contracts
-    path: sections/section-030/module-01/course-01-type-checking-transpilation-and-workspace-build-contracts.md
-  - type: reading
-    title: Summary
-    path: sections/section-030/module-01/course-02-summary.md
-- id: module-040
-  title: Download and install dependencies for a Backstage project with NPM/Yarn
-  description: Developed reading and reasoning for Download and install dependencies for a Backstage project
-    with NPM/Yarn.
-  maturity: alpha
-  content:
-  - type: reading
-    title: Download and install dependencies for a Backstage project with NPM/Yarn
-    path: sections/section-040/README.md
-  - type: reading
-    title: Package Managers, Lockfiles And Reproducible Dependencies
-    path: sections/section-040/module-01/course.md
-  - type: reading
-    title: Package Managers, Lockfiles And Reproducible Dependencies
-    path: sections/section-040/module-01/course-01-package-managers-lockfiles-and-reproducible-dependencies.md
-  - type: reading
-    title: Summary
-    path: sections/section-040/module-01/course-02-summary.md
-- id: module-050
-  title: Use Docker to build a container image of a Backstage project
-  description: Developed reading and reasoning for Use Docker to build a container image of a Backstage
-    project.
-  maturity: alpha
-  content:
-  - type: reading
+    description: Audience, reading method and review process.
+    content:
+    - type: reading
+      title: Introduction
+      path: sections/intro/README.md
+    - type: reading
+      title: Welcome To The Course
+      path: sections/intro/course-01-welcome.md
+    - type: reading
+      title: Get Your Machine Ready
+      path: sections/intro/course-02-get-your-machine-ready.md
+    - type: reading
+      title: How This Course Is Made
+      path: sections/intro/course-03-how-this-course-is-made.md
+  - id: module-010
+    title: "Build and run Backstage projects locally"
+    description: >
+      Makes the reader able to explain the app and backend workspaces,
+      start a project from source with merged configuration, find the first
+      failed startup boundary, and build artifacts that run without the
+      source tree.
+    content:
+      - type: reading
+        title: "Section Overview"
+        path: sections/section-010/README.md
+      - type: reading
+        title: "Local Projects, Development Servers And Production Builds"
+        path: sections/section-010/module-01/course.md
+      - type: reading
+        title: "Workspaces And The Parts Of A Project"
+        path: sections/section-010/module-01/course-01-workspaces-and-the-parts-of-a-project.md
+      - type: reading
+        title: "Development Servers And Configuration"
+        path: sections/section-010/module-01/course-02-development-servers-and-configuration.md
+      - type: reading
+        title: "Production Builds And Artifacts"
+        path: sections/section-010/module-01/course-03-production-builds-and-artifacts.md
+      - type: reading
+        title: "Question"
+        path: sections/section-010/module-01/labs/lab-01/question.md
+      - type: lab
+        title: "Start The Backend And Build A Runnable Artifact Lab"
+        path: sections/section-010/module-01/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 25m
+        topic: backstage-development
+        task_kind: fix
+        tags: [yarn, workspaces, configuration, build, dist, node]
+        learning_goals:
+          - Fix a start script that resolves its configuration path from the wrong directory
+          - Add a missing required configuration value
+          - Fix a build script so the artifact holds every runtime file and runs alone
+      - type: reading
+        title: "Summary"
+        path: sections/section-010/module-01/course-04-summary.md
+      - type: reading
+        title: "Question"
+        path: sections/section-010/capstone/labs/lab-01/question.md
+      - type: lab
+        title: "Build And Run Backstage Projects Locally Capstone"
+        path: sections/section-010/capstone/labs/lab-01
+        difficulty: advanced
+        estimated_duration: 40m
+        topic: backstage-development
+        task_kind: build
+        tags: [yarn, workspaces, configuration, build-all, browser-config, secrets]
+        learning_goals:
+          - Start the backend and the app from source and fix a port that does not match app.baseUrl
+          - Keep a token out of the browser-visible configuration
+          - Make build:all build every workspace and run both artifacts alone
+      - type: quiz
+        title: "Knowledge Check: Build and run Backstage projects locally"
+        path: sections/section-010/quiz.yaml
+        pass_score: 70
+  - id: module-020
+    title: "Understand local development workflows"
+    description: >
+      Makes the reader able to follow one change through a Backstage
+      monorepo: the packages and contracts it touches, the feedback from
+      type checks, tests, lint and hot reload, local overrides versus shared
+      configuration, and a change description a reviewer can verify.
+    content:
+      - type: reading
+        title: "Section Overview"
+        path: sections/section-020/README.md
+
+      - type: reading
+        title: "Changes, Workspace Feedback And Reviewable Development"
+        path: sections/section-020/module-01/course.md
+      - type: reading
+        title: "Tracing A Change Through The Workspace"
+        path: sections/section-020/module-01/course-01-tracing-a-change-through-the-workspace.md
+      - type: reading
+        title: "Fast Feedback From Type Checks, Tests And Lint"
+        path: sections/section-020/module-01/course-02-fast-feedback-type-checks-tests-and-lint.md
+      - type: reading
+        title: "Local Overrides, Configuration And Reviewable Changes"
+        path: sections/section-020/module-01/course-03-local-overrides-configuration-and-reviewable-changes.md
+      - type: reading
+        title: "Question"
+        path: sections/section-020/module-01/labs/lab-01/question.md
+      - type: lab
+        title: "Make A Change Reviewable Lab"
+        path: sections/section-020/module-01/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 25m
+        topic: development-workflow
+        task_kind: fix
+        tags: [typescript, yarn-workspace, app-config, local-override, secrets, gitignore]
+        learning_goals:
+          - Fix a type error and a wrong test result in a workspace package
+          - Move a shared configuration key out of a local override
+          - Replace a plain-text secret with an environment reference and ignore the local file
+        resources:
+          - name: "Backstage configuration"
+            url: https://backstage.io/docs/conf/writing/
+      - type: reading
+        title: "Summary"
+        path: sections/section-020/module-01/course-04-summary.md
+
+      - type: reading
+        title: "Question"
+        path: sections/section-020/capstone/labs/lab-01/question.md
+      - type: lab
+        title: "Local Development Workflow Capstone"
+        path: sections/section-020/capstone/labs/lab-01
+        difficulty: advanced
+        estimated_duration: 40m
+        topic: development-workflow
+        task_kind: build
+        tags: [typescript, tests, lint, app-config, secrets, git, review]
+        learning_goals:
+          - Fix type errors, failing tests and lint problems across three workspace packages
+          - Share a configuration key, read a secret from the environment and ignore the local override
+          - Write a change description with behavior, boundaries and evidence
+        resources:
+          - name: "Backstage configuration"
+            url: https://backstage.io/docs/conf/writing/
+      - type: quiz
+        title: "Knowledge Check: Understand local development workflows"
+        path: sections/section-020/quiz.yaml
+        pass_score: 70
+  - id: module-030
+    title: "Compile a Backstage project with TypeScript"
+    description: >
+      Makes the reader able to tell type checking from emit and bundling,
+      read the scope of a tsc result, handle optional values and untrusted
+      data, and build a workspace in dependency order with project
+      references and declaration files.
+
+    content:
+      - type: reading
+        title: "Section Overview"
+        path: sections/section-030/README.md
+
+      - type: reading
+        title: "Type Checking, Transpilation And Workspace Build Contracts"
+        path: sections/section-030/module-01/course.md
+      - type: reading
+        title: "Checking, Emitting And The Scope Of tsconfig.json"
+        path: sections/section-030/module-01/course-01-checking-emitting-and-tsconfig-scope.md
+      - type: reading
+        title: "Types, Optional Values And Runtime Boundaries"
+        path: sections/section-030/module-01/course-02-types-optional-values-and-runtime-boundaries.md
+      - type: reading
+        title: "Question"
+        path: sections/section-030/module-01/labs/lab-01/question.md
+      - type: lab
+        title: "Fix The Check Scope And An Optional Value Lab"
+        path: sections/section-030/module-01/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 20m
+        topic: typescript
+        task_kind: fix
+        tags: [typescript, tsc, tsconfig, strict, optional-property, noemit]
+        learning_goals:
+          - Make one tsc run cover every package of a workspace
+          - Handle an optional property in code without an assertion
+          - Configure a type check that writes no files
+        resources:
+          - name: "TSConfig reference"
+            url: https://www.typescriptlang.org/tsconfig/
+          - name: "Backstage build system"
+            url: https://backstage.io/docs/tooling/cli/build-system/
+      - type: reading
+        title: "Workspace Builds, Project References And Declaration Files"
+        path: sections/section-030/module-01/course-03-workspace-builds-references-and-declarations.md
+      - type: reading
+        title: "Summary"
+        path: sections/section-030/module-01/course-04-summary.md
+
+      - type: reading
+        title: "Question"
+        path: sections/section-030/capstone/labs/lab-01/question.md
+      - type: lab
+        title: "TypeScript Workspace Build Capstone"
+        path: sections/section-030/capstone/labs/lab-01
+        difficulty: advanced
+        estimated_duration: 35m
+        topic: typescript
+        task_kind: build
+        tags: [typescript, project-references, composite, declarations, tsc-build, runtime-validation]
+        learning_goals:
+          - Declare project references so a clean build works in dependency order
+          - Replace a type assertion on parsed JSON with a runtime parser
+          - Emit JavaScript and declaration files for every project of the workspace
+        resources:
+          - name: "TypeScript project references"
+            url: https://www.typescriptlang.org/docs/handbook/project-references.html
+      - type: quiz
+        title: "Knowledge Check: Compile a Backstage project with TypeScript"
+        path: sections/section-030/quiz.yaml
+        pass_score: 70
+  - id: module-040
+    title: "Download and install dependencies for a Backstage project with NPM/Yarn"
+    description: >
+      Makes the reader able to explain manifests, version ranges and lockfiles,
+      declare dependencies in the workspace that imports them, install exactly
+      what the lockfile says with yarn install --immutable and npm ci, force a
+      release with resolutions and sort install failures by cause.
+
+    content:
+      - type: reading
+        title: "Section Overview"
+        path: sections/section-040/README.md
+
+      - type: reading
+        title: "Package Managers, Lockfiles And Reproducible Dependencies"
+        path: sections/section-040/module-01/course.md
+      - type: reading
+        title: "Manifests, Version Ranges And The Lockfile"
+        path: sections/section-040/module-01/course-01-manifests-version-ranges-and-the-lockfile.md
+      - type: reading
+        title: "Workspaces And The Dependency Boundary"
+        path: sections/section-040/module-01/course-02-workspaces-and-the-dependency-boundary.md
+      - type: reading
+        title: "Reproducible Installs, Resolutions And Failures"
+        path: sections/section-040/module-01/course-03-reproducible-installs-resolutions-and-failures.md
+      - type: reading
+        title: "Question"
+        path: sections/section-040/module-01/labs/lab-01/question.md
+      - type: lab
+        title: "Make The Install Reproducible Lab"
+        path: sections/section-040/module-01/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 25m
+        topic: dependencies
+        task_kind: fix
+        tags: [yarn, lockfile, workspaces, immutable, hidden-dependency, version-range]
+        learning_goals:
+          - Fix a workspace range that no local package satisfies
+          - Declare a dependency in the workspace that imports it
+          - Update the lockfile and confirm it with yarn install --immutable
+      - type: reading
+        title: "Summary"
+        path: sections/section-040/module-01/course-04-summary.md
+
+      - type: reading
+        title: "Question"
+        path: sections/section-040/capstone/labs/lab-01/question.md
+      - type: lab
+        title: "Reproducible Dependencies Capstone"
+        path: sections/section-040/capstone/labs/lab-01
+        difficulty: advanced
+        estimated_duration: 40m
+        topic: dependencies
+        task_kind: fix
+        tags: [yarn, lockfile, resolutions, immutable, ci, semver]
+        learning_goals:
+          - Make a continuous integration install step use yarn install --immutable
+          - Force one release of a transitive dependency with resolutions
+          - Remove a second lockfile and confirm the install is reproducible
+      - type: quiz
+        title: "Knowledge Check: Download and install dependencies with NPM/Yarn"
+        path: sections/section-040/quiz.yaml
+        pass_score: 70
+  - id: module-050
     title: Use Docker to build a container image of a Backstage project
-    path: sections/section-050/README.md
-  - type: reading
-    title: Container Artifacts, Build Inputs And Runtime Responsibilities
-    path: sections/section-050/module-01/course.md
-  - type: reading
-    title: Container Artifacts, Build Inputs And Runtime Responsibilities
-    path: sections/section-050/module-01/course-01-container-artifacts-build-inputs-and-runtime-responsibilities.md
-  - type: reading
-    title: Summary
-    path: sections/section-050/module-01/course-02-summary.md
+    description: >
+      Makes the reader able to describe what a Backstage container image
+      contains, build it with a host build and a multi-stage build, control
+      the build context with .dockerignore, run the container as a non-root
+      user, pass configuration and secrets at run time, and tell apart a
+      finished build from a working deployment.
+    status: alpha
+    content:
+      - type: reading
+        title: "Use Docker to build a container image of a Backstage project"
+        path: sections/section-050/README.md
+
+      - type: reading
+        title: "Container Artifacts, Build Inputs And Runtime Responsibilities"
+        path: sections/section-050/module-01/course.md
+      - type: reading
+        title: "What Goes Into A Backstage Image"
+        path: sections/section-050/module-01/course-01-image-contents-and-build-context.md
+      - type: reading
+        title: "Host Build And Multi-Stage Build"
+        path: sections/section-050/module-01/course-02-host-build-and-multi-stage-builds.md
+      - type: reading
+        title: "Runtime Configuration, Identity And What A Build Proves"
+        path: sections/section-050/module-01/course-03-runtime-configuration-identity-and-evidence.md
+      - type: reading
+        title: "Question"
+        path: sections/section-050/module-01/labs/lab-01/question.md
+      - type: lab
+        title: "Package The Backend As A Container Image Lab"
+        path: sections/section-050/module-01/labs/lab-01
+        difficulty: intermediate
+        estimated_duration: 30m
+        topic: docker
+        task_kind: fix
+        tags: [docker, dockerfile, dockerignore, build-context, non-root, secrets, host-build]
+        learning_goals:
+          - Find why a host-build image fails from the build context and fix the ignore file
+          - Rebuild a stale bundle and package the current source
+          - Run the container as a non-root user and keep local configuration out of the image
+        resources:
+          - name: "Backstage: building a Docker image"
+            url: https://backstage.io/docs/deployment/docker/
+      - type: reading
+        title: "Summary"
+        path: sections/section-050/module-01/course-04-summary.md
+
+      - type: reading
+        title: "Question"
+        path: sections/section-050/capstone/labs/lab-01/question.md
+      - type: lab
+        title: "Multi-Stage Image And Runtime Configuration Capstone"
+        path: sections/section-050/capstone/labs/lab-01
+        difficulty: advanced
+        estimated_duration: 40m
+        topic: docker
+        task_kind: build
+        tags: [docker, multi-stage, dockerignore, non-root, runtime-configuration, secrets, healthcheck]
+        learning_goals:
+          - Fix a multi-stage Dockerfile so the final image holds only the bundle and two configuration files
+          - Start the backend with both configuration files so a published port answers
+          - Pass a token at run time without storing it in the image
+        resources:
+          - name: "Backstage: building a Docker image"
+            url: https://backstage.io/docs/deployment/docker/
+      - type: quiz
+        title: "Knowledge Check: Use Docker to build a container image of a Backstage project"
+        path: sections/section-050/quiz.yaml
+        pass_score: 70
+      - type: quiz
+        title: "Final Knowledge Check: Backstage Development Workflow"
+        path: sections/final-domain-quiz.yaml
+        pass_score: 70

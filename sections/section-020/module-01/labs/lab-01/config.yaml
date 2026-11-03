@@ -1,0 +1,63 @@
+# Make A Change Reviewable (LAB). Graded on the virtual machine. UNTESTED.
+metadata:
+  name: "ats-069-lab-020-01"
+  docs:
+    question: "question.md"
+    solution: "solution.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+
+bootstrap:
+  init:
+    - name: "seed-portal"
+      description: "Install Node.js 22 and Yarn, then create the portal workspace with the faults"
+      type: "folder"
+      source: "bootstrap/"
+
+# Applied only by astrona test: the reference solution.
+testing:
+  init:
+    - name: "apply-solution"
+      description: "Apply the reference solution"
+      type: "file"
+      source: "solution/apply.sh"
+
+validation:
+  scripts:
+    - name: "typecheck-passes"
+      description: "yarn tsc finishes without errors"
+      type: "file"
+      source: "validation/validate-typecheck.sh"
+      hint: "The ownerState function reads entity.owner. The Entity type keeps the owner at spec.owner."
+    - name: "owner-states-tested"
+      description: "The unchanged tests pass: owned, missing and error are three different results"
+      type: "file"
+      source: "validation/validate-owner-states.sh"
+      hint: "Return error only when there is no entity. Return missing when entity.spec.owner is absent."
+    - name: "shared-key-committed"
+      description: "catalog.ownerWarning.enabled is true in app-config.yaml and no longer only in the local file"
+      type: "file"
+      source: "validation/validate-shared-config.sh"
+      hint: "Move the catalog block from app-config.local.yaml to app-config.yaml. Keep the port override in the local file."
+    - name: "secret-not-committed"
+      description: "The database password in app-config.yaml comes from BACKEND_DB_PASSWORD"
+      type: "file"
+      source: "validation/validate-no-plaintext-secret.sh"
+      hint: "Write the value as ${BACKEND_DB_PASSWORD} in app-config.yaml."
+    - name: "local-override-ignored"
+      description: "Git ignores app-config.local.yaml and does not track it"
+      type: "file"
+      source: "validation/validate-local-override-ignored.sh"
+      hint: "Add a line app-config.local.yaml to .gitignore. Check with git check-ignore."
+
+teardown:
+  keepCluster: false

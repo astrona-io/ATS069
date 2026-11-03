@@ -1,0 +1,29 @@
+# Change And Feedback Workflow (PLAYGROUND). A working portal workspace in /opt/portal; all checks pass.
+# No task, no grading, no astrona submit. UNTESTED.
+metadata:
+  name: "ats-069-playground-020-01"
+  docs:
+    guide: "docs/overview.md"
+
+runtime:
+  type: "qemu"
+  qemu:
+    - image:
+        type: "oci"
+        source: "ghcr.io/astrona-io/ubuntu-qcow2-image:24.04-lfcs-{ARCH}"
+      cpus: 2
+      memoryMB: 4096
+      diskSizeGB: 20
+      display: false
+      sshPasswordAuth: false
+
+bootstrap:
+  init:
+    - name: "prepare-portal"
+      description: "Install Node.js 22 and Yarn, then create the portal workspace in /opt/portal"
+      type: "folder"
+      source: "bootstrap/"
+  manifests: []
+
+teardown:
+  keepCluster: false

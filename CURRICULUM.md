@@ -20,4 +20,4 @@ The [official objectives](https://training.linuxfoundation.org/certification/cer
 | 040 / 01 | Package Managers, Lockfiles And Reproducible Dependencies | Package Managers, Lockfiles And Reproducible Dependencies |
 | 050 / 01 | Container Artifacts, Build Inputs And Runtime Responsibilities | Container Artifacts, Build Inputs And Runtime Responsibilities |
 
-AUTHORING.yaml records measurable goals and adaptation sources. Every objective retains its section ID. All technical readings remain draft. Question banks are separate from the reading manifest and follow their declared summaries. No labs, playgrounds or runtime validation are included.
+AUTHORING.yaml records measurable goals and adaptation sources. Every objective retains its section ID. All technical readings remain draft. Each module has a playground and a graded lab, each section has a capstone lab and a `quiz.yaml`, and `sections/final-domain-quiz.yaml` closes the course. Labs and playgrounds run on Ubuntu 24.04 virtual machines and are UNTESTED: only static checks were run. The older question banks under `assessments/` remain.
