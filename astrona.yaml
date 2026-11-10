@@ -64,7 +64,7 @@ modules:
         difficulty: intermediate
         estimated_duration: 25m
         topic: backstage-development
-        task_kind: fix
+        task_kind: troubleshooting
         tags: [yarn, workspaces, configuration, build, dist, node]
         learning_goals:
           - Fix a start script that resolves its configuration path from the wrong directory
@@ -97,7 +97,7 @@ modules:
         difficulty: intermediate
         estimated_duration: 20m
         topic: backstage-development
-        task_kind: fix
+        task_kind: troubleshooting
         tags: [yarn, workspaces, package-roles, engines, corepack]
         learning_goals:
           - Add the plugins folder to the workspaces field
@@ -131,7 +131,7 @@ modules:
         difficulty: intermediate
         estimated_duration: 20m
         topic: backstage-development
-        task_kind: fix
+        task_kind: troubleshooting
         tags: [configuration, cors, postgresql, guest, catalog, secrets]
         learning_goals:
           - Match the CORS origin to app.baseUrl
@@ -193,7 +193,7 @@ modules:
         difficulty: intermediate
         estimated_duration: 25m
         topic: development-workflow
-        task_kind: fix
+        task_kind: troubleshooting
         tags: [typescript, yarn-workspace, app-config, local-override, secrets, gitignore]
         learning_goals:
           - Fix a type error and a wrong test result in a workspace package
@@ -229,7 +229,7 @@ modules:
         difficulty: intermediate
         estimated_duration: 25m
         topic: development-workflow
-        task_kind: fix
+        task_kind: build
         tags: [yarn-workspace, plugin, backend, dependency, routes]
         learning_goals:
           - Make a plugin folder a Yarn workspace and fix its plugin id
@@ -262,7 +262,7 @@ modules:
         difficulty: intermediate
         estimated_duration: 25m
         topic: development-workflow
-        task_kind: fix
+        task_kind: troubleshooting
         tags: [lint, format, check-script, git-hooks]
         learning_goals:
           - Fix a lint problem and format a file with the formatter
@@ -325,7 +325,7 @@ modules:
         difficulty: intermediate
         estimated_duration: 20m
         topic: typescript
-        task_kind: fix
+        task_kind: troubleshooting
         tags: [typescript, tsc, tsconfig, strict, optional-property, noemit]
         learning_goals:
           - Make one tsc run cover every package of a workspace
@@ -367,7 +367,7 @@ modules:
         difficulty: intermediate
         estimated_duration: 25m
         topic: typescript
-        task_kind: fix
+        task_kind: troubleshooting
         tags: [typescript, tsconfig, extends, strict, skiplibcheck, dist-types]
         learning_goals:
           - Extend a shared base configuration instead of copying its options
@@ -405,7 +405,7 @@ modules:
         difficulty: intermediate
         estimated_duration: 25m
         topic: typescript
-        task_kind: fix
+        task_kind: troubleshooting
         tags: [backstage-cli, package-roles, build, files, tsc]
         learning_goals:
           - Set the backstage.role of a package
@@ -476,7 +476,7 @@ modules:
         difficulty: intermediate
         estimated_duration: 25m
         topic: dependencies
-        task_kind: fix
+        task_kind: troubleshooting
         tags: [yarn, lockfile, workspaces, immutable, hidden-dependency, version-range]
         learning_goals:
           - Fix a workspace range that no local package satisfies
@@ -506,7 +506,7 @@ modules:
         difficulty: intermediate
         estimated_duration: 25m
         topic: dependencies
-        task_kind: fix
+        task_kind: troubleshooting
         tags: [yarn, workspaces, foreach, hidden-dependency]
         learning_goals:
           - Move a dependency from the root to the workspace that imports it
@@ -542,7 +542,7 @@ modules:
         difficulty: intermediate
         estimated_duration: 25m
         topic: dependencies
-        task_kind: fix
+        task_kind: troubleshooting
         tags: [yarn, peer-dependencies, registry, npmScopes, token]
         learning_goals:
           - Declare a peer dependency and a matching development dependency in a plugin
@@ -561,7 +561,7 @@ modules:
         difficulty: advanced
         estimated_duration: 40m
         topic: dependencies
-        task_kind: fix
+        task_kind: troubleshooting
         tags: [yarn, lockfile, resolutions, immutable, ci, semver]
         learning_goals:
           - Make a continuous integration install step use yarn install --immutable
@@ -606,7 +606,7 @@ modules:
         difficulty: intermediate
         estimated_duration: 30m
         topic: docker
-        task_kind: fix
+        task_kind: build
         tags: [docker, dockerfile, dockerignore, build-context, non-root, secrets, host-build]
         learning_goals:
           - Find why a host-build image fails from the build context and fix the ignore file
@@ -643,7 +643,7 @@ modules:
         difficulty: intermediate
         estimated_duration: 30m
         topic: docker
-        task_kind: fix
+        task_kind: troubleshooting
         tags: [docker, dockerignore, build-context, layer-cache, cache-friendly-dockerfile]
         learning_goals:
           - Exclude large and private files from the build context and verify it with a probe image
