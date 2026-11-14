@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://astrona.io/courses/certified-backstage-associate-cba">
+    <img src="https://astrona.io/courses/certified-backstage-associate-cba/domains/ATS069.svg" alt="ATS069: Backstage Development Workflow, part of the Certified Backstage Associate course on Astrona" width="100%">
+  </a>
+</p>
+
 # Backstage Development Workflow (ATS069)
 
 Certified Backstage Associate (CBA): Backstage Development Workflow, worth 24% of the official curriculum. This course belongs to ATP014.
